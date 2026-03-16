@@ -14,36 +14,30 @@ public final class GraphQueryService {
         this.relationType = validateIdentifier(relationType, "relationType");
     }
 
-    // 查询单个节点的入边数量、出边数量和总边数量。
-    public CypherQuery buildNodeSummaryQuery(String nodeId) {
-        Map<String, Object> params = new LinkedHashMap<String, Object>();
-        params.put("nodeId", requireText(nodeId, "nodeId"));
-
-        String statement = "MATCH (n:" + nodeLabel + " {id: $nodeId})\n"
+    // 查询全图中每个节点的汇总信息。
+    public CypherQuery buildGraphNodeSummaryQuery() {
+        String statement = "MATCH (n:" + nodeLabel + ")\n"
                 + "OPTIONAL MATCH (n)-[out:" + relationType + "]->()\n"
                 + "WITH n, count(out) AS outEdgeCount\n"
                 + "OPTIONAL MATCH ()-[in:" + relationType + "]->(n)\n"
                 + "RETURN n.id AS nodeId,\n"
+                + "       properties(n) AS nodeProperties,\n"
                 + "       outEdgeCount,\n"
                 + "       count(in) AS inEdgeCount,\n"
-                + "       outEdgeCount + count(in) AS totalEdgeCount";
-        return new CypherQuery(statement, params);
+                + "       outEdgeCount + count(in) AS totalEdgeCount\n"
+                + "ORDER BY nodeId";
+        return new CypherQuery(statement, Collections.<String, Object>emptyMap());
     }
 
-    // 查询两个节点之间直接边的属性汇总。
-    public CypherQuery buildEdgeSummaryQuery(String fromNodeId, String toNodeId) {
-        Map<String, Object> params = new LinkedHashMap<String, Object>();
-        params.put("fromNodeId", requireText(fromNodeId, "fromNodeId"));
-        params.put("toNodeId", requireText(toNodeId, "toNodeId"));
-
-        String statement = "MATCH (from:" + nodeLabel + " {id: $fromNodeId})"
-                + "-[r:" + relationType + "]->"
-                + "(to:" + nodeLabel + " {id: $toNodeId})\n"
+    // 查询全图中每条边的汇总信息。
+    public CypherQuery buildGraphEdgeSummaryQuery() {
+        String statement = "MATCH (from:" + nodeLabel + ")-[r:" + relationType + "]->(to:" + nodeLabel + ")\n"
                 + "RETURN from.id AS fromNodeId,\n"
                 + "       to.id AS toNodeId,\n"
                 + "       type(r) AS relationType,\n"
-                + "       properties(r) AS edgeProperties";
-        return new CypherQuery(statement, params);
+                + "       properties(r) AS edgeProperties\n"
+                + "ORDER BY fromNodeId, toNodeId";
+        return new CypherQuery(statement, Collections.<String, Object>emptyMap());
     }
 
     // 路径查询改成结构化入参，节点和边都可以携带条件。
