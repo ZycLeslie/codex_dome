@@ -1,0 +1,50 @@
+version: 1
+query:
+  nodes:
+    A:
+      labels:
+        - Account
+      id: account-1
+      properties:
+        tenantId: tenant-01
+    B:
+      labels:
+        - Service
+    C:
+      labels:
+        - Dataset
+      properties:
+        env: prod
+  edges:
+    ab:
+      from: A
+      to: B
+      direction: OUTBOUND
+      type: OWNS
+      id: rel-ab
+      properties:
+        active: true
+    bc:
+      from: B
+      to: C
+      direction: OUTBOUND
+      type: CALLS
+      properties:
+        latencyTier: gold
+  paths:
+    - alias: path_abc
+      edges:
+        - ab
+        - bc
+  return:
+    items:
+      - kind: PATH
+        ref: path_abc
+        alias: primaryPath
+      - kind: NODE
+        ref: B
+        alias: sharedNode
+      - kind: EDGE
+        ref: bc
+        alias: terminalEdge
+  limit: 25

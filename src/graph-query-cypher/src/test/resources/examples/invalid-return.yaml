@@ -1,0 +1,23 @@
+version: 1
+query:
+  nodes:
+    A:
+      labels:
+        - Account
+    B:
+      labels:
+        - Service
+  edges:
+    ab:
+      from: A
+      to: B
+      direction: OUTBOUND
+  paths:
+    - alias: path_ab
+      edges:
+        - ab
+  return:
+    items:
+      - kind: NODE
+        ref: Z
+        alias: missingNode

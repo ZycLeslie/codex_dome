@@ -1,0 +1,29 @@
+version: 1
+query:
+  nodes:
+    A:
+      labels:
+        - Start
+    B:
+      labels:
+        - Middle
+    C:
+      labels:
+        - Orphan
+    D:
+      labels:
+        - End
+  edges:
+    ab:
+      from: A
+      to: B
+      direction: OUTBOUND
+    cd:
+      from: C
+      to: D
+      direction: OUTBOUND
+  paths:
+    - alias: broken_path
+      edges:
+        - ab
+        - cd

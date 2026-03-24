@@ -1,0 +1,43 @@
+version: 1
+query:
+  nodes:
+    A:
+      labels:
+        - Account
+    B:
+      labels:
+        - Service
+        - Shared
+      id: node-b
+    C:
+      properties:
+        status: live
+    D:
+      properties:
+        region: cn
+  edges:
+    ab:
+      from: A
+      to: B
+      direction: OUTBOUND
+      properties:
+        enabled: true
+    bc:
+      from: B
+      to: C
+      direction: OUTBOUND
+      type: CALLS
+    bd:
+      from: B
+      to: D
+      direction: OUTBOUND
+      id: rel-bd
+  paths:
+    - alias: path_abc
+      edges:
+        - ab
+        - bc
+    - alias: path_bd
+      edges:
+        - bd
+  limit: 10
