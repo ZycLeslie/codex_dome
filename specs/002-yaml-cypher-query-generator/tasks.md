@@ -21,3 +21,11 @@
 - [x] 过滤值全部参数化
 - [x] 校验错误可读
 - [x] 文档与实现保持一致
+
+## 生产质量补强
+
+- [x] 为 facade、parser、validator、generator、异常与关键模型补齐 Javadoc
+- [x] 为路径编译、WHERE/参数命名、path 连续性校验、缺省边类型生成补解释性注释
+- [x] 在 `src/graph-query-cypher/` 增加独立 `README.md`
+- [x] 清理 `out`、`target`、`.DS_Store` 等构建产物或噪音文件，并补忽略规则
+- [x] 明确当前自检/构建方式，保证本次修改完成后仓库状态可审阅

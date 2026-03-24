@@ -14,7 +14,16 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Generates parameterized Cypher statements from a validated compiled query model.
+ */
 public final class CypherQueryGenerator {
+    /**
+     * Renders the full Cypher statement and the corresponding parameter map.
+     *
+     * @param query validated compiled query model
+     * @return generated Cypher statement and parameters
+     */
     public GeneratedCypherQuery generate(CompiledGraphQuery query) {
         StringBuilder statement = new StringBuilder();
         Map<String, Object> params = new LinkedHashMap<String, Object>();
@@ -62,6 +71,9 @@ public final class CypherQueryGenerator {
     private void appendEdgePattern(StringBuilder statement, String edgeAlias, EdgeSpec edge) {
         StringBuilder pattern = new StringBuilder();
         pattern.append('[').append(edgeAlias);
+        // The type is optional by design. Keeping the named relationship variable even when the
+        // type is absent lets the caller filter or return the edge while still producing valid
+        // Cypher such as -[ab]-> instead of forcing a synthetic wildcard type.
         if (edge.type() != null) {
             pattern.append(':').append(edge.type());
         }
@@ -80,6 +92,8 @@ public final class CypherQueryGenerator {
                                    Map<String, Object> params,
                                    CompiledGraphQuery query) {
         List<String> predicates = new ArrayList<String>();
+        // Shared nodes and edges may appear in multiple MATCH paths. WHERE predicates are emitted
+        // once per named entity so the generated query stays stable and avoids duplicate filters.
         for (Map.Entry<String, NodeSpec> entry : query.nodes().entrySet()) {
             appendPredicates(predicates, params, "node", entry.getKey(), entry.getValue().id(), entry.getValue().properties());
         }
@@ -103,6 +117,10 @@ public final class CypherQueryGenerator {
                                   String alias,
                                   Object id,
                                   Map<String, Object> properties) {
+        // Parameter names follow the spec's stable pattern:
+        //   node_<alias>_id / node_<alias>_prop_<property>
+        //   edge_<alias>_id / edge_<alias>_prop_<property>
+        // This keeps the output readable and prevents collisions between node and edge filters.
         if (id != null) {
             String paramName = entityKind + "_" + alias + "_id";
             params.put(paramName, id);

@@ -22,11 +22,20 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Facade for the YAML-to-Cypher pipeline.
+ *
+ * <p>This entry point keeps parsing, validation, compilation, and query generation separated
+ * internally while exposing a small public API to callers.</p>
+ */
 public final class GraphQueryCompiler {
     private final YamlGraphQueryParser parser;
     private final GraphQueryValidator validator;
     private final CypherQueryGenerator generator;
 
+    /**
+     * Creates a compiler with the default parser, validator, and generator implementations.
+     */
     public GraphQueryCompiler() {
         this(new YamlGraphQueryParser(), new GraphQueryValidator(), new CypherQueryGenerator());
     }
@@ -39,10 +48,22 @@ public final class GraphQueryCompiler {
         this.generator = generator;
     }
 
+    /**
+     * Parses YAML text into the immutable document model.
+     *
+     * @param yaml YAML text that follows the graph-query schema
+     * @return parsed document
+     */
     public QueryDocument parseYaml(String yaml) {
         return parser.parse(yaml);
     }
 
+    /**
+     * Reads YAML from disk and parses it into the immutable document model.
+     *
+     * @param yamlPath path to the YAML input file
+     * @return parsed document
+     */
     public QueryDocument parseYaml(Path yamlPath) {
         try {
             return parseYaml(Files.readString(yamlPath));
@@ -51,19 +72,43 @@ public final class GraphQueryCompiler {
         }
     }
 
+    /**
+     * Validates and compiles a parsed query document into the generator-ready model.
+     *
+     * @param document parsed query document
+     * @return validated compiled query model
+     */
     public CompiledGraphQuery compile(QueryDocument document) {
         validator.validate(document);
         return toCompiledQuery(document.query());
     }
 
+    /**
+     * Parses, validates, compiles, and generates Cypher from YAML text.
+     *
+     * @param yaml YAML text that follows the graph-query schema
+     * @return generated query and parameters
+     */
     public GeneratedCypherQuery compileYamlToCypher(String yaml) {
         return generate(compile(parseYaml(yaml)));
     }
 
+    /**
+     * Reads YAML from disk, then parses, validates, compiles, and generates Cypher.
+     *
+     * @param yamlPath path to the YAML input file
+     * @return generated query and parameters
+     */
     public GeneratedCypherQuery compileYamlToCypher(Path yamlPath) {
         return generate(compile(parseYaml(yamlPath)));
     }
 
+    /**
+     * Generates Cypher from a compiled graph query.
+     *
+     * @param query validated compiled query model
+     * @return generated query and parameters
+     */
     public GeneratedCypherQuery generate(CompiledGraphQuery query) {
         return generator.generate(query);
     }
@@ -75,6 +120,9 @@ public final class GraphQueryCompiler {
             List<String> nodeAliases = new ArrayList<String>();
             EdgeSpec firstEdge = edges.get(path.edges().get(0));
             nodeAliases.add(firstEdge.from());
+            // YAML paths only list edge aliases. After validation has guaranteed that the path is
+            // continuous, the compiler can reconstruct the node walk by taking the first source
+            // node and then appending each edge's target node in order.
             for (String edgeAlias : path.edges()) {
                 EdgeSpec edge = edges.get(edgeAlias);
                 nodeAliases.add(edge.to());
@@ -84,6 +132,7 @@ public final class GraphQueryCompiler {
 
         List<CompiledReturnItem> compiledReturnItems = new ArrayList<CompiledReturnItem>();
         if (query.returnSpec().items().isEmpty()) {
+            // An empty return section means "return every named path" in declaration order.
             for (CompiledPath path : compiledPaths) {
                 compiledReturnItems.add(new CompiledReturnItem(ReturnItemKind.PATH, path.alias(), path.alias()));
             }

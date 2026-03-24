@@ -16,9 +16,15 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Maps parsed YAML values into the immutable graph-query document model.
+ */
 public final class YamlGraphQueryParser {
     private final SimpleYamlParser yamlParser;
 
+    /**
+     * Creates a parser backed by the module's restricted YAML parser.
+     */
     public YamlGraphQueryParser() {
         this(new SimpleYamlParser());
     }
@@ -27,6 +33,12 @@ public final class YamlGraphQueryParser {
         this.yamlParser = yamlParser;
     }
 
+    /**
+     * Parses YAML text into a {@link QueryDocument}.
+     *
+     * @param yaml YAML text in the graph-query schema
+     * @return parsed document
+     */
     public QueryDocument parse(String yaml) {
         Map<String, Object> root = requireMap(yamlParser.parse(yaml), "root");
         Integer version = requireInteger(root.get("version"), "version");

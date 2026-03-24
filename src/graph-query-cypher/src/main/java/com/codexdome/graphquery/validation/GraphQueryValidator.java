@@ -16,9 +16,17 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+/**
+ * Validates structural and semantic constraints of a parsed graph-query document.
+ */
 public final class GraphQueryValidator {
     private static final Pattern IDENTIFIER = Pattern.compile("[A-Za-z_][A-Za-z0-9_]*");
 
+    /**
+     * Validates the supplied document and throws when one or more violations are found.
+     *
+     * @param document parsed graph-query document
+     */
     public void validate(QueryDocument document) {
         List<ValidationError> errors = new ArrayList<ValidationError>();
         if (document == null) {
@@ -148,6 +156,8 @@ public final class GraphQueryValidator {
                     previous = null;
                     continue;
                 }
+                // Compiled paths are rebuilt as a single node walk. That only works when each
+                // subsequent edge starts at the node where the previous edge ended.
                 if (previous != null && !previous.to().equals(current.from())) {
                     errors.add(new ValidationError(edgeField,
                             "path is not continuous: edge '" + previous.to() + "' to '" + current.from() + "' does not connect"));

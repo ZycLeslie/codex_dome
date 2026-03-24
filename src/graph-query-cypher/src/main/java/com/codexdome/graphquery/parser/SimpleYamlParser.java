@@ -7,10 +7,22 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Minimal block-style YAML parser that supports only the subset required by this module.
+ *
+ * <p>The parser intentionally rejects advanced YAML features such as inline collections, anchors,
+ * merge keys, or multi-line scalars.</p>
+ */
 public final class SimpleYamlParser {
     private List<Line> lines;
     private int index;
 
+    /**
+     * Parses YAML text into nested {@link Map}, {@link List}, and scalar values.
+     *
+     * @param yaml YAML text in the supported subset
+     * @return nested object tree
+     */
     public Object parse(String yaml) {
         if (yaml == null) {
             throw new YamlParseException("YAML input must not be null");
