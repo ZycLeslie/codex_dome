@@ -1,0 +1,41 @@
+{
+    "knowledgeGraphId": "5799d094297d4638b34711562615f320",
+    "limit": 100,
+    "pathQuery": {
+            "nodes": [
+                {
+                    "entityType": "node",
+                    "alias":"n2",
+                    "conditions": []
+                },
+                {
+                    "entityType": "node",
+                    "alias":"n1",
+                    "conditions": []
+                },
+                {
+                    "entityType": "node",
+                    "alias":"n3",
+                    "conditions": []
+                }
+            ],
+            "edges": [
+                {
+                    "startNode":"n1",
+                    "endNode":"n2",
+                    "entityType": "",
+                    "conditions": [
+                    ],
+                    "hops": 1
+                },
+                {
+                    "startNode":"n2",
+                    "endNode":"n3",
+                    "entityType": "",
+                    "conditions": [
+                    ],
+                    "hops": 1
+                }
+            ]
+        }
+}
