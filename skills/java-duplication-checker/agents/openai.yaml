@@ -1,0 +1,4 @@
+interface:
+  display_name: "Java Duplication Checker"
+  short_description: "Detect Java duplication in local and remote repos"
+  default_prompt: "Use $java-duplication-checker to detect duplicate Java classes and methods in local or remote repositories (after checkout), then provide behavior-safe reduction steps with explicit validation gates."
