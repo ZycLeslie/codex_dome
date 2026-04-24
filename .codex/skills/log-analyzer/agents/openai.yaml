@@ -1,0 +1,4 @@
+interface:
+  display_name: "Log Analyzer"
+  short_description: "Analyze logs, exceptions, and code paths"
+  default_prompt: "Use $log-analyzer to inspect a log directory, summarize repeated messages and exceptions, then trace likely code paths and remediation ideas in this repository."
