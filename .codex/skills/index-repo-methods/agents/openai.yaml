@@ -1,0 +1,4 @@
+interface:
+  display_name: "Index Repo Methods"
+  short_description: "Generate categorized method inventories for repositories"
+  default_prompt: "Use $index-repo-methods to scan this repository, generate a categorized method inventory, and search it before designing or implementing new logic."

@@ -1,0 +1,4813 @@
+{
+  "metadata": {
+    "repository": "/Users/yuechunyuechun/Desktop/codex_demo/codex_dome",
+    "generated_at": "2026-04-27T01:50:06+00:00",
+    "method_count": 306,
+    "file_count": 33
+  },
+  "categories": {
+    "Validation, Parsing, and Mapping": 82,
+    "API, Routing, and Controllers": 59,
+    "Data Access and Persistence": 58,
+    "Uncategorized": 34,
+    "UI and Presentation": 17,
+    "Configuration and Bootstrapping": 14,
+    "Tests": 14,
+    "Integrations, Jobs, and I/O": 10,
+    "Auth and Security": 6,
+    "Business Services and Workflows": 6,
+    "Error Handling and Logging": 5,
+    "Utilities and Shared Helpers": 1
+  },
+  "languages": {
+    "Java": 184,
+    "Python": 82,
+    "JavaScript": 40
+  },
+  "files": [
+    {
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "methods": 42,
+      "language": "Python",
+      "categories": {
+        "Uncategorized": 16,
+        "Data Access and Persistence": 12,
+        "Auth and Security": 4,
+        "UI and Presentation": 3,
+        "Configuration and Bootstrapping": 2,
+        "Integrations, Jobs, and I/O": 2,
+        "Validation, Parsing, and Mapping": 2,
+        "Utilities and Shared Helpers": 1
+      }
+    },
+    {
+      "file": "god-class-handler/GraphQueryService.java",
+      "methods": 39,
+      "language": "Java",
+      "categories": {
+        "API, Routing, and Controllers": 28,
+        "Data Access and Persistence": 5,
+        "Validation, Parsing, and Mapping": 4,
+        "UI and Presentation": 2
+      }
+    },
+    {
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "methods": 39,
+      "language": "Java",
+      "categories": {
+        "API, Routing, and Controllers": 28,
+        "Data Access and Persistence": 5,
+        "Validation, Parsing, and Mapping": 4,
+        "UI and Presentation": 2
+      }
+    },
+    {
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "methods": 26,
+      "language": "Python",
+      "categories": {
+        "Uncategorized": 7,
+        "Validation, Parsing, and Mapping": 7,
+        "UI and Presentation": 5,
+        "Configuration and Bootstrapping": 3,
+        "Data Access and Persistence": 2,
+        "API, Routing, and Controllers": 1,
+        "Error Handling and Logging": 1
+      }
+    },
+    {
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+      "methods": 23,
+      "language": "Java",
+      "categories": {
+        "Validation, Parsing, and Mapping": 23
+      }
+    },
+    {
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java",
+      "methods": 23,
+      "language": "Java",
+      "categories": {
+        "Validation, Parsing, and Mapping": 23
+      }
+    },
+    {
+      "file": "openspec/skills/java-design-driven-delivery/scripts/progress_checklist.py",
+      "methods": 14,
+      "language": "Python",
+      "categories": {
+        "Configuration and Bootstrapping": 5,
+        "Uncategorized": 3,
+        "Validation, Parsing, and Mapping": 3,
+        "Business Services and Workflows": 2,
+        "UI and Presentation": 1
+      }
+    },
+    {
+      "file": "background.js",
+      "methods": 13,
+      "language": "JavaScript",
+      "categories": {
+        "Uncategorized": 4,
+        "Business Services and Workflows": 2,
+        "Data Access and Persistence": 2,
+        "Integrations, Jobs, and I/O": 2,
+        "Auth and Security": 1,
+        "Error Handling and Logging": 1,
+        "UI and Presentation": 1
+      }
+    },
+    {
+      "file": "skills/background.js",
+      "methods": 13,
+      "language": "JavaScript",
+      "categories": {
+        "Uncategorized": 4,
+        "Business Services and Workflows": 2,
+        "Data Access and Persistence": 2,
+        "Integrations, Jobs, and I/O": 2,
+        "Auth and Security": 1,
+        "Error Handling and Logging": 1,
+        "UI and Presentation": 1
+      }
+    },
+    {
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/GraphQueryCompiler.java",
+      "methods": 8,
+      "language": "Java",
+      "categories": {
+        "Data Access and Persistence": 6,
+        "Validation, Parsing, and Mapping": 2
+      }
+    },
+    {
+      "file": "src/graph-query-cypher/src/test/java/com/codexdome/graphquery/GraphQueryCompilerSelfTest.java",
+      "methods": 8,
+      "language": "Java",
+      "categories": {
+        "Tests": 8
+      }
+    },
+    {
+      "file": "popup.js",
+      "methods": 7,
+      "language": "JavaScript",
+      "categories": {
+        "Integrations, Jobs, and I/O": 2,
+        "Validation, Parsing, and Mapping": 2,
+        "API, Routing, and Controllers": 1,
+        "Configuration and Bootstrapping": 1,
+        "UI and Presentation": 1
+      }
+    },
+    {
+      "file": "skills/popup.js",
+      "methods": 7,
+      "language": "JavaScript",
+      "categories": {
+        "Integrations, Jobs, and I/O": 2,
+        "Validation, Parsing, and Mapping": 2,
+        "API, Routing, and Controllers": 1,
+        "Configuration and Bootstrapping": 1,
+        "UI and Presentation": 1
+      }
+    },
+    {
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/generator/CypherQueryGenerator.java",
+      "methods": 6,
+      "language": "Java",
+      "categories": {
+        "Data Access and Persistence": 6
+      }
+    },
+    {
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/validation/GraphQueryValidator.java",
+      "methods": 6,
+      "language": "Java",
+      "categories": {
+        "Validation, Parsing, and Mapping": 6
+      }
+    },
+    {
+      "file": "src/graph-query-cypher/src/test/java/com/codexdome/graphquery/TestSupport.java",
+      "methods": 6,
+      "language": "Java",
+      "categories": {
+        "Tests": 6
+      }
+    },
+    {
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/GraphQueryValidationException.java",
+      "methods": 3,
+      "language": "Java",
+      "categories": {
+        "Error Handling and Logging": 2,
+        "Validation, Parsing, and Mapping": 1
+      }
+    },
+    {
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/ModelCopies.java",
+      "methods": 3,
+      "language": "Java",
+      "categories": {
+        "Data Access and Persistence": 3
+      }
+    },
+    {
+      "file": "god-class-handler/GraphPathQueryDemo.java",
+      "methods": 2,
+      "language": "Java",
+      "categories": {
+        "Configuration and Bootstrapping": 1,
+        "Data Access and Persistence": 1
+      }
+    },
+    {
+      "file": "skills/god-class-handler/GraphPathQueryDemo.java",
+      "methods": 2,
+      "language": "Java",
+      "categories": {
+        "Configuration and Bootstrapping": 1,
+        "Data Access and Persistence": 1
+      }
+    },
+    {
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/GraphQueryException.java",
+      "methods": 2,
+      "language": "Java",
+      "categories": {
+        "Data Access and Persistence": 2
+      }
+    },
+    {
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/YamlParseException.java",
+      "methods": 2,
+      "language": "Java",
+      "categories": {
+        "Validation, Parsing, and Mapping": 2
+      }
+    },
+    {
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/ReturnSpec.java",
+      "methods": 2,
+      "language": "Java",
+      "categories": {
+        "Data Access and Persistence": 2
+      }
+    },
+    {
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/GeneratedCypherQuery.java",
+      "methods": 1,
+      "language": "Java",
+      "categories": {
+        "Data Access and Persistence": 1
+      }
+    },
+    {
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/CompiledPath.java",
+      "methods": 1,
+      "language": "Java",
+      "categories": {
+        "Data Access and Persistence": 1
+      }
+    },
+    {
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/CompiledReturnItem.java",
+      "methods": 1,
+      "language": "Java",
+      "categories": {
+        "Data Access and Persistence": 1
+      }
+    },
+    {
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/Direction.java",
+      "methods": 1,
+      "language": "Java",
+      "categories": {
+        "Data Access and Persistence": 1
+      }
+    },
+    {
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/NodeSpec.java",
+      "methods": 1,
+      "language": "Java",
+      "categories": {
+        "Data Access and Persistence": 1
+      }
+    },
+    {
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/PathSpec.java",
+      "methods": 1,
+      "language": "Java",
+      "categories": {
+        "Data Access and Persistence": 1
+      }
+    },
+    {
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/QueryDocument.java",
+      "methods": 1,
+      "language": "Java",
+      "categories": {
+        "Data Access and Persistence": 1
+      }
+    },
+    {
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/ReturnItemKind.java",
+      "methods": 1,
+      "language": "Java",
+      "categories": {
+        "Data Access and Persistence": 1
+      }
+    },
+    {
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/ReturnItemSpec.java",
+      "methods": 1,
+      "language": "Java",
+      "categories": {
+        "Data Access and Persistence": 1
+      }
+    },
+    {
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/validation/ValidationError.java",
+      "methods": 1,
+      "language": "Java",
+      "categories": {
+        "Validation, Parsing, and Mapping": 1
+      }
+    }
+  ],
+  "repeated_method_names": [
+    {
+      "name": "of",
+      "count": 8,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "API, Routing, and Controllers": 8
+      }
+    },
+    {
+      "name": "main",
+      "count": 6,
+      "files": [
+        "god-class-handler/GraphPathQueryDemo.java",
+        "openspec/skills/java-design-driven-delivery/scripts/progress_checklist.py",
+        "skills/god-class-handler/GraphPathQueryDemo.java",
+        "skills/java-duplication-checker/scripts/check_java_duplication.py",
+        "skills/pom-version-governance/scripts/audit_pom_versions.py",
+        "src/graph-query-cypher/src/test/java/com/codexdome/graphquery/GraphQueryCompilerSelfTest.java"
+      ],
+      "categories": {
+        "Configuration and Bootstrapping": 5,
+        "Tests": 1
+      }
+    },
+    {
+      "name": "alias",
+      "count": 4,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "API, Routing, and Controllers": 4
+      }
+    },
+    {
+      "name": "conditions",
+      "count": 4,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "API, Routing, and Controllers": 4
+      }
+    },
+    {
+      "name": "operator",
+      "count": 4,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "API, Routing, and Controllers": 4
+      }
+    },
+    {
+      "name": "fail",
+      "count": 3,
+      "files": [
+        "background.js",
+        "skills/background.js",
+        "src/graph-query-cypher/src/test/java/com/codexdome/graphquery/TestSupport.java"
+      ],
+      "categories": {
+        "Error Handling and Logging": 2,
+        "Tests": 1
+      }
+    },
+    {
+      "name": "appendbranchpattern",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "API, Routing, and Controllers": 2
+      }
+    },
+    {
+      "name": "appendbranchquery",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "Data Access and Persistence": 2
+      }
+    },
+    {
+      "name": "aslist",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "API, Routing, and Controllers": 2
+      }
+    },
+    {
+      "name": "branch",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "API, Routing, and Controllers": 2
+      }
+    },
+    {
+      "name": "branches",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "API, Routing, and Controllers": 2
+      }
+    },
+    {
+      "name": "buildgraphsummaryquery",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "Data Access and Persistence": 2
+      }
+    },
+    {
+      "name": "buildpathquery",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "Data Access and Persistence": 2
+      }
+    },
+    {
+      "name": "buildrequest",
+      "count": 2,
+      "files": [
+        "background.js",
+        "skills/background.js"
+      ],
+      "categories": {
+        "UI and Presentation": 2
+      }
+    },
+    {
+      "name": "clonestate",
+      "count": 2,
+      "files": [
+        "background.js",
+        "skills/background.js"
+      ],
+      "categories": {
+        "Uncategorized": 2
+      }
+    },
+    {
+      "name": "collectconfig",
+      "count": 2,
+      "files": [
+        "popup.js",
+        "skills/popup.js"
+      ],
+      "categories": {
+        "Configuration and Bootstrapping": 2
+      }
+    },
+    {
+      "name": "complete",
+      "count": 2,
+      "files": [
+        "background.js",
+        "skills/background.js"
+      ],
+      "categories": {
+        "Uncategorized": 2
+      }
+    },
+    {
+      "name": "condition",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "API, Routing, and Controllers": 2
+      }
+    },
+    {
+      "name": "contains",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "API, Routing, and Controllers": 2
+      }
+    },
+    {
+      "name": "cypheroperator",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "API, Routing, and Controllers": 2
+      }
+    },
+    {
+      "name": "cypherquery",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "Data Access and Persistence": 2
+      }
+    },
+    {
+      "name": "edgeref",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "API, Routing, and Controllers": 2
+      }
+    },
+    {
+      "name": "edges",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "API, Routing, and Controllers": 2
+      }
+    },
+    {
+      "name": "eq",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "API, Routing, and Controllers": 2
+      }
+    },
+    {
+      "name": "executefetchintab",
+      "count": 2,
+      "files": [
+        "background.js",
+        "skills/background.js"
+      ],
+      "categories": {
+        "Integrations, Jobs, and I/O": 2
+      }
+    },
+    {
+      "name": "fromstring",
+      "count": 2,
+      "files": [
+        "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/Direction.java",
+        "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/ReturnItemKind.java"
+      ],
+      "categories": {
+        "Data Access and Persistence": 2
+      }
+    },
+    {
+      "name": "func",
+      "count": 2,
+      "files": [
+        "background.js",
+        "skills/background.js"
+      ],
+      "categories": {
+        "Integrations, Jobs, and I/O": 2
+      }
+    },
+    {
+      "name": "generate",
+      "count": 2,
+      "files": [
+        "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/GraphQueryCompiler.java",
+        "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/generator/CypherQueryGenerator.java"
+      ],
+      "categories": {
+        "Data Access and Persistence": 2
+      }
+    },
+    {
+      "name": "getactivetabid",
+      "count": 2,
+      "files": [
+        "popup.js",
+        "skills/popup.js"
+      ],
+      "categories": {
+        "Integrations, Jobs, and I/O": 2
+      }
+    },
+    {
+      "name": "getbypath",
+      "count": 2,
+      "files": [
+        "background.js",
+        "skills/background.js"
+      ],
+      "categories": {
+        "Uncategorized": 2
+      }
+    },
+    {
+      "name": "graphqueryservice",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "Data Access and Persistence": 2
+      }
+    },
+    {
+      "name": "loadstate",
+      "count": 2,
+      "files": [
+        "background.js",
+        "skills/background.js"
+      ],
+      "categories": {
+        "Data Access and Persistence": 2
+      }
+    },
+    {
+      "name": "name",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "API, Routing, and Controllers": 2
+      }
+    },
+    {
+      "name": "noderef",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "API, Routing, and Controllers": 2
+      }
+    },
+    {
+      "name": "nodes",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "API, Routing, and Controllers": 2
+      }
+    },
+    {
+      "name": "params",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "API, Routing, and Controllers": 2
+      }
+    },
+    {
+      "name": "parse",
+      "count": 2,
+      "files": [
+        "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+        "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java"
+      ],
+      "categories": {
+        "Validation, Parsing, and Mapping": 2
+      }
+    },
+    {
+      "name": "parse_args",
+      "count": 2,
+      "files": [
+        "skills/java-duplication-checker/scripts/check_java_duplication.py",
+        "skills/pom-version-governance/scripts/audit_pom_versions.py"
+      ],
+      "categories": {
+        "Validation, Parsing, and Mapping": 2
+      }
+    },
+    {
+      "name": "parseheaders",
+      "count": 2,
+      "files": [
+        "popup.js",
+        "skills/popup.js"
+      ],
+      "categories": {
+        "Validation, Parsing, and Mapping": 2
+      }
+    },
+    {
+      "name": "parsejsonorempty",
+      "count": 2,
+      "files": [
+        "popup.js",
+        "skills/popup.js"
+      ],
+      "categories": {
+        "Validation, Parsing, and Mapping": 2
+      }
+    },
+    {
+      "name": "pathqueryrequest",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "API, Routing, and Controllers": 2
+      }
+    },
+    {
+      "name": "persiststate",
+      "count": 2,
+      "files": [
+        "background.js",
+        "skills/background.js"
+      ],
+      "categories": {
+        "Data Access and Persistence": 2
+      }
+    },
+    {
+      "name": "print",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphPathQueryDemo.java",
+        "skills/god-class-handler/GraphPathQueryDemo.java"
+      ],
+      "categories": {
+        "Data Access and Persistence": 2
+      }
+    },
+    {
+      "name": "processnextpage",
+      "count": 2,
+      "files": [
+        "background.js",
+        "skills/background.js"
+      ],
+      "categories": {
+        "Business Services and Workflows": 2
+      }
+    },
+    {
+      "name": "processsinglepage",
+      "count": 2,
+      "files": [
+        "background.js",
+        "skills/background.js"
+      ],
+      "categories": {
+        "Business Services and Workflows": 2
+      }
+    },
+    {
+      "name": "property",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "API, Routing, and Controllers": 2
+      }
+    },
+    {
+      "name": "refreshstate",
+      "count": 2,
+      "files": [
+        "popup.js",
+        "skills/popup.js"
+      ],
+      "categories": {
+        "Integrations, Jobs, and I/O": 2
+      }
+    },
+    {
+      "name": "render_markdown",
+      "count": 2,
+      "files": [
+        "openspec/skills/java-design-driven-delivery/scripts/progress_checklist.py",
+        "skills/pom-version-governance/scripts/audit_pom_versions.py"
+      ],
+      "categories": {
+        "UI and Presentation": 2
+      }
+    },
+    {
+      "name": "renderstatus",
+      "count": 2,
+      "files": [
+        "popup.js",
+        "skills/popup.js"
+      ],
+      "categories": {
+        "UI and Presentation": 2
+      }
+    },
+    {
+      "name": "replacepagetoken",
+      "count": 2,
+      "files": [
+        "background.js",
+        "skills/background.js"
+      ],
+      "categories": {
+        "Auth and Security": 2
+      }
+    },
+    {
+      "name": "requirenonnull",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "UI and Presentation": 2
+      }
+    },
+    {
+      "name": "requiretext",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "UI and Presentation": 2
+      }
+    },
+    {
+      "name": "send",
+      "count": 2,
+      "files": [
+        "popup.js",
+        "skills/popup.js"
+      ],
+      "categories": {
+        "API, Routing, and Controllers": 2
+      }
+    },
+    {
+      "name": "statement",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "API, Routing, and Controllers": 2
+      }
+    },
+    {
+      "name": "toarray",
+      "count": 2,
+      "files": [
+        "background.js",
+        "skills/background.js"
+      ],
+      "categories": {
+        "Uncategorized": 2
+      }
+    },
+    {
+      "name": "validatealias",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "Validation, Parsing, and Mapping": 2
+      }
+    },
+    {
+      "name": "validatebranch",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "Validation, Parsing, and Mapping": 2
+      }
+    },
+    {
+      "name": "validateconditions",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "Validation, Parsing, and Mapping": 2
+      }
+    },
+    {
+      "name": "validateidentifier",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "Validation, Parsing, and Mapping": 2
+      }
+    },
+    {
+      "name": "value",
+      "count": 2,
+      "files": [
+        "god-class-handler/GraphQueryService.java",
+        "skills/god-class-handler/GraphQueryService.java"
+      ],
+      "categories": {
+        "API, Routing, and Controllers": 2
+      }
+    }
+  ],
+  "methods": [
+    {
+      "name": "appendBranchPattern",
+      "qualified_name": "appendBranchPattern",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 93,
+      "language": "Java",
+      "signature": "private void appendBranchPattern(StringBuilder statement, Branch branch) {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "Operator",
+      "qualified_name": "Operator",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 200,
+      "language": "Java",
+      "signature": "Operator(String cypherOperator) {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "cypherOperator",
+      "qualified_name": "cypherOperator",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 204,
+      "language": "Java",
+      "signature": "public String cypherOperator() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "Condition",
+      "qualified_name": "Condition",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 214,
+      "language": "Java",
+      "signature": "private Condition(String property, Operator operator, Object value) {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "eq",
+      "qualified_name": "eq",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 220,
+      "language": "Java",
+      "signature": "public static Condition eq(String property, Object value) {",
+      "category": "API, Routing, and Controllers",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "contains",
+      "qualified_name": "contains",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 224,
+      "language": "Java",
+      "signature": "public static Condition contains(String property, String value) {",
+      "category": "API, Routing, and Controllers",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "property",
+      "qualified_name": "property",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 228,
+      "language": "Java",
+      "signature": "public String property() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "operator",
+      "qualified_name": "operator",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 232,
+      "language": "Java",
+      "signature": "public Operator operator() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "value",
+      "qualified_name": "value",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 236,
+      "language": "Java",
+      "signature": "public Object value() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "NodeRef",
+      "qualified_name": "NodeRef",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 245,
+      "language": "Java",
+      "signature": "private NodeRef(String alias, List<Condition> conditions) {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "of",
+      "qualified_name": "of",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 250,
+      "language": "Java",
+      "signature": "public static NodeRef of(String alias, Condition... conditions) {",
+      "category": "API, Routing, and Controllers",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "alias",
+      "qualified_name": "alias",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 254,
+      "language": "Java",
+      "signature": "public String alias() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "conditions",
+      "qualified_name": "conditions",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 258,
+      "language": "Java",
+      "signature": "public List<Condition> conditions() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "EdgeRef",
+      "qualified_name": "EdgeRef",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 267,
+      "language": "Java",
+      "signature": "private EdgeRef(String alias, List<Condition> conditions) {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "of",
+      "qualified_name": "of",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 272,
+      "language": "Java",
+      "signature": "public static EdgeRef of(String alias, Condition... conditions) {",
+      "category": "API, Routing, and Controllers",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "alias",
+      "qualified_name": "alias",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 276,
+      "language": "Java",
+      "signature": "public String alias() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "conditions",
+      "qualified_name": "conditions",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 280,
+      "language": "Java",
+      "signature": "public List<Condition> conditions() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "Branch",
+      "qualified_name": "Branch",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 290,
+      "language": "Java",
+      "signature": "private Branch(String name, List<NodeRef> nodes, List<EdgeRef> edges) {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "of",
+      "qualified_name": "of",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 296,
+      "language": "Java",
+      "signature": "public static Branch of(String name, List<NodeRef> nodes, List<EdgeRef> edges) {",
+      "category": "API, Routing, and Controllers",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "name",
+      "qualified_name": "name",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 300,
+      "language": "Java",
+      "signature": "public String name() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "nodes",
+      "qualified_name": "nodes",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 304,
+      "language": "Java",
+      "signature": "public List<NodeRef> nodes() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "edges",
+      "qualified_name": "edges",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 308,
+      "language": "Java",
+      "signature": "public List<EdgeRef> edges() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "PathQueryRequest",
+      "qualified_name": "PathQueryRequest",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 316,
+      "language": "Java",
+      "signature": "private PathQueryRequest(List<Branch> branches) {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "of",
+      "qualified_name": "of",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 320,
+      "language": "Java",
+      "signature": "public static PathQueryRequest of(List<Branch> branches) {",
+      "category": "API, Routing, and Controllers",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "branches",
+      "qualified_name": "branches",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 324,
+      "language": "Java",
+      "signature": "public List<Branch> branches() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "statement",
+      "qualified_name": "statement",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 339,
+      "language": "Java",
+      "signature": "public String statement() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "params",
+      "qualified_name": "params",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 343,
+      "language": "Java",
+      "signature": "public Map<String, Object> params() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "asList",
+      "qualified_name": "asList",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 348,
+      "language": "Java",
+      "signature": "private static <T> List<T> asList(T[] items) {",
+      "category": "API, Routing, and Controllers",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "send",
+      "qualified_name": "send",
+      "owner": "",
+      "kind": "function",
+      "file": "popup.js",
+      "line": 92,
+      "language": "JavaScript",
+      "signature": "async function send(action, payload = {}) {",
+      "category": "API, Routing, and Controllers",
+      "flags": [
+        "async"
+      ]
+    },
+    {
+      "name": "appendBranchPattern",
+      "qualified_name": "appendBranchPattern",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 93,
+      "language": "Java",
+      "signature": "private void appendBranchPattern(StringBuilder statement, Branch branch) {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "Operator",
+      "qualified_name": "Operator",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 200,
+      "language": "Java",
+      "signature": "Operator(String cypherOperator) {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "cypherOperator",
+      "qualified_name": "cypherOperator",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 204,
+      "language": "Java",
+      "signature": "public String cypherOperator() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "Condition",
+      "qualified_name": "Condition",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 214,
+      "language": "Java",
+      "signature": "private Condition(String property, Operator operator, Object value) {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "eq",
+      "qualified_name": "eq",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 220,
+      "language": "Java",
+      "signature": "public static Condition eq(String property, Object value) {",
+      "category": "API, Routing, and Controllers",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "contains",
+      "qualified_name": "contains",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 224,
+      "language": "Java",
+      "signature": "public static Condition contains(String property, String value) {",
+      "category": "API, Routing, and Controllers",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "property",
+      "qualified_name": "property",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 228,
+      "language": "Java",
+      "signature": "public String property() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "operator",
+      "qualified_name": "operator",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 232,
+      "language": "Java",
+      "signature": "public Operator operator() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "value",
+      "qualified_name": "value",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 236,
+      "language": "Java",
+      "signature": "public Object value() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "NodeRef",
+      "qualified_name": "NodeRef",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 245,
+      "language": "Java",
+      "signature": "private NodeRef(String alias, List<Condition> conditions) {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "of",
+      "qualified_name": "of",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 250,
+      "language": "Java",
+      "signature": "public static NodeRef of(String alias, Condition... conditions) {",
+      "category": "API, Routing, and Controllers",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "alias",
+      "qualified_name": "alias",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 254,
+      "language": "Java",
+      "signature": "public String alias() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "conditions",
+      "qualified_name": "conditions",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 258,
+      "language": "Java",
+      "signature": "public List<Condition> conditions() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "EdgeRef",
+      "qualified_name": "EdgeRef",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 267,
+      "language": "Java",
+      "signature": "private EdgeRef(String alias, List<Condition> conditions) {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "of",
+      "qualified_name": "of",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 272,
+      "language": "Java",
+      "signature": "public static EdgeRef of(String alias, Condition... conditions) {",
+      "category": "API, Routing, and Controllers",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "alias",
+      "qualified_name": "alias",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 276,
+      "language": "Java",
+      "signature": "public String alias() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "conditions",
+      "qualified_name": "conditions",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 280,
+      "language": "Java",
+      "signature": "public List<Condition> conditions() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "Branch",
+      "qualified_name": "Branch",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 290,
+      "language": "Java",
+      "signature": "private Branch(String name, List<NodeRef> nodes, List<EdgeRef> edges) {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "of",
+      "qualified_name": "of",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 296,
+      "language": "Java",
+      "signature": "public static Branch of(String name, List<NodeRef> nodes, List<EdgeRef> edges) {",
+      "category": "API, Routing, and Controllers",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "name",
+      "qualified_name": "name",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 300,
+      "language": "Java",
+      "signature": "public String name() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "nodes",
+      "qualified_name": "nodes",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 304,
+      "language": "Java",
+      "signature": "public List<NodeRef> nodes() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "edges",
+      "qualified_name": "edges",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 308,
+      "language": "Java",
+      "signature": "public List<EdgeRef> edges() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "PathQueryRequest",
+      "qualified_name": "PathQueryRequest",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 316,
+      "language": "Java",
+      "signature": "private PathQueryRequest(List<Branch> branches) {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "of",
+      "qualified_name": "of",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 320,
+      "language": "Java",
+      "signature": "public static PathQueryRequest of(List<Branch> branches) {",
+      "category": "API, Routing, and Controllers",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "branches",
+      "qualified_name": "branches",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 324,
+      "language": "Java",
+      "signature": "public List<Branch> branches() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "statement",
+      "qualified_name": "statement",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 339,
+      "language": "Java",
+      "signature": "public String statement() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "params",
+      "qualified_name": "params",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 343,
+      "language": "Java",
+      "signature": "public Map<String, Object> params() {",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "asList",
+      "qualified_name": "asList",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 348,
+      "language": "Java",
+      "signature": "private static <T> List<T> asList(T[] items) {",
+      "category": "API, Routing, and Controllers",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "discover_maven_binary",
+      "qualified_name": "discover_maven_binary",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 435,
+      "language": "Python",
+      "signature": "def discover_maven_binary(requested_mvn_bin: str) -> str:",
+      "category": "API, Routing, and Controllers",
+      "flags": []
+    },
+    {
+      "name": "send",
+      "qualified_name": "send",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/popup.js",
+      "line": 92,
+      "language": "JavaScript",
+      "signature": "async function send(action, payload = {}) {",
+      "category": "API, Routing, and Controllers",
+      "flags": [
+        "async"
+      ]
+    },
+    {
+      "name": "replacePageToken",
+      "qualified_name": "replacePageToken",
+      "owner": "",
+      "kind": "function",
+      "file": "background.js",
+      "line": 26,
+      "language": "JavaScript",
+      "signature": "function replacePageToken(value, page) {",
+      "category": "Auth and Security",
+      "flags": []
+    },
+    {
+      "name": "replacePageToken",
+      "qualified_name": "replacePageToken",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/background.js",
+      "line": 26,
+      "language": "JavaScript",
+      "signature": "function replacePageToken(value, page) {",
+      "category": "Auth and Security",
+      "flags": []
+    },
+    {
+      "name": "dataclass_from_dict",
+      "qualified_name": "dataclass_from_dict",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 234,
+      "language": "Python",
+      "signature": "def dataclass_from_dict(cls: Type[T], data: Dict[str, Any]) -> T:",
+      "category": "Auth and Security",
+      "flags": []
+    },
+    {
+      "name": "tokenize",
+      "qualified_name": "tokenize",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 340,
+      "language": "Python",
+      "signature": "def tokenize(code_text: str) -> List[str]:",
+      "category": "Auth and Security",
+      "flags": []
+    },
+    {
+      "name": "generalize_tokens",
+      "qualified_name": "generalize_tokens",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 348,
+      "language": "Python",
+      "signature": "def generalize_tokens(tokens: Sequence[str]) -> str:",
+      "category": "Auth and Security",
+      "flags": []
+    },
+    {
+      "name": "group_exact",
+      "qualified_name": "group_exact",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 649,
+      "language": "Python",
+      "signature": "def group_exact(items: Sequence[object], hash_attr: str) -> List[List[object]]:",
+      "category": "Auth and Security",
+      "flags": []
+    },
+    {
+      "name": "processSinglePage",
+      "qualified_name": "processSinglePage",
+      "owner": "",
+      "kind": "function",
+      "file": "background.js",
+      "line": 109,
+      "language": "JavaScript",
+      "signature": "async function processSinglePage(page) {",
+      "category": "Business Services and Workflows",
+      "flags": [
+        "async"
+      ]
+    },
+    {
+      "name": "processNextPage",
+      "qualified_name": "processNextPage",
+      "owner": "",
+      "kind": "function",
+      "file": "background.js",
+      "line": 128,
+      "language": "JavaScript",
+      "signature": "async function processNextPage() {",
+      "category": "Business Services and Workflows",
+      "flags": [
+        "async"
+      ]
+    },
+    {
+      "name": "compute_progress",
+      "qualified_name": "compute_progress",
+      "owner": "",
+      "kind": "function",
+      "file": "openspec/skills/java-design-driven-delivery/scripts/progress_checklist.py",
+      "line": 39,
+      "language": "Python",
+      "signature": "def compute_progress(rows: list[TaskRow]) -> int:",
+      "category": "Business Services and Workflows",
+      "flags": []
+    },
+    {
+      "name": "compute_gate",
+      "qualified_name": "compute_gate",
+      "owner": "",
+      "kind": "function",
+      "file": "openspec/skills/java-design-driven-delivery/scripts/progress_checklist.py",
+      "line": 46,
+      "language": "Python",
+      "signature": "def compute_gate(rows: list[TaskRow]) -> str:",
+      "category": "Business Services and Workflows",
+      "flags": []
+    },
+    {
+      "name": "processSinglePage",
+      "qualified_name": "processSinglePage",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/background.js",
+      "line": 109,
+      "language": "JavaScript",
+      "signature": "async function processSinglePage(page) {",
+      "category": "Business Services and Workflows",
+      "flags": [
+        "async"
+      ]
+    },
+    {
+      "name": "processNextPage",
+      "qualified_name": "processNextPage",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/background.js",
+      "line": 128,
+      "language": "JavaScript",
+      "signature": "async function processNextPage() {",
+      "category": "Business Services and Workflows",
+      "flags": [
+        "async"
+      ]
+    },
+    {
+      "name": "main",
+      "qualified_name": "main",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphPathQueryDemo.java",
+      "line": 5,
+      "language": "Java",
+      "signature": "public static void main(String[] args) {",
+      "category": "Configuration and Bootstrapping",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "init_command",
+      "qualified_name": "init_command",
+      "owner": "",
+      "kind": "function",
+      "file": "openspec/skills/java-design-driven-delivery/scripts/progress_checklist.py",
+      "line": 133,
+      "language": "Python",
+      "signature": "def init_command(args: argparse.Namespace) -> int:",
+      "category": "Configuration and Bootstrapping",
+      "flags": []
+    },
+    {
+      "name": "add_command",
+      "qualified_name": "add_command",
+      "owner": "",
+      "kind": "function",
+      "file": "openspec/skills/java-design-driven-delivery/scripts/progress_checklist.py",
+      "line": 154,
+      "language": "Python",
+      "signature": "def add_command(args: argparse.Namespace) -> int:",
+      "category": "Configuration and Bootstrapping",
+      "flags": []
+    },
+    {
+      "name": "update_command",
+      "qualified_name": "update_command",
+      "owner": "",
+      "kind": "function",
+      "file": "openspec/skills/java-design-driven-delivery/scripts/progress_checklist.py",
+      "line": 172,
+      "language": "Python",
+      "signature": "def update_command(args: argparse.Namespace) -> int:",
+      "category": "Configuration and Bootstrapping",
+      "flags": []
+    },
+    {
+      "name": "verify_command",
+      "qualified_name": "verify_command",
+      "owner": "",
+      "kind": "function",
+      "file": "openspec/skills/java-design-driven-delivery/scripts/progress_checklist.py",
+      "line": 201,
+      "language": "Python",
+      "signature": "def verify_command(args: argparse.Namespace) -> int:",
+      "category": "Configuration and Bootstrapping",
+      "flags": []
+    },
+    {
+      "name": "main",
+      "qualified_name": "main",
+      "owner": "",
+      "kind": "function",
+      "file": "openspec/skills/java-design-driven-delivery/scripts/progress_checklist.py",
+      "line": 241,
+      "language": "Python",
+      "signature": "def main() -> int:",
+      "category": "Configuration and Bootstrapping",
+      "flags": []
+    },
+    {
+      "name": "collectConfig",
+      "qualified_name": "collectConfig",
+      "owner": "",
+      "kind": "function",
+      "file": "popup.js",
+      "line": 69,
+      "language": "JavaScript",
+      "signature": "function collectConfig() {",
+      "category": "Configuration and Bootstrapping",
+      "flags": []
+    },
+    {
+      "name": "main",
+      "qualified_name": "main",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphPathQueryDemo.java",
+      "line": 5,
+      "language": "Java",
+      "signature": "public static void main(String[] args) {",
+      "category": "Configuration and Bootstrapping",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "__init__",
+      "qualified_name": "UnionFind.__init__",
+      "owner": "UnionFind",
+      "kind": "method",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 659,
+      "language": "Python",
+      "signature": "def __init__(self, size: int):",
+      "category": "Configuration and Bootstrapping",
+      "flags": []
+    },
+    {
+      "name": "main",
+      "qualified_name": "main",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 1046,
+      "language": "Python",
+      "signature": "def main() -> int:",
+      "category": "Configuration and Bootstrapping",
+      "flags": []
+    },
+    {
+      "name": "parse_plugin",
+      "qualified_name": "parse_plugin",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 154,
+      "language": "Python",
+      "signature": "def parse_plugin( plugin: ET.Element, rel_pom: str, module: str, section: str ) -> VersionEntry | None:",
+      "category": "Configuration and Bootstrapping",
+      "flags": []
+    },
+    {
+      "name": "run_transitive_scan",
+      "qualified_name": "run_transitive_scan",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 597,
+      "language": "Python",
+      "signature": "def run_transitive_scan( root_dir: Path, mode: str, requested_mvn_bin: str, module_to_pom: Dict[str, str] ) -> TransitiveScanResult:",
+      "category": "Configuration and Bootstrapping",
+      "flags": []
+    },
+    {
+      "name": "main",
+      "qualified_name": "main",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 971,
+      "language": "Python",
+      "signature": "def main() -> int:",
+      "category": "Configuration and Bootstrapping",
+      "flags": []
+    },
+    {
+      "name": "collectConfig",
+      "qualified_name": "collectConfig",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/popup.js",
+      "line": 69,
+      "language": "JavaScript",
+      "signature": "function collectConfig() {",
+      "category": "Configuration and Bootstrapping",
+      "flags": []
+    },
+    {
+      "name": "persistState",
+      "qualified_name": "persistState",
+      "owner": "",
+      "kind": "function",
+      "file": "background.js",
+      "line": 21,
+      "language": "JavaScript",
+      "signature": "async function persistState() {",
+      "category": "Data Access and Persistence",
+      "flags": [
+        "async"
+      ]
+    },
+    {
+      "name": "loadState",
+      "qualified_name": "loadState",
+      "owner": "",
+      "kind": "function",
+      "file": "background.js",
+      "line": 182,
+      "language": "JavaScript",
+      "signature": "async function loadState() {",
+      "category": "Data Access and Persistence",
+      "flags": [
+        "async"
+      ]
+    },
+    {
+      "name": "print",
+      "qualified_name": "print",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphPathQueryDemo.java",
+      "line": 40,
+      "language": "Java",
+      "signature": "private static void print(String title, GraphQueryService.CypherQuery query) {",
+      "category": "Data Access and Persistence",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "GraphQueryService",
+      "qualified_name": "GraphQueryService",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 12,
+      "language": "Java",
+      "signature": "public GraphQueryService(String nodeLabel, String relationType) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "buildGraphSummaryQuery",
+      "qualified_name": "buildGraphSummaryQuery",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 18,
+      "language": "Java",
+      "signature": "public CypherQuery buildGraphSummaryQuery() {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "buildPathQuery",
+      "qualified_name": "buildPathQuery",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 50,
+      "language": "Java",
+      "signature": "public CypherQuery buildPathQuery(PathQueryRequest request) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "appendBranchQuery",
+      "qualified_name": "appendBranchQuery",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 72,
+      "language": "Java",
+      "signature": "private void appendBranchQuery(StringBuilder statement, Map<String, Object> params, Branch branch, int branchIndex) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "CypherQuery",
+      "qualified_name": "CypherQuery",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 334,
+      "language": "Java",
+      "signature": "public CypherQuery(String statement, Map<String, Object> params) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "persistState",
+      "qualified_name": "persistState",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/background.js",
+      "line": 21,
+      "language": "JavaScript",
+      "signature": "async function persistState() {",
+      "category": "Data Access and Persistence",
+      "flags": [
+        "async"
+      ]
+    },
+    {
+      "name": "loadState",
+      "qualified_name": "loadState",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/background.js",
+      "line": 182,
+      "language": "JavaScript",
+      "signature": "async function loadState() {",
+      "category": "Data Access and Persistence",
+      "flags": [
+        "async"
+      ]
+    },
+    {
+      "name": "print",
+      "qualified_name": "print",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphPathQueryDemo.java",
+      "line": 40,
+      "language": "Java",
+      "signature": "private static void print(String title, GraphQueryService.CypherQuery query) {",
+      "category": "Data Access and Persistence",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "GraphQueryService",
+      "qualified_name": "GraphQueryService",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 12,
+      "language": "Java",
+      "signature": "public GraphQueryService(String nodeLabel, String relationType) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "buildGraphSummaryQuery",
+      "qualified_name": "buildGraphSummaryQuery",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 18,
+      "language": "Java",
+      "signature": "public CypherQuery buildGraphSummaryQuery() {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "buildPathQuery",
+      "qualified_name": "buildPathQuery",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 50,
+      "language": "Java",
+      "signature": "public CypherQuery buildPathQuery(PathQueryRequest request) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "appendBranchQuery",
+      "qualified_name": "appendBranchQuery",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 72,
+      "language": "Java",
+      "signature": "private void appendBranchQuery(StringBuilder statement, Map<String, Object> params, Branch branch, int branchIndex) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "CypherQuery",
+      "qualified_name": "CypherQuery",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 334,
+      "language": "Java",
+      "signature": "public CypherQuery(String statement, Map<String, Object> params) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "line_number",
+      "qualified_name": "line_number",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 226,
+      "language": "Python",
+      "signature": "def line_number(line_starts: Sequence[int], index: int) -> int:",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "find_java_files",
+      "qualified_name": "find_java_files",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 362,
+      "language": "Python",
+      "signature": "def find_java_files(root: Path, ignore_dirs: Sequence[str], include_tests: bool) -> List[Path]:",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "find_matching_brace",
+      "qualified_name": "find_matching_brace",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 391,
+      "language": "Python",
+      "signature": "def find_matching_brace(masked: str, opening_index: int) -> int:",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "find_member_start",
+      "qualified_name": "find_member_start",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 404,
+      "language": "Python",
+      "signature": "def find_member_start(masked: str, min_index: int, brace_index: int) -> int:",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "find",
+      "qualified_name": "UnionFind.find",
+      "owner": "UnionFind",
+      "kind": "method",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 663,
+      "language": "Python",
+      "signature": "def find(self, x: int) -> int:",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "union",
+      "qualified_name": "UnionFind.union",
+      "owner": "UnionFind",
+      "kind": "method",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 669,
+      "language": "Python",
+      "signature": "def union(self, x: int, y: int) -> None:",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "to_class_member_payload",
+      "qualified_name": "to_class_member_payload",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 821,
+      "language": "Python",
+      "signature": "def to_class_member_payload(clazz: JavaClassInfo) -> Dict[str, object]:",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "to_method_member_payload",
+      "qualified_name": "to_method_member_payload",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 828,
+      "language": "Python",
+      "signature": "def to_method_member_payload(method: JavaMethodInfo) -> Dict[str, object]:",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "resolve_cache_path",
+      "qualified_name": "resolve_cache_path",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 921,
+      "language": "Python",
+      "signature": "def resolve_cache_path(root: Path, cache_file: str) -> Path:",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "build_cache_signature",
+      "qualified_name": "build_cache_signature",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 928,
+      "language": "Python",
+      "signature": "def build_cache_signature(args: argparse.Namespace) -> Dict[str, object]:",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "load_cache",
+      "qualified_name": "load_cache",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 945,
+      "language": "Python",
+      "signature": "def load_cache(cache_path: Path) -> Dict[str, object]:",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "save_cache",
+      "qualified_name": "save_cache",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 958,
+      "language": "Python",
+      "signature": "def save_cache(cache_path: Path, payload: Dict[str, object]) -> None:",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "find_pom_files",
+      "qualified_name": "find_pom_files",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 252,
+      "language": "Python",
+      "signature": "def find_pom_files(root_dir: Path, ignored_dirs: Sequence[str]) -> List[Path]:",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "build_report_payload",
+      "qualified_name": "build_report_payload",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 677,
+      "language": "Python",
+      "signature": "def build_report_payload( root_dir: Path, pom_files: List[Path], entries: List[VersionEntry],",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "GeneratedCypherQuery",
+      "qualified_name": "GeneratedCypherQuery",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/GeneratedCypherQuery.java",
+      "line": 13,
+      "language": "Java",
+      "signature": "public record GeneratedCypherQuery(String query, Map<String, Object> params) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "GraphQueryCompiler",
+      "qualified_name": "GraphQueryCompiler",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/GraphQueryCompiler.java",
+      "line": 39,
+      "language": "Java",
+      "signature": "public GraphQueryCompiler() {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "compile",
+      "qualified_name": "compile",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/GraphQueryCompiler.java",
+      "line": 81,
+      "language": "Java",
+      "signature": "public CompiledGraphQuery compile(QueryDocument document) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "compileYamlToCypher",
+      "qualified_name": "compileYamlToCypher",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/GraphQueryCompiler.java",
+      "line": 92,
+      "language": "Java",
+      "signature": "public GeneratedCypherQuery compileYamlToCypher(String yaml) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "compileYamlToCypher",
+      "qualified_name": "compileYamlToCypher",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/GraphQueryCompiler.java",
+      "line": 102,
+      "language": "Java",
+      "signature": "public GeneratedCypherQuery compileYamlToCypher(Path yamlPath) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "generate",
+      "qualified_name": "generate",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/GraphQueryCompiler.java",
+      "line": 112,
+      "language": "Java",
+      "signature": "public GeneratedCypherQuery generate(CompiledGraphQuery query) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "toCompiledQuery",
+      "qualified_name": "toCompiledQuery",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/GraphQueryCompiler.java",
+      "line": 116,
+      "language": "Java",
+      "signature": "private CompiledGraphQuery toCompiledQuery(QuerySpec query) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "GraphQueryException",
+      "qualified_name": "GraphQueryException",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/GraphQueryException.java",
+      "line": 12,
+      "language": "Java",
+      "signature": "public GraphQueryException(String message) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "GraphQueryException",
+      "qualified_name": "GraphQueryException",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/GraphQueryException.java",
+      "line": 22,
+      "language": "Java",
+      "signature": "public GraphQueryException(String message, Throwable cause) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "generate",
+      "qualified_name": "generate",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/generator/CypherQueryGenerator.java",
+      "line": 27,
+      "language": "Java",
+      "signature": "public GeneratedCypherQuery generate(CompiledGraphQuery query) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "appendMatchClauses",
+      "qualified_name": "appendMatchClauses",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/generator/CypherQueryGenerator.java",
+      "line": 39,
+      "language": "Java",
+      "signature": "private void appendMatchClauses(StringBuilder statement, CompiledGraphQuery query) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "appendEdgePattern",
+      "qualified_name": "appendEdgePattern",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/generator/CypherQueryGenerator.java",
+      "line": 71,
+      "language": "Java",
+      "signature": "private void appendEdgePattern(StringBuilder statement, String edgeAlias, EdgeSpec edge) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "appendReturnClause",
+      "qualified_name": "appendReturnClause",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/generator/CypherQueryGenerator.java",
+      "line": 136,
+      "language": "Java",
+      "signature": "private void appendReturnClause(StringBuilder statement, List<CompiledReturnItem> items) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "sourceAlias",
+      "qualified_name": "sourceAlias",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/generator/CypherQueryGenerator.java",
+      "line": 148,
+      "language": "Java",
+      "signature": "private String sourceAlias(CompiledReturnItem item) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "appendLimit",
+      "qualified_name": "appendLimit",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/generator/CypherQueryGenerator.java",
+      "line": 155,
+      "language": "Java",
+      "signature": "private void appendLimit(StringBuilder statement, Integer limit) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "CompiledPath",
+      "qualified_name": "CompiledPath",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/CompiledPath.java",
+      "line": 12,
+      "language": "Java",
+      "signature": "public record CompiledPath(String alias, List<String> nodeAliases, List<String> edgeAliases) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "CompiledReturnItem",
+      "qualified_name": "CompiledReturnItem",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/CompiledReturnItem.java",
+      "line": 10,
+      "language": "Java",
+      "signature": "public record CompiledReturnItem(ReturnItemKind kind, String ref, String alias) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "fromString",
+      "qualified_name": "fromString",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/Direction.java",
+      "line": 17,
+      "language": "Java",
+      "signature": "public static Direction fromString(String value) {",
+      "category": "Data Access and Persistence",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "ModelCopies",
+      "qualified_name": "ModelCopies",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/ModelCopies.java",
+      "line": 13,
+      "language": "Java",
+      "signature": "private ModelCopies() {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "immutableList",
+      "qualified_name": "immutableList",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/ModelCopies.java",
+      "line": 23,
+      "language": "Java",
+      "signature": "public static <T> List<T> immutableList(List<T> source) {",
+      "category": "Data Access and Persistence",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "immutableMap",
+      "qualified_name": "immutableMap",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/ModelCopies.java",
+      "line": 38,
+      "language": "Java",
+      "signature": "public static <K, V> Map<K, V> immutableMap(Map<K, V> source) {",
+      "category": "Data Access and Persistence",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "NodeSpec",
+      "qualified_name": "NodeSpec",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/NodeSpec.java",
+      "line": 13,
+      "language": "Java",
+      "signature": "public record NodeSpec(List<String> labels, Object id, Map<String, Object> properties) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "PathSpec",
+      "qualified_name": "PathSpec",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/PathSpec.java",
+      "line": 11,
+      "language": "Java",
+      "signature": "public record PathSpec(String alias, List<String> edges) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "QueryDocument",
+      "qualified_name": "QueryDocument",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/QueryDocument.java",
+      "line": 9,
+      "language": "Java",
+      "signature": "public record QueryDocument(int version, QuerySpec query) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "fromString",
+      "qualified_name": "fromString",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/ReturnItemKind.java",
+      "line": 17,
+      "language": "Java",
+      "signature": "public static ReturnItemKind fromString(String value) {",
+      "category": "Data Access and Persistence",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "ReturnItemSpec",
+      "qualified_name": "ReturnItemSpec",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/ReturnItemSpec.java",
+      "line": 10,
+      "language": "Java",
+      "signature": "public record ReturnItemSpec(ReturnItemKind kind, String ref, String alias) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "ReturnSpec",
+      "qualified_name": "ReturnSpec",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/ReturnSpec.java",
+      "line": 10,
+      "language": "Java",
+      "signature": "public record ReturnSpec(List<ReturnItemSpec> items) {",
+      "category": "Data Access and Persistence",
+      "flags": []
+    },
+    {
+      "name": "empty",
+      "qualified_name": "empty",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/model/ReturnSpec.java",
+      "line": 20,
+      "language": "Java",
+      "signature": "public static ReturnSpec empty() {",
+      "category": "Data Access and Persistence",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "fail",
+      "qualified_name": "fail",
+      "owner": "",
+      "kind": "function",
+      "file": "background.js",
+      "line": 73,
+      "language": "JavaScript",
+      "signature": "function fail(message, error) {",
+      "category": "Error Handling and Logging",
+      "flags": []
+    },
+    {
+      "name": "fail",
+      "qualified_name": "fail",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/background.js",
+      "line": 73,
+      "language": "JavaScript",
+      "signature": "function fail(message, error) {",
+      "category": "Error Handling and Logging",
+      "flags": []
+    },
+    {
+      "name": "summarize_maven_error",
+      "qualified_name": "summarize_maven_error",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 450,
+      "language": "Python",
+      "signature": "def summarize_maven_error(output: str, max_lines: int = 8) -> str:",
+      "category": "Error Handling and Logging",
+      "flags": []
+    },
+    {
+      "name": "GraphQueryValidationException",
+      "qualified_name": "GraphQueryValidationException",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/GraphQueryValidationException.java",
+      "line": 20,
+      "language": "Java",
+      "signature": "public GraphQueryValidationException(List<ValidationError> errors) {",
+      "category": "Error Handling and Logging",
+      "flags": []
+    },
+    {
+      "name": "errors",
+      "qualified_name": "errors",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/GraphQueryValidationException.java",
+      "line": 30,
+      "language": "Java",
+      "signature": "public List<ValidationError> errors() {",
+      "category": "Error Handling and Logging",
+      "flags": []
+    },
+    {
+      "name": "executeFetchInTab",
+      "qualified_name": "executeFetchInTab",
+      "owner": "",
+      "kind": "function",
+      "file": "background.js",
+      "line": 79,
+      "language": "JavaScript",
+      "signature": "async function executeFetchInTab(tabId, request) {",
+      "category": "Integrations, Jobs, and I/O",
+      "flags": [
+        "async"
+      ]
+    },
+    {
+      "name": "func",
+      "qualified_name": "func",
+      "owner": "",
+      "kind": "property function",
+      "file": "background.js",
+      "line": 83,
+      "language": "JavaScript",
+      "signature": "func: async ({ url, options }) => {",
+      "category": "Integrations, Jobs, and I/O",
+      "flags": [
+        "async"
+      ]
+    },
+    {
+      "name": "getActiveTabId",
+      "qualified_name": "getActiveTabId",
+      "owner": "",
+      "kind": "function",
+      "file": "popup.js",
+      "line": 61,
+      "language": "JavaScript",
+      "signature": "async function getActiveTabId() {",
+      "category": "Integrations, Jobs, and I/O",
+      "flags": [
+        "async"
+      ]
+    },
+    {
+      "name": "refreshState",
+      "qualified_name": "refreshState",
+      "owner": "",
+      "kind": "function",
+      "file": "popup.js",
+      "line": 117,
+      "language": "JavaScript",
+      "signature": "async function refreshState() {",
+      "category": "Integrations, Jobs, and I/O",
+      "flags": [
+        "async"
+      ]
+    },
+    {
+      "name": "executeFetchInTab",
+      "qualified_name": "executeFetchInTab",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/background.js",
+      "line": 79,
+      "language": "JavaScript",
+      "signature": "async function executeFetchInTab(tabId, request) {",
+      "category": "Integrations, Jobs, and I/O",
+      "flags": [
+        "async"
+      ]
+    },
+    {
+      "name": "func",
+      "qualified_name": "func",
+      "owner": "",
+      "kind": "property function",
+      "file": "skills/background.js",
+      "line": 83,
+      "language": "JavaScript",
+      "signature": "func: async ({ url, options }) => {",
+      "category": "Integrations, Jobs, and I/O",
+      "flags": [
+        "async"
+      ]
+    },
+    {
+      "name": "extract_classes_and_methods",
+      "qualified_name": "extract_classes_and_methods",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 521,
+      "language": "Python",
+      "signature": "def extract_classes_and_methods( root: Path, java_file: Path, min_class_lines: int,",
+      "category": "Integrations, Jobs, and I/O",
+      "flags": []
+    },
+    {
+      "name": "file_fingerprint",
+      "qualified_name": "file_fingerprint",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 937,
+      "language": "Python",
+      "signature": "def file_fingerprint(path: Path) -> Dict[str, int]:",
+      "category": "Integrations, Jobs, and I/O",
+      "flags": []
+    },
+    {
+      "name": "getActiveTabId",
+      "qualified_name": "getActiveTabId",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/popup.js",
+      "line": 61,
+      "language": "JavaScript",
+      "signature": "async function getActiveTabId() {",
+      "category": "Integrations, Jobs, and I/O",
+      "flags": [
+        "async"
+      ]
+    },
+    {
+      "name": "refreshState",
+      "qualified_name": "refreshState",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/popup.js",
+      "line": 117,
+      "language": "JavaScript",
+      "signature": "async function refreshState() {",
+      "category": "Integrations, Jobs, and I/O",
+      "flags": [
+        "async"
+      ]
+    },
+    {
+      "name": "GraphQueryCompilerSelfTest",
+      "qualified_name": "GraphQueryCompilerSelfTest",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/test/java/com/codexdome/graphquery/GraphQueryCompilerSelfTest.java",
+      "line": 13,
+      "language": "Java",
+      "signature": "private GraphQueryCompilerSelfTest() {",
+      "category": "Tests",
+      "flags": []
+    },
+    {
+      "name": "main",
+      "qualified_name": "main",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/test/java/com/codexdome/graphquery/GraphQueryCompilerSelfTest.java",
+      "line": 16,
+      "language": "Java",
+      "signature": "public static void main(String[] args) throws Exception {",
+      "category": "Tests",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "shouldGenerateSingleChain",
+      "qualified_name": "shouldGenerateSingleChain",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/test/java/com/codexdome/graphquery/GraphQueryCompilerSelfTest.java",
+      "line": 25,
+      "language": "Java",
+      "signature": "private static void shouldGenerateSingleChain(GraphQueryCompiler compiler) throws IOException {",
+      "category": "Tests",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "shouldGenerateBranchingQueryWithUntypedEdge",
+      "qualified_name": "shouldGenerateBranchingQueryWithUntypedEdge",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/test/java/com/codexdome/graphquery/GraphQueryCompilerSelfTest.java",
+      "line": 48,
+      "language": "Java",
+      "signature": "private static void shouldGenerateBranchingQueryWithUntypedEdge(GraphQueryCompiler compiler) throws IOException {",
+      "category": "Tests",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "shouldRejectNonContiguousPath",
+      "qualified_name": "shouldRejectNonContiguousPath",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/test/java/com/codexdome/graphquery/GraphQueryCompilerSelfTest.java",
+      "line": 70,
+      "language": "Java",
+      "signature": "private static void shouldRejectNonContiguousPath(GraphQueryCompiler compiler) throws IOException {",
+      "category": "Tests",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "shouldRejectUnknownReturnReference",
+      "qualified_name": "shouldRejectUnknownReturnReference",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/test/java/com/codexdome/graphquery/GraphQueryCompilerSelfTest.java",
+      "line": 79,
+      "language": "Java",
+      "signature": "private static void shouldRejectUnknownReturnReference(GraphQueryCompiler compiler) throws IOException {",
+      "category": "Tests",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "assertHasError",
+      "qualified_name": "assertHasError",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/test/java/com/codexdome/graphquery/GraphQueryCompilerSelfTest.java",
+      "line": 88,
+      "language": "Java",
+      "signature": "private static void assertHasError(List<ValidationError> errors, String field, String messageFragment) {",
+      "category": "Tests",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "readExample",
+      "qualified_name": "readExample",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/test/java/com/codexdome/graphquery/GraphQueryCompilerSelfTest.java",
+      "line": 97,
+      "language": "Java",
+      "signature": "private static String readExample(String fileName) throws IOException {",
+      "category": "Tests",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "TestSupport",
+      "qualified_name": "TestSupport",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/test/java/com/codexdome/graphquery/TestSupport.java",
+      "line": 6,
+      "language": "Java",
+      "signature": "private TestSupport() {",
+      "category": "Tests",
+      "flags": []
+    },
+    {
+      "name": "assertEquals",
+      "qualified_name": "assertEquals",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/test/java/com/codexdome/graphquery/TestSupport.java",
+      "line": 9,
+      "language": "Java",
+      "signature": "static void assertEquals(Object expected, Object actual, String message) {",
+      "category": "Tests",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "assertTrue",
+      "qualified_name": "assertTrue",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/test/java/com/codexdome/graphquery/TestSupport.java",
+      "line": 15,
+      "language": "Java",
+      "signature": "static void assertTrue(boolean condition, String message) {",
+      "category": "Tests",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "assertContains",
+      "qualified_name": "assertContains",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/test/java/com/codexdome/graphquery/TestSupport.java",
+      "line": 21,
+      "language": "Java",
+      "signature": "static void assertContains(String actual, String expectedFragment, String message) {",
+      "category": "Tests",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "assertMapContains",
+      "qualified_name": "assertMapContains",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/test/java/com/codexdome/graphquery/TestSupport.java",
+      "line": 27,
+      "language": "Java",
+      "signature": "static void assertMapContains(Map<String, Object> params, String key, Object expectedValue) {",
+      "category": "Tests",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "fail",
+      "qualified_name": "fail",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/test/java/com/codexdome/graphquery/TestSupport.java",
+      "line": 32,
+      "language": "Java",
+      "signature": "static void fail(String message) {",
+      "category": "Tests",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "buildRequest",
+      "qualified_name": "buildRequest",
+      "owner": "",
+      "kind": "function",
+      "file": "background.js",
+      "line": 30,
+      "language": "JavaScript",
+      "signature": "function buildRequest(config, page) {",
+      "category": "UI and Presentation",
+      "flags": []
+    },
+    {
+      "name": "requireNonNull",
+      "qualified_name": "requireNonNull",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 171,
+      "language": "Java",
+      "signature": "private <T> T requireNonNull(T value, String fieldName) {",
+      "category": "UI and Presentation",
+      "flags": []
+    },
+    {
+      "name": "requireText",
+      "qualified_name": "requireText",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 178,
+      "language": "Java",
+      "signature": "private String requireText(String value, String fieldName) {",
+      "category": "UI and Presentation",
+      "flags": []
+    },
+    {
+      "name": "render_markdown",
+      "qualified_name": "render_markdown",
+      "owner": "",
+      "kind": "function",
+      "file": "openspec/skills/java-design-driven-delivery/scripts/progress_checklist.py",
+      "line": 56,
+      "language": "Python",
+      "signature": "def render_markdown(title: str, path: Path, rows: list[TaskRow]) -> str:",
+      "category": "UI and Presentation",
+      "flags": []
+    },
+    {
+      "name": "renderStatus",
+      "qualified_name": "renderStatus",
+      "owner": "",
+      "kind": "function",
+      "file": "popup.js",
+      "line": 96,
+      "language": "JavaScript",
+      "signature": "function renderStatus(state) {",
+      "category": "UI and Presentation",
+      "flags": []
+    },
+    {
+      "name": "buildRequest",
+      "qualified_name": "buildRequest",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/background.js",
+      "line": 30,
+      "language": "JavaScript",
+      "signature": "function buildRequest(config, page) {",
+      "category": "UI and Presentation",
+      "flags": []
+    },
+    {
+      "name": "requireNonNull",
+      "qualified_name": "requireNonNull",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 171,
+      "language": "Java",
+      "signature": "private <T> T requireNonNull(T value, String fieldName) {",
+      "category": "UI and Presentation",
+      "flags": []
+    },
+    {
+      "name": "requireText",
+      "qualified_name": "requireText",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 178,
+      "language": "Java",
+      "signature": "private String requireText(String value, String fieldName) {",
+      "category": "UI and Presentation",
+      "flags": []
+    },
+    {
+      "name": "build_line_starts",
+      "qualified_name": "build_line_starts",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 218,
+      "language": "Python",
+      "signature": "def build_line_starts(text: str) -> List[int]:",
+      "category": "UI and Presentation",
+      "flags": []
+    },
+    {
+      "name": "build_class_groups",
+      "qualified_name": "build_class_groups",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 835,
+      "language": "Python",
+      "signature": "def build_class_groups( classes: Sequence[JavaClassInfo], similarity_threshold: float, max_comparisons: int,",
+      "category": "UI and Presentation",
+      "flags": []
+    },
+    {
+      "name": "build_method_groups",
+      "qualified_name": "build_method_groups",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 878,
+      "language": "Python",
+      "signature": "def build_method_groups( methods: Sequence[JavaMethodInfo], similarity_threshold: float, max_comparisons: int,",
+      "category": "UI and Presentation",
+      "flags": []
+    },
+    {
+      "name": "build_artifact_key",
+      "qualified_name": "build_artifact_key",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 112,
+      "language": "Python",
+      "signature": "def build_artifact_key(group_id: str, artifact_id: str) -> str:",
+      "category": "UI and Presentation",
+      "flags": []
+    },
+    {
+      "name": "build_component_propagation_entries",
+      "qualified_name": "build_component_propagation_entries",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 373,
+      "language": "Python",
+      "signature": "def build_component_propagation_entries( pom_results: Sequence[PomParseResult], ) -> List[DependencyPathEntry]:",
+      "category": "UI and Presentation",
+      "flags": []
+    },
+    {
+      "name": "render_version_section",
+      "qualified_name": "render_version_section",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 763,
+      "language": "Python",
+      "signature": "def render_version_section(title: str, groups: Sequence[Dict[str, object]]) -> List[str]:",
+      "category": "UI and Presentation",
+      "flags": []
+    },
+    {
+      "name": "render_path_section",
+      "qualified_name": "render_path_section",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 782,
+      "language": "Python",
+      "signature": "def render_path_section( title: str, groups: Sequence[Dict[str, object]], show_notes: bool = False ) -> List[str]:",
+      "category": "UI and Presentation",
+      "flags": []
+    },
+    {
+      "name": "render_markdown",
+      "qualified_name": "render_markdown",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 806,
+      "language": "Python",
+      "signature": "def render_markdown(payload: Dict[str, object], min_occurrences: int) -> str:",
+      "category": "UI and Presentation",
+      "flags": []
+    },
+    {
+      "name": "renderStatus",
+      "qualified_name": "renderStatus",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/popup.js",
+      "line": 96,
+      "language": "JavaScript",
+      "signature": "function renderStatus(state) {",
+      "category": "UI and Presentation",
+      "flags": []
+    },
+    {
+      "name": "cloneState",
+      "qualified_name": "cloneState",
+      "owner": "",
+      "kind": "function",
+      "file": "background.js",
+      "line": 17,
+      "language": "JavaScript",
+      "signature": "function cloneState() {",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "getByPath",
+      "qualified_name": "getByPath",
+      "owner": "",
+      "kind": "function",
+      "file": "background.js",
+      "line": 44,
+      "language": "JavaScript",
+      "signature": "function getByPath(obj, path) {",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "toArray",
+      "qualified_name": "toArray",
+      "owner": "",
+      "kind": "function",
+      "file": "background.js",
+      "line": 57,
+      "language": "JavaScript",
+      "signature": "function toArray(value) {",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "complete",
+      "qualified_name": "complete",
+      "owner": "",
+      "kind": "function",
+      "file": "background.js",
+      "line": 67,
+      "language": "JavaScript",
+      "signature": "function complete(message) {",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "escape_cell",
+      "qualified_name": "escape_cell",
+      "owner": "",
+      "kind": "function",
+      "file": "openspec/skills/java-design-driven-delivery/scripts/progress_checklist.py",
+      "line": 35,
+      "language": "Python",
+      "signature": "def escape_cell(value: str) -> str:",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "ensure_parent",
+      "qualified_name": "ensure_parent",
+      "owner": "",
+      "kind": "function",
+      "file": "openspec/skills/java-design-driven-delivery/scripts/progress_checklist.py",
+      "line": 124,
+      "language": "Python",
+      "signature": "def ensure_parent(path: Path) -> None:",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "write_checklist",
+      "qualified_name": "write_checklist",
+      "owner": "",
+      "kind": "function",
+      "file": "openspec/skills/java-design-driven-delivery/scripts/progress_checklist.py",
+      "line": 128,
+      "language": "Python",
+      "signature": "def write_checklist(path: Path, title: str, rows: list[TaskRow]) -> None:",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "cloneState",
+      "qualified_name": "cloneState",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/background.js",
+      "line": 17,
+      "language": "JavaScript",
+      "signature": "function cloneState() {",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "getByPath",
+      "qualified_name": "getByPath",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/background.js",
+      "line": 44,
+      "language": "JavaScript",
+      "signature": "function getByPath(obj, path) {",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "toArray",
+      "qualified_name": "toArray",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/background.js",
+      "line": 57,
+      "language": "JavaScript",
+      "signature": "function toArray(value) {",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "complete",
+      "qualified_name": "complete",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/background.js",
+      "line": 67,
+      "language": "JavaScript",
+      "signature": "function complete(message) {",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "sha1",
+      "qualified_name": "sha1",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 230,
+      "language": "Python",
+      "signature": "def sha1(text: str) -> str:",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "mask_non_code",
+      "qualified_name": "mask_non_code",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 240,
+      "language": "Python",
+      "signature": "def mask_non_code(source: str) -> str:",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "extract_method_name",
+      "qualified_name": "extract_method_name",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 415,
+      "language": "Python",
+      "signature": "def extract_method_name(header_text: str) -> str:",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "looks_like_method_header",
+      "qualified_name": "looks_like_method_header",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 426,
+      "language": "Python",
+      "signature": "def looks_like_method_header(header_text: str, method_name: str) -> bool:",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "extract_modifiers",
+      "qualified_name": "extract_modifiers",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 456,
+      "language": "Python",
+      "signature": "def extract_modifiers(header_text: str) -> List[str]:",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "unique",
+      "qualified_name": "unique",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 461,
+      "language": "Python",
+      "signature": "def unique(items: Iterable[str]) -> List[str]:",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "assess_method_risk",
+      "qualified_name": "assess_method_risk",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 472,
+      "language": "Python",
+      "signature": "def assess_method_risk(signature: str, body: str, modifiers: Sequence[str]) -> Tuple[str, List[str]]:",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "group_similar",
+      "qualified_name": "group_similar",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 684,
+      "language": "Python",
+      "signature": "def group_similar( items: Sequence[object], threshold: float, max_comparisons: int,",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "risk_score",
+      "qualified_name": "risk_score",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 743,
+      "language": "Python",
+      "signature": "def risk_score(level: str) -> int:",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "aggregate_group_risk",
+      "qualified_name": "aggregate_group_risk",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 747,
+      "language": "Python",
+      "signature": "def aggregate_group_risk(methods: Sequence[JavaMethodInfo]) -> Tuple[str, List[str]]:",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "recommendation_for_method_group",
+      "qualified_name": "recommendation_for_method_group",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 767,
+      "language": "Python",
+      "signature": "def recommendation_for_method_group(methods: Sequence[JavaMethodInfo], group_kind: str) -> Dict[str, object]:",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "recommendation_for_class_group",
+      "qualified_name": "recommendation_for_class_group",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 798,
+      "language": "Python",
+      "signature": "def recommendation_for_class_group(classes: Sequence[JavaClassInfo], group_kind: str) -> Dict[str, object]:",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "collect_group_ids",
+      "qualified_name": "collect_group_ids",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 970,
+      "language": "Python",
+      "signature": "def collect_group_ids( class_exact: Sequence[Dict[str, object]], class_similar: Sequence[Dict[str, object]], method_exact: Sequence[Dict[str, object]],",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "member_location",
+      "qualified_name": "member_location",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 984,
+      "language": "Python",
+      "signature": "def member_location(member: Dict[str, object], member_type: str) -> str:",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "summarize_group",
+      "qualified_name": "summarize_group",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 993,
+      "language": "Python",
+      "signature": "def summarize_group( group: Dict[str, object], member_type: str, expanded: bool,",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "summarize_section",
+      "qualified_name": "summarize_section",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 1030,
+      "language": "Python",
+      "signature": "def summarize_section( section: Dict[str, List[Dict[str, object]]], member_type: str, expanded_group_ids: Set[str],",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "local_name",
+      "qualified_name": "local_name",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 82,
+      "language": "Python",
+      "signature": "def local_name(tag: str) -> str:",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "child_text",
+      "qualified_name": "child_text",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 88,
+      "language": "Python",
+      "signature": "def child_text(elem: ET.Element | None, name: str) -> str:",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "child_element",
+      "qualified_name": "child_element",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 97,
+      "language": "Python",
+      "signature": "def child_element(elem: ET.Element | None, name: str) -> ET.Element | None:",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "children",
+      "qualified_name": "children",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 106,
+      "language": "Python",
+      "signature": "def children(elem: ET.Element | None, name: str) -> Iterable[ET.Element]:",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "group_version_entries",
+      "qualified_name": "group_version_entries",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 262,
+      "language": "Python",
+      "signature": "def group_version_entries(entries: Iterable[VersionEntry]) -> Dict[str, List[VersionEntry]]:",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "analyze_version_groups",
+      "qualified_name": "analyze_version_groups",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 269,
+      "language": "Python",
+      "signature": "def analyze_version_groups( grouped: Dict[str, List[VersionEntry]], min_occurrences: int ) -> Dict[str, List[Dict[str, object]]]:",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "analyze_path_entries",
+      "qualified_name": "analyze_path_entries",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 314,
+      "language": "Python",
+      "signature": "def analyze_path_entries( entries: Iterable[DependencyPathEntry], min_occurrences: int ) -> Dict[str, List[Dict[str, object]]]:",
+      "category": "Uncategorized",
+      "flags": []
+    },
+    {
+      "name": "common_safety_checks",
+      "qualified_name": "common_safety_checks",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 757,
+      "language": "Python",
+      "signature": "def common_safety_checks() -> List[str]:",
+      "category": "Utilities and Shared Helpers",
+      "flags": []
+    },
+    {
+      "name": "validateBranch",
+      "qualified_name": "validateBranch",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 137,
+      "language": "Java",
+      "signature": "private void validateBranch(Branch branch) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "validateConditions",
+      "qualified_name": "validateConditions",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 157,
+      "language": "Java",
+      "signature": "private void validateConditions(List<Condition> conditions) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "validateAlias",
+      "qualified_name": "validateAlias",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 167,
+      "language": "Java",
+      "signature": "private void validateAlias(String alias, String fieldName) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "validateIdentifier",
+      "qualified_name": "validateIdentifier",
+      "owner": "",
+      "kind": "method",
+      "file": "god-class-handler/GraphQueryService.java",
+      "line": 186,
+      "language": "Java",
+      "signature": "private String validateIdentifier(String value, String fieldName) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parse_task_arg",
+      "qualified_name": "parse_task_arg",
+      "owner": "",
+      "kind": "function",
+      "file": "openspec/skills/java-design-driven-delivery/scripts/progress_checklist.py",
+      "line": 24,
+      "language": "Python",
+      "signature": "def parse_task_arg(task_value: str) -> tuple[str, str]:",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parse_markdown",
+      "qualified_name": "parse_markdown",
+      "owner": "",
+      "kind": "function",
+      "file": "openspec/skills/java-design-driven-delivery/scripts/progress_checklist.py",
+      "line": 87,
+      "language": "Python",
+      "signature": "def parse_markdown(path: Path) -> tuple[str, list[TaskRow]]:",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "build_parser",
+      "qualified_name": "build_parser",
+      "owner": "",
+      "kind": "function",
+      "file": "openspec/skills/java-design-driven-delivery/scripts/progress_checklist.py",
+      "line": 210,
+      "language": "Python",
+      "signature": "def build_parser() -> argparse.ArgumentParser:",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parseJSONOrEmpty",
+      "qualified_name": "parseJSONOrEmpty",
+      "owner": "",
+      "kind": "function",
+      "file": "popup.js",
+      "line": 17,
+      "language": "JavaScript",
+      "signature": "function parseJSONOrEmpty(text, fieldName) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parseHeaders",
+      "qualified_name": "parseHeaders",
+      "owner": "",
+      "kind": "function",
+      "file": "popup.js",
+      "line": 29,
+      "language": "JavaScript",
+      "signature": "function parseHeaders(text) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "validateBranch",
+      "qualified_name": "validateBranch",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 137,
+      "language": "Java",
+      "signature": "private void validateBranch(Branch branch) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "validateConditions",
+      "qualified_name": "validateConditions",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 157,
+      "language": "Java",
+      "signature": "private void validateConditions(List<Condition> conditions) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "validateAlias",
+      "qualified_name": "validateAlias",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 167,
+      "language": "Java",
+      "signature": "private void validateAlias(String alias, String fieldName) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "validateIdentifier",
+      "qualified_name": "validateIdentifier",
+      "owner": "",
+      "kind": "method",
+      "file": "skills/god-class-handler/GraphQueryService.java",
+      "line": 186,
+      "language": "Java",
+      "signature": "private String validateIdentifier(String value, String fieldName) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parse_args",
+      "qualified_name": "parse_args",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 157,
+      "language": "Python",
+      "signature": "def parse_args() -> argparse.Namespace:",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "normalize_tokens",
+      "qualified_name": "normalize_tokens",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/java-duplication-checker/scripts/check_java_duplication.py",
+      "line": 344,
+      "language": "Python",
+      "signature": "def normalize_tokens(tokens: Sequence[str]) -> str:",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parse_declared_dependency",
+      "qualified_name": "parse_declared_dependency",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 116,
+      "language": "Python",
+      "signature": "def parse_declared_dependency( dep: ET.Element, rel_pom: str, module: str, section: str ) -> DeclaredDependency | None:",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parse_version_dependency",
+      "qualified_name": "parse_version_dependency",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 134,
+      "language": "Python",
+      "signature": "def parse_version_dependency( dep: ET.Element, rel_pom: str, module: str, section: str ) -> List[VersionEntry]:",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parse_pom",
+      "qualified_name": "parse_pom",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 174,
+      "language": "Python",
+      "signature": "def parse_pom(pom_path: Path, root_dir: Path) -> PomParseResult:",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "normalize_maven_line",
+      "qualified_name": "normalize_maven_line",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 446,
+      "language": "Python",
+      "signature": "def normalize_maven_line(line: str) -> str:",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parse_tree_body",
+      "qualified_name": "parse_tree_body",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 491,
+      "language": "Python",
+      "signature": "def parse_tree_body(body: str) -> Dict[str, str] | None:",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parse_dependency_tree_output",
+      "qualified_name": "parse_dependency_tree_output",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 522,
+      "language": "Python",
+      "signature": "def parse_dependency_tree_output( output: str, module_to_pom: Dict[str, str] ) -> tuple[List[DependencyPathEntry], List[DependencyPathEntry]]:",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parse_args",
+      "qualified_name": "parse_args",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/pom-version-governance/scripts/audit_pom_versions.py",
+      "line": 924,
+      "language": "Python",
+      "signature": "def parse_args() -> argparse.Namespace:",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parseJSONOrEmpty",
+      "qualified_name": "parseJSONOrEmpty",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/popup.js",
+      "line": 17,
+      "language": "JavaScript",
+      "signature": "function parseJSONOrEmpty(text, fieldName) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parseHeaders",
+      "qualified_name": "parseHeaders",
+      "owner": "",
+      "kind": "function",
+      "file": "skills/popup.js",
+      "line": 29,
+      "language": "JavaScript",
+      "signature": "function parseHeaders(text) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parseYaml",
+      "qualified_name": "parseYaml",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/GraphQueryCompiler.java",
+      "line": 57,
+      "language": "Java",
+      "signature": "public QueryDocument parseYaml(String yaml) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parseYaml",
+      "qualified_name": "parseYaml",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/GraphQueryCompiler.java",
+      "line": 67,
+      "language": "Java",
+      "signature": "public QueryDocument parseYaml(Path yamlPath) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "buildMessage",
+      "qualified_name": "buildMessage",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/GraphQueryValidationException.java",
+      "line": 34,
+      "language": "Java",
+      "signature": "private static String buildMessage(List<ValidationError> errors) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": [
+        "static"
+      ]
+    },
+    {
+      "name": "YamlParseException",
+      "qualified_name": "YamlParseException",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/YamlParseException.java",
+      "line": 12,
+      "language": "Java",
+      "signature": "public YamlParseException(String message) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "YamlParseException",
+      "qualified_name": "YamlParseException",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/YamlParseException.java",
+      "line": 22,
+      "language": "Java",
+      "signature": "public YamlParseException(String message, Throwable cause) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parse",
+      "qualified_name": "parse",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+      "line": 26,
+      "language": "Java",
+      "signature": "public Object parse(String yaml) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parseBlock",
+      "qualified_name": "parseBlock",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+      "line": 44,
+      "language": "Java",
+      "signature": "private Object parseBlock(int indent) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parseMapping",
+      "qualified_name": "parseMapping",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+      "line": 55,
+      "language": "Java",
+      "signature": "private Map<String, Object> parseMapping(int indent, Map<String, Object> target) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parseSequence",
+      "qualified_name": "parseSequence",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+      "line": 78,
+      "language": "Java",
+      "signature": "private List<Object> parseSequence(int indent) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "resolveValue",
+      "qualified_name": "resolveValue",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+      "line": 116,
+      "language": "Java",
+      "signature": "private Object resolveValue(String valueText, int parentIndent) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "currentLineNumberOrParent",
+      "qualified_name": "currentLineNumberOrParent",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+      "line": 126,
+      "language": "Java",
+      "signature": "private int currentLineNumberOrParent() {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parseScalar",
+      "qualified_name": "parseScalar",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+      "line": 133,
+      "language": "Java",
+      "signature": "private Object parseScalar(String valueText, int lineNumber) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "unquote",
+      "qualified_name": "unquote",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+      "line": 171,
+      "language": "Java",
+      "signature": "private String unquote(String value, int lineNumber) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parseKeyValue",
+      "qualified_name": "parseKeyValue",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+      "line": 206,
+      "language": "Java",
+      "signature": "private KeyValue parseKeyValue(String content, int lineNumber) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "hasNestedBlock",
+      "qualified_name": "hasNestedBlock",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+      "line": 219,
+      "language": "Java",
+      "signature": "private boolean hasNestedBlock(int parentIndent) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "looksLikeInlineMapping",
+      "qualified_name": "looksLikeInlineMapping",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+      "line": 223,
+      "language": "Java",
+      "signature": "private boolean looksLikeInlineMapping(String text) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "isSequenceLine",
+      "qualified_name": "isSequenceLine",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+      "line": 231,
+      "language": "Java",
+      "signature": "private boolean isSequenceLine(Line line, int indent) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "sequenceItemBody",
+      "qualified_name": "sequenceItemBody",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+      "line": 235,
+      "language": "Java",
+      "signature": "private String sequenceItemBody(String content) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "preprocess",
+      "qualified_name": "preprocess",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+      "line": 242,
+      "language": "Java",
+      "signature": "private List<Line> preprocess(String yaml) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "stripComment",
+      "qualified_name": "stripComment",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+      "line": 260,
+      "language": "Java",
+      "signature": "private String stripComment(String line) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "isEscaped",
+      "qualified_name": "isEscaped",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+      "line": 282,
+      "language": "Java",
+      "signature": "private boolean isEscaped(String value, int index) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "countIndent",
+      "qualified_name": "countIndent",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+      "line": 290,
+      "language": "Java",
+      "signature": "private int countIndent(String line) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "hasCurrent",
+      "qualified_name": "hasCurrent",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+      "line": 298,
+      "language": "Java",
+      "signature": "private boolean hasCurrent() {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "current",
+      "qualified_name": "current",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+      "line": 302,
+      "language": "Java",
+      "signature": "private Line current() {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "advance",
+      "qualified_name": "advance",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+      "line": 306,
+      "language": "Java",
+      "signature": "private void advance() {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "error",
+      "qualified_name": "error",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+      "line": 310,
+      "language": "Java",
+      "signature": "private YamlParseException error(Line line, String message) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "Line",
+      "qualified_name": "Line",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+      "line": 314,
+      "language": "Java",
+      "signature": "private record Line(int number, int indent, String content) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "KeyValue",
+      "qualified_name": "KeyValue",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/SimpleYamlParser.java",
+      "line": 317,
+      "language": "Java",
+      "signature": "private record KeyValue(String key, String valueText) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "YamlGraphQueryParser",
+      "qualified_name": "YamlGraphQueryParser",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java",
+      "line": 28,
+      "language": "Java",
+      "signature": "public YamlGraphQueryParser() {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "YamlGraphQueryParser",
+      "qualified_name": "YamlGraphQueryParser",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java",
+      "line": 32,
+      "language": "Java",
+      "signature": "YamlGraphQueryParser(SimpleYamlParser yamlParser) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parse",
+      "qualified_name": "parse",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java",
+      "line": 42,
+      "language": "Java",
+      "signature": "public QueryDocument parse(String yaml) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parseQuerySpec",
+      "qualified_name": "parseQuerySpec",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java",
+      "line": 49,
+      "language": "Java",
+      "signature": "private QuerySpec parseQuerySpec(Map<String, Object> queryMap) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parseNodes",
+      "qualified_name": "parseNodes",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java",
+      "line": 58,
+      "language": "Java",
+      "signature": "private Map<String, NodeSpec> parseNodes(Map<String, Object> nodesMap) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "scalarMap",
+      "qualified_name": "scalarMap",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java",
+      "line": 66,
+      "language": "Java",
+      "signature": "scalarMap(nodeMap.get(\"properties\"), field + \".properties\") )); } return nodes;",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parseEdges",
+      "qualified_name": "parseEdges",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java",
+      "line": 72,
+      "language": "Java",
+      "signature": "private Map<String, EdgeSpec> parseEdges(Map<String, Object> edgesMap) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "scalarMap",
+      "qualified_name": "scalarMap",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java",
+      "line": 83,
+      "language": "Java",
+      "signature": "scalarMap(edgeMap.get(\"properties\"), field + \".properties\") )); } return edges;",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parsePaths",
+      "qualified_name": "parsePaths",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java",
+      "line": 89,
+      "language": "Java",
+      "signature": "private List<PathSpec> parsePaths(List<Object> pathItems) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "stringList",
+      "qualified_name": "stringList",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java",
+      "line": 96,
+      "language": "Java",
+      "signature": "stringList(pathMap.get(\"edges\"), field + \".edges\") )); } return paths;",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "parseReturnSpec",
+      "qualified_name": "parseReturnSpec",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java",
+      "line": 102,
+      "language": "Java",
+      "signature": "private ReturnSpec parseReturnSpec(Map<String, Object> returnMap) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "optionalString",
+      "qualified_name": "optionalString",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java",
+      "line": 111,
+      "language": "Java",
+      "signature": "optionalString(itemMap.get(\"alias\"), field + \".alias\") )); } return new ReturnSpec(items);",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "scalarMap",
+      "qualified_name": "scalarMap",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java",
+      "line": 117,
+      "language": "Java",
+      "signature": "private Map<String, Object> scalarMap(Object value, String field) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "stringList",
+      "qualified_name": "stringList",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java",
+      "line": 127,
+      "language": "Java",
+      "signature": "private List<String> stringList(Object value, String field) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "optionalScalar",
+      "qualified_name": "optionalScalar",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java",
+      "line": 140,
+      "language": "Java",
+      "signature": "private Object optionalScalar(Object value, String field) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "optionalString",
+      "qualified_name": "optionalString",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java",
+      "line": 150,
+      "language": "Java",
+      "signature": "private String optionalString(Object value, String field) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "optionalInteger",
+      "qualified_name": "optionalInteger",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java",
+      "line": 160,
+      "language": "Java",
+      "signature": "private Integer optionalInteger(Object value, String field) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "requireInteger",
+      "qualified_name": "requireInteger",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java",
+      "line": 167,
+      "language": "Java",
+      "signature": "private Integer requireInteger(Object value, String field) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "optionalDirection",
+      "qualified_name": "optionalDirection",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java",
+      "line": 180,
+      "language": "Java",
+      "signature": "private Direction optionalDirection(Object value, String field) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "optionalReturnKind",
+      "qualified_name": "optionalReturnKind",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java",
+      "line": 192,
+      "language": "Java",
+      "signature": "private ReturnItemKind optionalReturnKind(Object value, String field) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "requireMap",
+      "qualified_name": "requireMap",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java",
+      "line": 205,
+      "language": "Java",
+      "signature": "private Map<String, Object> requireMap(Object value, String field) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "asMapOrEmpty",
+      "qualified_name": "asMapOrEmpty",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java",
+      "line": 213,
+      "language": "Java",
+      "signature": "private Map<String, Object> asMapOrEmpty(Object value, String field) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "asListOrEmpty",
+      "qualified_name": "asListOrEmpty",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/parser/YamlGraphQueryParser.java",
+      "line": 224,
+      "language": "Java",
+      "signature": "private List<Object> asListOrEmpty(Object value, String field) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "validate",
+      "qualified_name": "validate",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/validation/GraphQueryValidator.java",
+      "line": 30,
+      "language": "Java",
+      "signature": "public void validate(QueryDocument document) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "validateNodes",
+      "qualified_name": "validateNodes",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/validation/GraphQueryValidator.java",
+      "line": 57,
+      "language": "Java",
+      "signature": "private void validateNodes(Map<String, NodeSpec> nodes, List<ValidationError> errors) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "validateLimit",
+      "qualified_name": "validateLimit",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/validation/GraphQueryValidator.java",
+      "line": 240,
+      "language": "Java",
+      "signature": "private void validateLimit(Integer limit, List<ValidationError> errors) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "validateScalar",
+      "qualified_name": "validateScalar",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/validation/GraphQueryValidator.java",
+      "line": 273,
+      "language": "Java",
+      "signature": "private void validateScalar(String field, Object value, List<ValidationError> errors) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "isValidIdentifier",
+      "qualified_name": "isValidIdentifier",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/validation/GraphQueryValidator.java",
+      "line": 282,
+      "language": "Java",
+      "signature": "private boolean isValidIdentifier(String value) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "throwIfAny",
+      "qualified_name": "throwIfAny",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/validation/GraphQueryValidator.java",
+      "line": 286,
+      "language": "Java",
+      "signature": "private void throwIfAny(List<ValidationError> errors) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    },
+    {
+      "name": "ValidationError",
+      "qualified_name": "ValidationError",
+      "owner": "",
+      "kind": "method",
+      "file": "src/graph-query-cypher/src/main/java/com/codexdome/graphquery/validation/ValidationError.java",
+      "line": 9,
+      "language": "Java",
+      "signature": "public record ValidationError(String field, String message) {",
+      "category": "Validation, Parsing, and Mapping",
+      "flags": []
+    }
+  ],
+  "skipped_inputs": [
+    {
+      "path": ".codex",
+      "reason": "excluded directory"
+    },
+    {
+      "path": ".git",
+      "reason": "excluded directory"
+    },
+    {
+      "path": "openspec/.codex-progress",
+      "reason": "hidden directory"
+    },
+    {
+      "path": "openspec/.task-records",
+      "reason": "hidden directory"
+    },
+    {
+      "path": "src/graph-query-cypher/target",
+      "reason": "excluded directory"
+    }
+  ]
+}
