@@ -1,0 +1,4 @@
+interface:
+  display_name: "Analyze Java Startup Time"
+  short_description: "Diagnose Java service startup and readiness latency"
+  default_prompt: "Use $analyze-java-startup-time to analyze this Java microservice startup log and explain where startup and restart-to-available time is spent."
