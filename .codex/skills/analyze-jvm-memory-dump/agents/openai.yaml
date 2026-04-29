@@ -1,0 +1,4 @@
+interface:
+  display_name: "Analyze JVM Memory Dump"
+  short_description: "Analyze JVM dumps with Docker and system evidence"
+  default_prompt: "Use $analyze-jvm-memory-dump to analyze this JVM dump package, starting from the dump itself and using any class histogram, javacore, cgroup, jstat, lsof, netstat, ps, top, df, GC log, or application log files as supporting evidence."
