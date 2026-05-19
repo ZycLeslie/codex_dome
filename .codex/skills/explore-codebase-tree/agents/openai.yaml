@@ -1,0 +1,4 @@
+interface:
+  display_name: "Explore Codebase Tree"
+  short_description: "Build exhaustive method trees for repository exploration"
+  default_prompt: "Use $explore-codebase-tree to scan this repository, list every method/function, group by functional category, and produce a tree-style exploration map."
