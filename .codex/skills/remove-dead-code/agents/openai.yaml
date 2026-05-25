@@ -1,0 +1,4 @@
+interface:
+  display_name: "Remove Dead Code"
+  short_description: "Protect roots before dead-code deletion."
+  default_prompt: "Use $remove-dead-code to find and remove dead code, protect APIs declared in source or YAML, and handle cascading unreachable calls safely."
