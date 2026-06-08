@@ -1,16 +1,18 @@
 # AI-Friendly 2.0 Design Guide
 
-Use this guide when multiple target designs can preserve the same business behavior. AI-friendly code remains ordinary production-quality code; it is easier for both humans and automated agents to discover, call, reason about, test, and observe.
+Use this guide when multiple target designs can preserve or intentionally improve the same business capability. AI-friendly code remains ordinary production-quality code; it is easier for both humans and automated agents to discover, call, reason about, test, and observe.
 
 ## Design Priorities
 
 Apply these priorities in order:
 
-1. Preserve business behavior, security, and data integrity.
-2. Follow target repository conventions and architecture.
-3. Make contracts and ownership explicit.
-4. Improve composability, discoverability, tests, and observability.
-5. Avoid unnecessary novelty and migration scope.
+1. Preserve security, privacy, compliance, and data integrity.
+2. Implement the approved 2.0 design intent, including intentional behavior changes.
+3. Preserve legacy compatibility where required by design, rollout, callers, or data contracts.
+4. Follow target repository conventions and architecture.
+5. Make contracts and ownership explicit.
+6. Improve composability, discoverability, tests, and observability.
+7. Avoid unnecessary novelty and migration scope.
 
 ## Preferred Properties
 
@@ -27,6 +29,7 @@ Apply these priorities in order:
 - Make defaults, limits, timeouts, retries, and feature flags visible.
 - Prefer explicit dependency injection and registration over hidden global state or string-based reflection.
 - Model important state transitions and authorization decisions directly.
+- When behavior changes from legacy, encode the new contract in schemas, tests, docs, or migration records rather than leaving it as an implicit code difference.
 
 ### Composable
 
@@ -41,6 +44,7 @@ Apply these priorities in order:
 - Make fixtures and examples small, readable, and representative.
 - Support deterministic substitutes for time, IDs, external calls, and event delivery where target patterns allow.
 - Test authorization, validation, idempotency, error paths, and side effects.
+- Separate tests that protect legacy compatibility from tests that assert redesigned 2.0 behavior.
 
 ### Observable
 
@@ -48,6 +52,7 @@ Apply these priorities in order:
 - Include stable identifiers needed to correlate a feature operation without exposing secrets.
 - Make partial failure and retry outcomes visible.
 - Preserve operational signals that existing support or compliance workflows rely on.
+- Add new signals for redesigned workflows, rollout flags, adapters, and deprecation paths.
 
 ## Avoid
 
@@ -58,6 +63,7 @@ Apply these priorities in order:
 - Hiding business rules inside framework callbacks, reflection, dynamic strings, or untestable glue.
 - Splitting code into many tiny modules that obscure the end-to-end workflow.
 - Recreating source architecture inside the target as a permanent compatibility island.
+- Treating a design document as implementation-complete when legacy edge cases, compatibility obligations, or operational constraints still need source evidence.
 
 ## Design Review Questions
 
@@ -67,3 +73,4 @@ Apply these priorities in order:
 - Can tests run deterministically without real external services?
 - Can operators understand success, failure, retry, and partial completion?
 - Does the design look native to the target repository?
+- Are intentional differences from legacy behavior visible, tested, and traceable to a design decision?
