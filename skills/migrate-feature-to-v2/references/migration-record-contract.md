@@ -2,7 +2,9 @@
 
 Create one migration record per feature at:
 
-`<target-root>/.codex/feature-migrations/<feature-slug>/migration-record.md`
+`<target-root>/.ai-migrations/feature-migrations/<feature-slug>/migration-record.md`
+
+If the target repository already has an established location for agent, migration, or design artifacts, use that convention instead of this default.
 
 Keep it concise but evidence-backed. Update it as discoveries invalidate earlier assumptions.
 

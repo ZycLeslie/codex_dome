@@ -1,6 +1,6 @@
 ---
 name: migrate-feature-to-v2
-description: Discover a named feature or business capability in a legacy source repository, recover its observable behavior and implementation evidence, reconcile it with 2.0 design documents or requested optimizations, then implement and verify an architecture-appropriate, AI-friendly target version. Use when Codex needs to perform cross-repository feature migration, non-one-to-one modernization, design-doc-driven implementation, 功能迁移, 特性迁移, 老仓功能探索, 旧系统升级到 2.0, 功能优化, 设计文档落地, or reconstruct a function from source code and deliver the intended 2.0 capability end to end in a new codebase.
+description: Discover a named feature or business capability in a legacy source repository, recover its observable behavior and implementation evidence, reconcile it with 2.0 design documents or requested optimizations, then implement and verify an architecture-appropriate, AI-friendly target version. Use when an AI coding agent, automation workflow, or engineering team needs to perform cross-repository feature migration, non-one-to-one modernization, design-doc-driven implementation, 功能迁移, 特性迁移, 老仓功能探索, 旧系统升级到 2.0, 功能优化, 设计文档落地, or reconstruct a function from source code and deliver the intended 2.0 capability end to end in a new codebase.
 ---
 
 # Migrate Feature To V2
@@ -47,7 +47,7 @@ For remote URLs, clone or fetch only after obtaining any required approval. Do n
 4. Inspect target worktree changes before editing. Never overwrite unrelated changes.
 5. Profile both repositories when they are unfamiliar:
 
-   `python3 <skill-dir>/scripts/profile_repositories.py --source <source-root> --target <target-root> --output-dir <target-root>/.codex/feature-migrations/<feature-slug>`
+   `python3 <skill-dir>/scripts/profile_repositories.py --source <source-root> --target <target-root> --output-dir <target-root>/.ai-migrations/feature-migrations/<feature-slug>`
 
 Use the profile as orientation only. Read actual source files before making decisions.
 
@@ -129,9 +129,9 @@ Do not create a parallel architecture just because the source repository used on
 
 ### 6. Write A Migration And Design Record
 
-Before substantial edits, create or update:
+Before substantial edits, create or update a migration record. Use the target repository's existing agent/workflow artifact convention when one exists; otherwise default to:
 
-`<target-root>/.codex/feature-migrations/<feature-slug>/migration-record.md`
+`<target-root>/.ai-migrations/feature-migrations/<feature-slug>/migration-record.md`
 
 Include the legacy baseline, design inputs, baseline-vs-target matrix, target mapping, intentional differences, risk decisions, implementation slices, and verification plan. Use `references/migration-record-contract.md` for the required shape.
 

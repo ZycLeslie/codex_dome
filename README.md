@@ -6,7 +6,7 @@
 
 ```text
 .
-├── .codex/                             # OpenSpec/Codex skills & commands
+├── .codex/                             # OpenSpec/agent skills & commands
 ├── docs/                               # 项目说明与历史文档
 ├── openspec/                           # OpenSpec 主工作流目录
 │   ├── changes/
@@ -16,7 +16,7 @@
 │   └── extension/                      # Chrome 扩展可运行源码
 │   └── graph-query-cypher/             # YAML -> Cypher Java 模块
 ├── progressive-god-class-refactor/     # 保留的独立资料
-└── skills/                             # 保留的独立工作区
+└── skills/                             # AI agent / 工程自动化技能目录
 ```
 
 ## 目录约定
@@ -27,6 +27,7 @@
 - `docs/`：项目概览、迁移说明、辅助文档。
 - `specs/`：旧 SDD 资料，作为迁移源保留，不再作为首选入口。
 - `src/`：只放可运行实现，不混入需求和设计说明。
+- `skills/`：可复用的 AI agent / 自动化工作流技能，面向代码迁移、Java 重构、依赖治理等工程任务。
 
 ## 当前功能
 
@@ -36,6 +37,26 @@
 - Java 模块目录：[src/graph-query-cypher](/Users/yuechunyuechun/Desktop/codex_demo/codex_dome/src/graph-query-cypher)
 - 旧版 SDD 规格目录：[specs/002-yaml-cypher-query-generator](/Users/yuechunyuechun/Desktop/codex_demo/codex_dome/specs/002-yaml-cypher-query-generator)
 - OpenSpec 迁移归档目录：[openspec/changes/archive/2026-03-24-yaml-cypher-query-generator-migration](/Users/yuechunyuechun/Desktop/codex_demo/codex_dome/openspec/changes/archive/2026-03-24-yaml-cypher-query-generator-migration)
+
+## AI Agent Skills
+
+技能目录位于 [skills](/Users/yuechunyuechun/Desktop/codex_demo/codex_dome/skills)，用于沉淀可复用的工程自动化流程，不限定某一个具体 AI 工具。
+
+重点技能：
+
+- [migrate-feature-to-v2](/Users/yuechunyuechun/Desktop/codex_demo/codex_dome/skills/migrate-feature-to-v2/SKILL.md)：根据旧仓源代码证据和 2.0 设计文档，实现 AI 友好的目标功能。支持非一比一迁移、功能优化、拆分/合并、废弃兼容、设计文档落地。
+- [java-method-mover](/Users/yuechunyuechun/Desktop/codex_demo/codex_dome/skills/java-method-mover/SKILL.md)：迁移或抽取 Java 方法，并同步处理依赖、调用点和死代码。
+- [progressive-god-class-refactor](/Users/yuechunyuechun/Desktop/codex_demo/codex_dome/skills/progressive-god-class-refactor/SKILL.md)：渐进式拆分 God Class。
+
+功能迁移默认流程：
+
+1. 从源仓恢复旧功能的完整行为基线。
+2. 读取 2.0 设计文档、需求或验收标准。
+3. 建立“旧行为 vs 目标设计”矩阵。
+4. 设计文档与源代码偏离时先确认；一致时保证完整迁移。
+5. 在目标仓按现有架构实现、测试和验证。
+
+迁移记录默认写入 `.ai-migrations/feature-migrations/<feature-slug>/`，如果目标仓已有自己的 agent / migration / design artifact 目录约定，则优先遵循目标仓约定。
 
 ## 使用方式
 
