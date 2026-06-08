@@ -16,7 +16,7 @@
 
 核心 skill：
 
-- [migrate-feature-to-v2](./migrate-feature-to-v2/SKILL.md)
+- [migrate-feature-to-v2](./migrate-feature-to-v2/README.md)
 
 适用场景：
 
@@ -26,19 +26,4 @@
 - 源代码实现与设计文档并不一一对应。
 - 需要在迁移中优化、替换、拆分、合并或废弃旧功能。
 
-关键规则：
-
-- 先从源仓恢复旧功能完整行为基线。
-- 再读取 2.0 设计文档、需求、API 规格或验收标准。
-- 对每个行为标记 `aligned`、`source-only`、`design-only` 或 `divergent`。
-- 设计文档与源代码偏离时，需要用户确认后才能改变旧行为。
-- 设计文档与源代码一致时，必须完整迁移，包括边界条件、校验、权限、持久化、副作用、配置、日志、指标、审计和测试。
-- 迁移记录默认写入 `.ai-migrations/feature-migrations/<feature-slug>/`；如果目标仓已有自己的约定，则使用目标仓约定。
-
-示例请求：
-
-```text
-使用 migrate-feature-to-v2，把旧仓的“订单退款”功能迁移到当前 2.0 仓。
-参考 docs/refund-v2-design.md。
-如果设计文档和旧仓行为不一致，先列出差异并等待确认；一致的部分要完整迁移。
-```
+详细规则、默认流程、确认门和示例请求见 [migrate-feature-to-v2/README.md](./migrate-feature-to-v2/README.md)。
