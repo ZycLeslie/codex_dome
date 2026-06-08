@@ -1,0 +1,101 @@
+# Source Exploration Contract
+
+Persist source exploration results before implementing the target feature. The goal is traceability: another agent or engineer should be able to understand how the legacy behavior was recovered without redoing the whole search.
+
+## Default Location
+
+Use the target repository's existing artifact convention when one exists. Otherwise write to:
+
+```text
+.ai-migrations/feature-migrations/<feature-slug>/source-exploration/
+```
+
+## Required Artifacts
+
+### source-exploration.md
+
+Human-readable summary of the source investigation.
+
+Required sections:
+
+```markdown
+# <Feature> Source Exploration
+
+## Source Access
+- Repository:
+- Access method: local checkout | generic git | CodeHub MCP | other
+- Branch/ref/commit:
+- Exploration timestamp:
+
+## Entry Points
+| Entry point | Type | Evidence | Notes |
+|---|---|---|---|
+
+## Behavior Baseline
+| Scenario | Inputs/triggers | Outputs/results | Side effects | Evidence |
+|---|---|---|---|---|
+
+## Implementation Trace
+| Layer/responsibility | Files/symbols | Callers/callees | Evidence |
+|---|---|---|---|
+
+## Data And Integration Evidence
+| Concern | Evidence | Notes |
+|---|---|---|
+
+## Open Questions
+| Question | Why it matters | Proposed next step |
+|---|---|---|
+```
+
+### source-evidence.json
+
+Machine-readable evidence index. Keep it compact and deterministic.
+
+Recommended shape:
+
+```json
+{
+  "feature": "<feature-slug>",
+  "source": {
+    "repository": "<path-or-url>",
+    "accessMethod": "local checkout | generic git | CodeHub MCP | other",
+    "ref": "<branch-or-commit>"
+  },
+  "evidence": [
+    {
+      "id": "EV-001",
+      "claim": "Short behavior or implementation claim",
+      "kind": "code | test | schema | config | history | codehub-mcp | runtime | docs",
+      "location": "repo-relative/path:line or MCP resource identifier",
+      "symbol": "optional symbol name",
+      "notes": "brief explanation"
+    }
+  ]
+}
+```
+
+### Supporting Artifacts
+
+Create only when useful:
+
+- `search-log.md`: high-signal searches and why they mattered.
+- `candidate-files.txt`: files inspected or rejected.
+- `call-trace.md`: entry point to domain/persistence/integration call chain.
+- `codehub-mcp-evidence.md`: CodeHub MCP queries, resources, branch/ref details, and evidence IDs.
+
+## CodeHub MCP Evidence Rules
+
+When the source repository is a CodeHub URL or the user identifies it as CodeHub:
+
+- Use the matching CodeHub MCP for source discovery.
+- Record the MCP server/tool identity, repository identifier, branch/ref, and resource IDs or query parameters needed to reproduce the evidence.
+- Do not replace CodeHub MCP evidence with generic Git, browser scraping, or raw HTTP unless the user explicitly approves a fallback.
+- If CodeHub MCP is unavailable, stop before source exploration and ask the user to enable or install the correct MCP.
+
+## Quality Bar
+
+- Every recovered behavior in the migration record should point to at least one evidence item.
+- Label uncertain claims as assumptions.
+- Prefer source tests, schemas, configs, and externally visible entry points over comments.
+- Keep raw source excerpts short; cite locations instead of copying large blocks.

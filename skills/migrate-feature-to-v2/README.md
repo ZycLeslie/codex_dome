@@ -17,18 +17,30 @@
 - 对每个行为标记 `aligned`、`source-only`、`design-only` 或 `divergent`。
 - 设计文档与源代码偏离时，需要用户确认后才能改变旧行为。
 - 设计文档与源代码一致时，必须完整迁移。
+- 源仓探索结果必须落盘，保证迁移过程可追溯。
+- 如果源仓是 CodeHub 地址，必须使用对应的 CodeHub MCP 访问和探索。
 - 不盲目复制旧实现；用目标仓现有架构完成实现。
 
 ## 默认流程
 
 1. 确认源仓、目标仓、功能范围、设计文档和验收标准。
 2. 从源仓恢复旧功能的完整行为基线。
-3. 读取 2.0 设计文档，提取目标行为和验收要求。
-4. 建立“旧行为 vs 目标设计”矩阵。
-5. 对设计文档与源代码偏离的行为先确认。
-6. 在目标仓按现有架构实现完整纵向切片。
-7. 补齐单元测试、集成测试、契约测试或差异对比测试。
-8. 输出迁移记录和验证结果。
+3. 将源仓探索结果写入 `.ai-migrations/feature-migrations/<feature-slug>/source-exploration/`。
+4. 读取 2.0 设计文档，提取目标行为和验收要求。
+5. 建立“旧行为 vs 目标设计”矩阵。
+6. 对设计文档与源代码偏离的行为先确认。
+7. 在目标仓按现有架构实现完整纵向切片。
+8. 补齐单元测试、集成测试、契约测试或差异对比测试。
+9. 输出迁移记录和验证结果。
+
+## CodeHub 源仓
+
+当源仓地址来自 CodeHub，或用户明确说明这是 CodeHub 仓库时：
+
+- 必须优先使用对应 CodeHub MCP 获取仓库元数据、分支、文件、搜索结果、历史和评审上下文。
+- 不允许静默降级为普通 `git clone`、浏览器抓取或未认证 HTTP。
+- 如果当前环境没有可用的 CodeHub MCP，需要先要求用户启用或安装对应 MCP。
+- CodeHub MCP 查询、资源标识、分支和证据 ID 需要写入源仓探索记录。
 
 ## 完整迁移要求
 
@@ -57,6 +69,12 @@
 
 ## 迁移记录
 
+源仓探索记录默认写入：
+
+```text
+.ai-migrations/feature-migrations/<feature-slug>/source-exploration/
+```
+
 迁移记录默认写入：
 
 ```text
@@ -67,6 +85,7 @@
 
 迁移记录模板见：
 
+- [references/source-exploration-contract.md](./references/source-exploration-contract.md)
 - [references/migration-record-contract.md](./references/migration-record-contract.md)
 
 ## 相关文件

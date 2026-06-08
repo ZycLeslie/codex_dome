@@ -1,4 +1,4 @@
 interface:
   display_name: "功能迁移到 AI 友好 2.0"
-  short_description: "按设计文档和旧仓证据实现可验证的AI友好2.0目标能力"
-  default_prompt: "Use $migrate-feature-to-v2 to reconcile legacy source behavior with a 2.0 design document, then implement the intended AI-friendly target capability."
+  short_description: "落盘旧仓探索证据并按设计文档实现可验证的AI友好2.0能力"
+  default_prompt: "Use $migrate-feature-to-v2 to persist source exploration evidence, reconcile legacy behavior with a 2.0 design document, and implement the intended AI-friendly target capability."

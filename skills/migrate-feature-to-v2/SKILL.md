@@ -1,6 +1,6 @@
 ---
 name: migrate-feature-to-v2
-description: Discover a named feature or business capability in a legacy source repository, recover its observable behavior and implementation evidence, reconcile it with 2.0 design documents or requested optimizations, then implement and verify an architecture-appropriate, AI-friendly target version. Use when an AI coding agent, automation workflow, or engineering team needs to perform cross-repository feature migration, non-one-to-one modernization, design-doc-driven implementation, 功能迁移, 特性迁移, 老仓功能探索, 旧系统升级到 2.0, 功能优化, 设计文档落地, or reconstruct a function from source code and deliver the intended 2.0 capability end to end in a new codebase.
+description: Discover a named feature or business capability in a legacy source repository, persist source exploration evidence to disk, recover observable behavior, reconcile it with 2.0 design documents or requested optimizations, then implement and verify an architecture-appropriate, AI-friendly target version. Use when an AI coding agent, automation workflow, or engineering team needs to perform cross-repository feature migration, non-one-to-one modernization, design-doc-driven implementation, CodeHub-backed migration through the matching CodeHub MCP, 功能迁移, 特性迁移, 老仓功能探索, 旧系统升级到 2.0, 功能优化, 设计文档落地, or reconstruct a function from source code and deliver the intended 2.0 capability end to end in a new codebase.
 ---
 
 # Migrate Feature To V2
@@ -22,6 +22,14 @@ Use the current workspace as the target repository when the user gives only a so
 
 For remote URLs, clone or fetch only after obtaining any required approval. Do not modify or commit in the source repository unless the user explicitly requests it.
 
+## Repository Access Rules
+
+- Treat local paths as ordinary read-only source roots unless the user explicitly allows changes.
+- Treat generic Git URLs as remote repositories that may require clone/fetch approval.
+- Treat any URL or user label that identifies CodeHub as a CodeHub repository. Use the matching CodeHub MCP for repository metadata, branch discovery, file reads, code search, history, pull/merge request context, and permission-safe access.
+- Do not silently downgrade a CodeHub URL to generic `git clone`, browser scraping, or unauthenticated HTTP access. If the matching CodeHub MCP is unavailable, use tool discovery or connector installation when possible; otherwise stop and ask the user to provide or enable the CodeHub MCP.
+- When both CodeHub MCP evidence and local checkout evidence exist, record which source each claim came from.
+
 ## Non-Negotiables
 
 - Preserve externally observable business behavior unless the user requests a behavior change.
@@ -35,17 +43,19 @@ For remote URLs, clone or fetch only after obtaining any required approval. Do n
 - Keep the target repository buildable throughout the migration and protect unrelated user changes.
 - Add tests that prove the recovered contract and requested 2.0 behavior.
 - Make intentional behavior differences explicit in the migration record and final report.
+- Persist source exploration results before implementation so another agent or engineer can trace every recovered behavior back to source evidence.
 - Interpret "AI-friendly" as discoverable, explicit, composable, testable, and observable. Do not add an LLM, agent endpoint, or weaken security merely to claim AI readiness.
 
 ## Workflow
 
 ### 1. Establish The Two-Repository Context
 
-1. Resolve local source and target roots and confirm their roles.
+1. Resolve local source and target roots or remote repository identities and confirm their roles.
 2. Locate and read user-provided design documents or discover likely design artifacts in the target repo when the request references them.
-3. Read repository instructions, manifests, architecture docs, and recent relevant changes in both repositories.
-4. Inspect target worktree changes before editing. Never overwrite unrelated changes.
-5. Profile both repositories when they are unfamiliar:
+3. If the source or target is a CodeHub address, access it through the matching CodeHub MCP before attempting any generic Git operation.
+4. Read repository instructions, manifests, architecture docs, and recent relevant changes in both repositories.
+5. Inspect target worktree changes before editing. Never overwrite unrelated changes.
+6. Profile both repositories when they are unfamiliar:
 
    `python3 <skill-dir>/scripts/profile_repositories.py --source <source-root> --target <target-root> --output-dir <target-root>/.ai-migrations/feature-migrations/<feature-slug>`
 
@@ -69,7 +79,7 @@ When design documents, tickets, OpenSpec changes, API specs, or explicit optimiz
 
 For detailed design-doc reconciliation guidance, read `references/design-driven-modernization.md`.
 
-### 3. Recover The Source Baseline
+### 3. Recover And Persist The Source Baseline
 
 Start from user-visible or externally callable entry points, then trace inward:
 
@@ -78,6 +88,14 @@ Start from user-visible or externally callable entry points, then trace inward:
 3. Inspect tests, fixtures, schemas, API specifications, migrations, and configuration that constrain behavior.
 4. Use `git log`, `git blame`, and historical diffs when current intent is unclear.
 5. Record file-and-line evidence for each important behavior.
+
+Persist the exploration as you go. Before implementation, create or update:
+
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/source-exploration.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/source-evidence.json`
+- supporting artifacts such as `search-log.md`, `candidate-files.txt`, `call-trace.md`, or `codehub-mcp-evidence.md` when useful
+
+Use the target repository's existing artifact directory if it has one. Read `references/source-exploration-contract.md` for the required structure.
 
 Recover at least:
 
@@ -171,6 +189,7 @@ Report:
 
 - design documents or optimization requirements used
 - source entry points and strongest implementation evidence
+- persisted source exploration artifact paths
 - target files and architecture owners changed
 - preserved behaviors, optimized behaviors, deprecated behaviors, and intentional differences
 - verification commands and outcomes

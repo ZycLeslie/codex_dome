@@ -19,7 +19,12 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - Design documents:
 - Requested behavior:
 - Migration mode:
+- Repository access method:
 - Explicit non-goals:
+
+## Source Exploration Artifacts
+| Artifact | Purpose | Status |
+|---|---|---|
 
 ## Design Intent
 | Requirement | Source/design reference | Target behavior | Acceptance check |
@@ -74,6 +79,7 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 
 - Use repository-relative file paths and line numbers where practical.
 - Link each important contract claim to code, test, schema, config, history, or runtime evidence.
+- Link source behavior claims to persisted source exploration artifacts where possible.
 - Label uncertain claims as assumptions instead of presenting them as facts.
 - Record intentional differences before or during implementation, not only after tests fail.
 - Link every non-one-to-one behavior decision to a design document, user instruction, or explicit compatibility decision.
