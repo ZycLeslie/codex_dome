@@ -43,6 +43,10 @@ Required sections:
 | Concern | Evidence | Notes |
 |---|---|---|
 
+## Legacy Smells
+| Smell | Severity | Evidence | Migration decision |
+|---|---|---|---|
+
 ## Open Questions
 | Question | Why it matters | Proposed next step |
 |---|---|---|
@@ -66,13 +70,35 @@ Recommended shape:
     {
       "id": "EV-001",
       "claim": "Short behavior or implementation claim",
-      "kind": "code | test | schema | config | history | codehub-mcp | runtime | docs",
+      "kind": "code | test | schema | config | history | codehub-mcp | runtime | docs | bad-smell",
       "location": "repo-relative/path:line or MCP resource identifier",
       "symbol": "optional symbol name",
       "notes": "brief explanation"
     }
   ]
 }
+```
+
+### legacy-smells.md
+
+Required smell inventory. If no relevant smells are found, write `none found` with the evidence scope checked.
+
+Required sections:
+
+```markdown
+# <Feature> Legacy Smells
+
+## Summary
+- Overall risk:
+- Scope checked:
+
+## Smell Inventory
+| Smell/problem | Classification | Source evidence | Target decision | Verification |
+|---|---|---|---|---|
+
+## Deferred Items
+| Item | Reason deferred | Risk | Follow-up |
+|---|---|---|---|
 ```
 
 ### Supporting Artifacts
@@ -96,6 +122,7 @@ When the source repository is a CodeHub URL or the user identifies it as CodeHub
 ## Quality Bar
 
 - Every recovered behavior in the migration record should point to at least one evidence item.
+- Every severe smell or defect discovered in the feature path should be recorded with a remediation or deferral decision.
 - Label uncertain claims as assumptions.
 - Prefer source tests, schemas, configs, and externally visible entry points over comments.
 - Keep raw source excerpts short; cite locations instead of copying large blocks.

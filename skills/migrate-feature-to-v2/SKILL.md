@@ -1,11 +1,11 @@
 ---
 name: migrate-feature-to-v2
-description: Discover a named feature or business capability in a legacy source repository, persist source exploration evidence to disk, recover observable behavior, reconcile it with 2.0 design documents or requested optimizations, then implement and verify an architecture-appropriate, AI-friendly target version. Use when an AI coding agent, automation workflow, or engineering team needs to perform cross-repository feature migration, non-one-to-one modernization, design-doc-driven implementation, CodeHub-backed migration through the matching CodeHub MCP, 功能迁移, 特性迁移, 老仓功能探索, 旧系统升级到 2.0, 功能优化, 设计文档落地, or reconstruct a function from source code and deliver the intended 2.0 capability end to end in a new codebase.
+description: Discover a named feature or business capability in a legacy source repository, persist source exploration evidence to disk, recover observable behavior, classify legacy code smells, reconcile everything with 2.0 design documents or requested optimizations, then implement and verify an architecture-appropriate, AI-friendly target version. Use when an AI coding agent, automation workflow, or engineering team needs to perform cross-repository feature migration, non-one-to-one modernization, design-doc-driven implementation, CodeHub-backed migration through the matching CodeHub MCP, legacy smell remediation, 功能迁移, 特性迁移, 老仓功能探索, 旧系统升级到 2.0, 功能优化, 设计文档落地, or reconstruct a function from source code and deliver the intended 2.0 capability end to end in a new codebase.
 ---
 
 # Migrate Feature To V2
 
-Recover the legacy behavior from the source repository, reconcile it with the intended 2.0 design, then implement the target capability using the target repository's architecture. Treat source code as behavioral evidence, not as a template to paste; treat design documents as the intended future state, not optional commentary.
+Recover the legacy behavior from the source repository, classify legacy code smells, reconcile the evidence with the intended 2.0 design, then implement the target capability using the target repository's architecture. Treat source code as behavioral evidence, not as a template to paste; treat design documents as the intended future state, not optional commentary.
 
 ## Inputs And Defaults
 
@@ -16,6 +16,7 @@ Resolve these inputs before editing:
 - **Feature request**: user-visible capability, business rule, API, workflow, job, UI behavior, or named function to migrate.
 - **Design documents**: optional PRD, technical design, API spec, OpenSpec change, ADR, issue, ticket, or acceptance document that defines the 2.0 target behavior.
 - **Change intent**: whether the work is compatible migration, optimized behavior, redesigned workflow, API replacement, feature split/merge, deprecation, or greenfield implementation informed by legacy evidence.
+- **Bad smell policy**: optional user guidance for which legacy smells, defects, or technical debt must be fixed during migration.
 - **Acceptance criteria**: explicit requirements when provided; otherwise recover them from source behavior and tests.
 
 Use the current workspace as the target repository when the user gives only a source repository. Treat a user-provided repository as the source unless they explicitly call it the 2.0 target. If both repository roles remain ambiguous and editing the wrong repository is plausible, ask one concise question before modifying code.
@@ -39,6 +40,7 @@ For remote URLs, clone or fetch only after obtaining any required approval. Do n
 - Do not assume a one-to-one migration. Explicitly decide whether each legacy behavior is preserved, changed, replaced, deprecated, split, merged, or dropped.
 - Adapt the implementation to target conventions, ownership boundaries, frameworks, and existing abstractions.
 - Do not blindly copy source files, legacy architecture, generated code, obsolete dependencies, or known defects.
+- Do not preserve legacy bad smells as compatibility. Fix simple low-risk smells in the target implementation, and remediate severe smells or defects instead of recreating them.
 - Trace security, authorization, validation, transactions, idempotency, persistence, events, and integrations explicitly.
 - Keep the target repository buildable throughout the migration and protect unrelated user changes.
 - Add tests that prove the recovered contract and requested 2.0 behavior.
@@ -93,6 +95,7 @@ Persist the exploration as you go. Before implementation, create or update:
 
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/source-exploration.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/source-evidence.json`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/legacy-smells.md`
 - supporting artifacts such as `search-log.md`, `candidate-files.txt`, `call-trace.md`, or `codehub-mcp-evidence.md` when useful
 
 Use the target repository's existing artifact directory if it has one. Read `references/source-exploration-contract.md` for the required structure.
@@ -110,7 +113,24 @@ Recover at least:
 
 Separate **essential behavior** from **legacy implementation accidents**. Do not preserve incidental class layouts, duplicated logic, or framework workarounds unless they are required for compatibility.
 
-### 4. Reconcile Legacy Behavior With The Target Design
+### 4. Classify And Remediate Legacy Smells
+
+Build a legacy smell inventory before target implementation. Classify each smell as:
+
+- `simple-fix`: low-risk technical debt that can be corrected while preserving behavior, such as duplicated local logic, misleading names, small long-method extractions, magic constants, weak logging, missing null/empty guards, local exception handling cleanup, or obvious test fixture cleanup.
+- `severe-fix`: serious design, correctness, security, reliability, performance, or data-integrity problems that must not be copied into 2.0, such as authorization bypasses, injection risks, transaction leaks, race/idempotency flaws, data corruption, resource leaks, unsafe retries, hard-coded secrets, unbounded queries, N+1 behavior, framework misuse, or highly coupled god-object logic.
+- `defer-with-record`: known debt outside the feature slice or too risky to fix now; keep it out of the target implementation when possible and record the reason.
+- `preserve-by-contract`: awkward legacy behavior that is externally required; preserve the behavior but avoid preserving the implementation smell.
+
+Apply these rules:
+
+- Fix `simple-fix` smells directly in the target design and tests; do not ask unless the fix changes external behavior.
+- Fix or redesign around `severe-fix` issues. Add tests or checks that prove the severe problem was not carried forward.
+- If a severe fix changes an external contract, data compatibility, or user-visible behavior, use the divergence confirmation gate unless the current task explicitly authorizes the change.
+- Do not edit the source repository to clean smells unless the user explicitly asks; remediation belongs in the target implementation and migration record.
+- Read `references/legacy-smell-remediation.md` for the full classification checklist.
+
+### 5. Reconcile Legacy Behavior With The Target Design
 
 Build a baseline-vs-target matrix before implementation:
 
@@ -133,7 +153,7 @@ Apply the confirmation gate:
 - **Divergent**: design changes or contradicts source behavior. Pause and ask for confirmation before implementing the changed behavior, unless the user's current request explicitly approves the specific change.
 - **Drop/deprecate**: any removal, replacement, or compatibility break requires explicit confirmation or documented approval.
 
-### 5. Map The Target Capability Onto The Target Architecture
+### 6. Map The Target Capability Onto The Target Architecture
 
 Explore the target before designing:
 
@@ -145,17 +165,17 @@ Explore the target before designing:
 
 Do not create a parallel architecture just because the source repository used one.
 
-### 6. Write A Migration And Design Record
+### 7. Write A Migration And Design Record
 
 Before substantial edits, create or update a migration record. Use the target repository's existing agent/workflow artifact convention when one exists; otherwise default to:
 
 `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/migration-record.md`
 
-Include the legacy baseline, design inputs, baseline-vs-target matrix, target mapping, intentional differences, risk decisions, implementation slices, and verification plan. Use `references/migration-record-contract.md` for the required shape.
+Include the legacy baseline, design inputs, legacy smell inventory, baseline-vs-target matrix, target mapping, intentional differences, risk decisions, implementation slices, and verification plan. Use `references/migration-record-contract.md` for the required shape.
 
 Proceed autonomously when evidence supports a safe implementation. Pause only when an unresolved ambiguity could materially change business behavior, security, data integrity, or the public contract.
 
-### 7. Implement A Complete Vertical Slice
+### 8. Implement A Complete Vertical Slice
 
 Implement the smallest complete slice that delivers the intended 2.0 capability through its real entry point:
 
@@ -164,11 +184,12 @@ Implement the smallest complete slice that delivers the intended 2.0 capability 
 3. Wire persistence, integrations, configuration, dependency injection, routes, handlers, jobs, or UI as required.
 4. Preserve or intentionally revise authorization, validation, transactional behavior, idempotency, and failure semantics according to the design record.
 5. Add logs, metrics, traces, or audit events consistent with target conventions.
-6. Remove temporary duplication or compatibility scaffolding that is not needed after the slice works.
+6. Remediate classified `simple-fix` and `severe-fix` smells in the target implementation.
+7. Remove temporary duplication or compatibility scaffolding that is not needed after the slice works.
 
 For detailed 2.0 design guidance, read `references/ai-friendly-v2.md` when choosing between multiple viable target designs.
 
-### 8. Verify Behavior, Design, And Integration
+### 9. Verify Behavior, Design, Smell Remediation, And Integration
 
 Derive verification scenarios from both the target design and the recovered source baseline, not merely from copied source tests.
 
@@ -180,16 +201,18 @@ Derive verification scenarios from both the target design and the recovered sour
 - Verify failure paths, authorization, idempotency, and side effects, not only the happy path.
 - Verify compatibility adapters, deprecation paths, data migrations, rollout flags, and backfill behavior when the 2.0 design changes external contracts.
 - For aligned behavior, verify complete migration coverage against the source baseline: all entry points, edge cases, validation failures, permissions, data mutations, emitted events, external calls, config-controlled behavior, logs, metrics, and audit output that matter externally.
+- Verify that every `simple-fix` and `severe-fix` smell has a target-side remediation, test, static check, or documented reason when deferred.
 
 If the source behavior cannot be executed, state which claims are proven by static evidence and which remain assumptions.
 
-### 9. Report The Result
+### 10. Report The Result
 
 Report:
 
 - design documents or optimization requirements used
 - source entry points and strongest implementation evidence
 - persisted source exploration artifact paths
+- legacy smells fixed, severe issues remediated, and any deferred smells with reasons
 - target files and architecture owners changed
 - preserved behaviors, optimized behaviors, deprecated behaviors, and intentional differences
 - verification commands and outcomes
@@ -205,6 +228,8 @@ Do not declare the migration complete while required target wiring, tests, or ve
 - When a design document is vague, use the source baseline to fill business-rule gaps but do not invent 2.0 changes beyond the documented intent.
 - When a design document is older than current target code or conflicts with target architecture, verify the current code path before implementing the document literally.
 - When source behavior and design intent agree, migrate the complete feature contract before calling the work done.
+- When source code contains simple low-risk smells, fix them in the target implementation as part of migration.
+- When source code contains severe security, correctness, reliability, performance, or data-integrity problems, remediate them in the target design and record the decision.
 - When a target abstraction almost fits but would distort the contract, add a narrow adapter or extend the abstraction with tests.
 - When evidence is contradictory, prefer externally observable behavior and executable tests over comments or names.
 - When the source contains an apparent defect, do not silently reproduce or silently fix it. Record the finding and choose based on compatibility requirements.

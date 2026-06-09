@@ -26,6 +26,10 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 | Artifact | Purpose | Status |
 |---|---|---|
 
+## Legacy Smell Remediation
+| Smell/problem | Severity | Source evidence | Target decision | Verification |
+|---|---|---|---|---|
+
 ## Design Intent
 | Requirement | Source/design reference | Target behavior | Acceptance check |
 |---|---|---|---|
@@ -63,6 +67,8 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - [ ] Design-doc behavior
 - [ ] Legacy compatibility behavior
 - [ ] Full migration coverage for aligned behavior
+- [ ] Simple legacy smell fixes
+- [ ] Severe legacy issue remediation
 - [ ] Domain behavior
 - [ ] Persistence and integrations
 - [ ] Entry-point wiring
@@ -80,6 +86,7 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - Use repository-relative file paths and line numbers where practical.
 - Link each important contract claim to code, test, schema, config, history, or runtime evidence.
 - Link source behavior claims to persisted source exploration artifacts where possible.
+- Link legacy smell and severe issue decisions to source evidence and verification.
 - Label uncertain claims as assumptions instead of presenting them as facts.
 - Record intentional differences before or during implementation, not only after tests fail.
 - Link every non-one-to-one behavior decision to a design document, user instruction, or explicit compatibility decision.

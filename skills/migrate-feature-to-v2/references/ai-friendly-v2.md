@@ -30,6 +30,7 @@ Apply these priorities in order:
 - Prefer explicit dependency injection and registration over hidden global state or string-based reflection.
 - Model important state transitions and authorization decisions directly.
 - When behavior changes from legacy, encode the new contract in schemas, tests, docs, or migration records rather than leaving it as an implicit code difference.
+- When legacy code uses brittle, unsafe, or tightly coupled mechanisms, expose the target behavior through explicit contracts instead of recreating the mechanism.
 
 ### Composable
 
@@ -64,6 +65,7 @@ Apply these priorities in order:
 - Splitting code into many tiny modules that obscure the end-to-end workflow.
 - Recreating source architecture inside the target as a permanent compatibility island.
 - Treating a design document as implementation-complete when legacy edge cases, compatibility obligations, or operational constraints still need source evidence.
+- Carrying forward severe legacy smells such as authorization gaps, transaction leaks, unbounded queries, hard-coded secrets, unsafe retries, or god-object coupling.
 
 ## Design Review Questions
 
