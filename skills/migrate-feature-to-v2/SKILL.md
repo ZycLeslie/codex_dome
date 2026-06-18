@@ -1,11 +1,11 @@
 ---
 name: migrate-feature-to-v2
-description: Discover a named feature or business capability in a legacy source repository, persist source exploration evidence to disk, recover observable behavior, classify legacy code smells, reconcile everything with 2.0 design documents or requested optimizations, then implement and verify an architecture-appropriate, AI-friendly target version. Use when an AI coding agent, automation workflow, or engineering team needs to perform cross-repository feature migration, non-one-to-one modernization, design-doc-driven implementation, CodeHub-backed migration through the matching CodeHub MCP, legacy smell remediation, 功能迁移, 特性迁移, 老仓功能探索, 旧系统升级到 2.0, 功能优化, 设计文档落地, or reconstruct a function from source code and deliver the intended 2.0 capability end to end in a new codebase.
+description: Discover a named feature or business capability in a legacy source repository, persist source exploration evidence to disk, recover observable behavior, extract the valuable business essence, reject legacy dross and code smells, reconcile everything with 2.0 design documents or requested optimizations, then implement and verify an architecture-appropriate, AI-friendly target version. Use when an AI coding agent, automation workflow, or engineering team needs to perform cross-repository feature migration, non-one-to-one modernization, design-doc-driven implementation, CodeHub-backed migration through the matching CodeHub MCP, legacy smell remediation, 取其精华去其糟粕, 功能迁移, 特性迁移, 老仓功能探索, 旧系统升级到 2.0, 功能优化, 设计文档落地, or reconstruct a function from source code and deliver the intended 2.0 capability end to end in a new codebase.
 ---
 
 # Migrate Feature To V2
 
-Recover the legacy behavior from the source repository, classify legacy code smells, reconcile the evidence with the intended 2.0 design, then implement the target capability using the target repository's architecture. Treat source code as behavioral evidence, not as a template to paste; treat design documents as the intended future state, not optional commentary.
+Recover the legacy behavior from the source repository, classify legacy code smells, extract the valuable essence, reject the dross, reconcile the evidence with the intended 2.0 design, then implement the target capability using the target repository's architecture. Treat source code as behavioral evidence, not as a template to paste; treat design documents as the intended future state, not optional commentary.
 
 ## Inputs And Defaults
 
@@ -39,6 +39,7 @@ For remote URLs, clone or fetch only after obtaining any required approval. Do n
 - When design documents and recovered source behavior are consistent, perform a complete migration of the feature, including edge cases, validations, permissions, persistence, side effects, configuration, observability, and tests.
 - Do not assume a one-to-one migration. Explicitly decide whether each legacy behavior is preserved, changed, replaced, deprecated, split, merged, or dropped.
 - Adapt the implementation to target conventions, ownership boundaries, frameworks, and existing abstractions.
+- Take the essence and reject the dross: preserve domain rules, invariants, public contracts, proven edge cases, tests, and operational lessons; reject accidental architecture, copy-paste structure, obsolete dependencies, unsafe shortcuts, and brittle implementation mechanisms.
 - Do not blindly copy source files, legacy architecture, generated code, obsolete dependencies, or known defects.
 - Do not preserve legacy bad smells as compatibility. Fix simple low-risk smells in the target implementation, and remediate severe smells or defects instead of recreating them.
 - Trace security, authorization, validation, transactions, idempotency, persistence, events, and integrations explicitly.
@@ -111,21 +112,30 @@ Recover at least:
 - configuration, flags, limits, and compatibility expectations
 - observable logs, metrics, traces, and audit events
 
-Separate **essential behavior** from **legacy implementation accidents**. Do not preserve incidental class layouts, duplicated logic, or framework workarounds unless they are required for compatibility.
+Separate **essence** from **dross**:
+
+- Essence includes business rules, domain invariants, user-visible contracts, compatibility obligations, proven edge cases, useful tests, data constraints, operational signals, and production lessons.
+- Dross includes accidental class/module layout, duplicated or tangled implementation, framework workarounds, obsolete dependencies, unsafe shortcuts, hidden globals, dead code, brittle orchestration, and known defects.
+
+Do not preserve incidental class layouts, duplicated logic, or framework workarounds unless they are required for compatibility. Record each important take/drop decision in the exploration and migration records.
 
 ### 4. Classify And Remediate Legacy Smells
 
-Build a legacy smell inventory before target implementation. Classify each smell as:
+Build a legacy smell and dross inventory before target implementation. Classify each item as:
 
 - `simple-fix`: low-risk technical debt that can be corrected while preserving behavior, such as duplicated local logic, misleading names, small long-method extractions, magic constants, weak logging, missing null/empty guards, local exception handling cleanup, or obvious test fixture cleanup.
 - `severe-fix`: serious design, correctness, security, reliability, performance, or data-integrity problems that must not be copied into 2.0, such as authorization bypasses, injection risks, transaction leaks, race/idempotency flaws, data corruption, resource leaks, unsafe retries, hard-coded secrets, unbounded queries, N+1 behavior, framework misuse, or highly coupled god-object logic.
 - `defer-with-record`: known debt outside the feature slice or too risky to fix now; keep it out of the target implementation when possible and record the reason.
 - `preserve-by-contract`: awkward legacy behavior that is externally required; preserve the behavior but avoid preserving the implementation smell.
+- `dross-drop`: source structure, dependency, pattern, or workaround that has no business value and should not enter the target design.
+- `essence-keep`: source insight or behavior that must influence the target implementation.
 
 Apply these rules:
 
 - Fix `simple-fix` smells directly in the target design and tests; do not ask unless the fix changes external behavior.
 - Fix or redesign around `severe-fix` issues. Add tests or checks that prove the severe problem was not carried forward.
+- Keep `essence-keep` items as target behavior, tests, contracts, or operational requirements.
+- Drop `dross-drop` items from the target design and record why they are not migrated.
 - If a severe fix changes an external contract, data compatibility, or user-visible behavior, use the divergence confirmation gate unless the current task explicitly authorizes the change.
 - Do not edit the source repository to clean smells unless the user explicitly asks; remediation belongs in the target implementation and migration record.
 - Read `references/legacy-smell-remediation.md` for the full classification checklist.
@@ -171,7 +181,7 @@ Before substantial edits, create or update a migration record. Use the target re
 
 `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/migration-record.md`
 
-Include the legacy baseline, design inputs, legacy smell inventory, baseline-vs-target matrix, target mapping, intentional differences, risk decisions, implementation slices, and verification plan. Use `references/migration-record-contract.md` for the required shape.
+Include the legacy baseline, design inputs, essence/dross decisions, legacy smell inventory, baseline-vs-target matrix, target mapping, intentional differences, risk decisions, implementation slices, and verification plan. Use `references/migration-record-contract.md` for the required shape.
 
 Proceed autonomously when evidence supports a safe implementation. Pause only when an unresolved ambiguity could materially change business behavior, security, data integrity, or the public contract.
 
@@ -213,6 +223,7 @@ Report:
 - source entry points and strongest implementation evidence
 - persisted source exploration artifact paths
 - legacy smells fixed, severe issues remediated, and any deferred smells with reasons
+- essence kept and dross intentionally rejected
 - target files and architecture owners changed
 - preserved behaviors, optimized behaviors, deprecated behaviors, and intentional differences
 - verification commands and outcomes
@@ -228,6 +239,8 @@ Do not declare the migration complete while required target wiring, tests, or ve
 - When a design document is vague, use the source baseline to fill business-rule gaps but do not invent 2.0 changes beyond the documented intent.
 - When a design document is older than current target code or conflicts with target architecture, verify the current code path before implementing the document literally.
 - When source behavior and design intent agree, migrate the complete feature contract before calling the work done.
+- Preserve the source's business essence, not its accidental implementation shape.
+- Reject source dross even when it is easy to copy.
 - When source code contains simple low-risk smells, fix them in the target implementation as part of migration.
 - When source code contains severe security, correctness, reliability, performance, or data-integrity problems, remediate them in the target design and record the decision.
 - When a target abstraction almost fits but would distort the contract, add a narrow adapter or extend the abstraction with tests.

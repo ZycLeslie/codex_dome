@@ -26,6 +26,10 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 | Artifact | Purpose | Status |
 |---|---|---|
 
+## Essence And Dross Decisions
+| Source item | Classification | Source evidence | Target decision | Verification |
+|---|---|---|---|---|
+
 ## Legacy Smell Remediation
 | Smell/problem | Severity | Source evidence | Target decision | Verification |
 |---|---|---|---|---|
@@ -67,6 +71,8 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - [ ] Design-doc behavior
 - [ ] Legacy compatibility behavior
 - [ ] Full migration coverage for aligned behavior
+- [ ] Essence kept
+- [ ] Dross rejected
 - [ ] Simple legacy smell fixes
 - [ ] Severe legacy issue remediation
 - [ ] Domain behavior
@@ -86,6 +92,7 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - Use repository-relative file paths and line numbers where practical.
 - Link each important contract claim to code, test, schema, config, history, or runtime evidence.
 - Link source behavior claims to persisted source exploration artifacts where possible.
+- Link essence/dross decisions to source evidence, target decisions, and verification.
 - Link legacy smell and severe issue decisions to source evidence and verification.
 - Label uncertain claims as assumptions instead of presenting them as facts.
 - Record intentional differences before or during implementation, not only after tests fail.

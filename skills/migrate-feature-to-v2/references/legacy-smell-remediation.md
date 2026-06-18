@@ -1,6 +1,6 @@
 # Legacy Smell Remediation
 
-Use this guide when source exploration finds legacy code smells, defects, or technical debt in the feature path. The target implementation should preserve required business behavior, not legacy implementation damage.
+Use this guide when source exploration finds legacy code smells, defects, or technical debt in the feature path. The target implementation should preserve required business behavior and useful production lessons, not legacy implementation damage.
 
 ## Classification
 
@@ -69,12 +69,48 @@ Action:
 - Do not preserve the bad implementation structure.
 - Add tests that lock the required behavior.
 
+### essence-keep
+
+Source behavior or production knowledge that should survive migration.
+
+Examples:
+
+- domain invariants
+- externally visible contracts
+- edge cases proven by tests or production behavior
+- operational signals that support support/compliance workflows
+- historical compatibility rules still required by callers or data
+
+Action:
+
+- Preserve as target behavior, tests, contracts, or observability.
+- Re-express through target architecture instead of copying source shape.
+
+### dross-drop
+
+Legacy implementation material with no target value.
+
+Examples:
+
+- accidental class/module layout
+- copy-paste structure
+- obsolete dependencies
+- framework workarounds no longer needed
+- dead code and unused branches
+- brittle orchestration created by historical constraints
+
+Action:
+
+- Do not migrate.
+- Record why it is dropped when it appears in the feature path.
+- Confirm only if dropping it could affect an external contract.
+
 ## Smell Inventory Fields
 
 Record each relevant smell with:
 
 - smell/problem summary
-- classification: `simple-fix`, `severe-fix`, `defer-with-record`, or `preserve-by-contract`
+- classification: `simple-fix`, `severe-fix`, `defer-with-record`, `preserve-by-contract`, `essence-keep`, or `dross-drop`
 - source evidence
 - target remediation decision
 - behavior compatibility impact
@@ -86,4 +122,6 @@ Record each relevant smell with:
 - Never use "AI-friendly" as an excuse to rewrite business behavior without confirmation.
 - Prefer target-native ownership over source class/module shape.
 - Preserve source business rules and edge cases, but replace unsafe or brittle implementation mechanisms.
+- Convert source essence into target-native contracts, tests, and observability.
+- Drop source dross deliberately instead of recreating it for convenience.
 - When unsure whether something is behavior or smell, treat it as behavior until evidence or user confirmation says otherwise.

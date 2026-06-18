@@ -43,6 +43,10 @@ Required sections:
 | Concern | Evidence | Notes |
 |---|---|---|
 
+## Essence And Dross
+| Item | Classification | Evidence | Migration decision |
+|---|---|---|---|
+
 ## Legacy Smells
 | Smell | Severity | Evidence | Migration decision |
 |---|---|---|---|
@@ -70,7 +74,7 @@ Recommended shape:
     {
       "id": "EV-001",
       "claim": "Short behavior or implementation claim",
-      "kind": "code | test | schema | config | history | codehub-mcp | runtime | docs | bad-smell",
+      "kind": "code | test | schema | config | history | codehub-mcp | runtime | docs | essence | dross | bad-smell",
       "location": "repo-relative/path:line or MCP resource identifier",
       "symbol": "optional symbol name",
       "notes": "brief explanation"
@@ -122,6 +126,7 @@ When the source repository is a CodeHub URL or the user identifies it as CodeHub
 ## Quality Bar
 
 - Every recovered behavior in the migration record should point to at least one evidence item.
+- Every important essence/dross decision should point to evidence and a migration decision.
 - Every severe smell or defect discovered in the feature path should be recorded with a remediation or deferral decision.
 - Label uncertain claims as assumptions.
 - Prefer source tests, schemas, configs, and externally visible entry points over comments.
