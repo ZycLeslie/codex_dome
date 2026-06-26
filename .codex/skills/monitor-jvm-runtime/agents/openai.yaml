@@ -1,0 +1,4 @@
+interface:
+  display_name: "Monitor JVM Runtime"
+  short_description: "Monitor JVMs with Actuator and runtime tools"
+  default_prompt: "Use $monitor-jvm-runtime to monitor this Spring Boot or JVM process with Actuator and runtime tools, then produce an evidence-backed report."
