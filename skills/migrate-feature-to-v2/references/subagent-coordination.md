@@ -34,6 +34,7 @@ Create task packages when any of these are true:
 - The source feature has multiple entry points, workflows, jobs, events, or UI paths.
 - The candidate source files or call chain are too large to keep in memory.
 - The target implementation crosses multiple owners such as API, domain, persistence, UI, jobs, or integrations.
+- The feature has both frontend and backend/API surfaces that need separate owners, tests, and approval.
 - Design documents are large, contradictory, or contain multiple alternatives.
 - Implementation can be split into disjoint approved slices.
 - Verification needs independent coverage of compatibility, security, data, or integration behavior.
@@ -130,11 +131,13 @@ For small migrations, a single agent may execute the same package protocol seria
 | Role | Use for | Must output |
 |---|---|---|
 | `source-entrypoint-explorer` | One legacy entry point, workflow, domain slice, job, event, or UI path | `feature-points/<slug>.md`, evidence IDs, report |
+| `frontend-surface-explorer` | UI routes, pages, components, forms, client state, API clients, generated types, visible validation, permissions display, analytics, accessibility | frontend feature-point files, evidence IDs, report |
+| `backend-surface-explorer` | API contracts, handlers, domain services, persistence, jobs/events, integrations, authorization, validation, transactions, idempotency | backend/API feature-point files, evidence IDs, report |
 | `design-intent-extractor` | Large or ambiguous design documents | target intent, acceptance criteria, explicit changes, questions |
 | `legacy-smell-auditor` | Smell and dross classification after feature points exist | `legacy-smells.md` updates and severe-fix recommendations |
 | `target-architecture-mapper` | Target analogs, owners, boundaries, patterns, and tests | target mapping artifact and report |
 | `reconciliation-designer` | Combining reduced artifacts into decisions | baseline-vs-target matrix, design draft updates |
-| `implementation-slice-agent` | One approved implementation slice | patch in disjoint write set, tests, report |
+| `implementation-slice-agent` | One approved implementation slice, preferably one surface at a time | patch in disjoint write set, tests, report |
 | `verification-agent` | Independent verification of behavior, approval, and coverage | verification results and gaps |
 
 ## Delegation Rules
@@ -142,6 +145,7 @@ For small migrations, a single agent may execute the same package protocol seria
 - Give each subagent only the package file and the minimal referenced artifacts.
 - Do not ask one subagent to ingest the complete source, complete target, and complete design corpus unless the package explicitly justifies it.
 - For code-edit packages, assign a disjoint write set and remind the subagent not to revert unrelated changes.
+- Split frontend and backend implementation into separate packages when both surfaces exist, then add a coordination or verification package for the end-to-end workflow.
 - Exploration and design packages may write artifacts before design approval. Implementation packages may start only after approved slices are recorded.
 - Subagents may recommend behavior changes, smell remediation, or drops, but the main agent owns reconciliation and approval gates.
 - If a package discovers evidence that changes design scope, mark dependent packages `stale`, update `context-recovery.md`, and return to design approval before implementation continues.

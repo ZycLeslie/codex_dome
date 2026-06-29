@@ -1,11 +1,11 @@
 ---
 name: migrate-feature-to-v2
-description: Discover a named feature or business capability in a legacy source repository, split large migrations into bounded subagent task packages, persist source exploration evidence to disk, split recovered feature points into focused Markdown files, recover observable behavior, extract the valuable business essence, reject legacy dross and code smells, reconcile everything with 2.0 design documents or requested optimizations, produce an approvable migration design, then implement only after approval. Use when an AI coding agent, automation workflow, or engineering team needs to perform cross-repository feature migration, context-bounded subagent delegation, non-one-to-one modernization, design-doc-driven implementation, CodeHub-backed migration through the matching CodeHub MCP, legacy smell remediation, 取其精华去其糟粕, subagent 分工迁移, 功能点拆分, 方案审批后迁移, 功能迁移, 特性迁移, 老仓功能探索, 旧系统升级到 2.0, 功能优化, 设计文档落地, or reconstruct a function from source code and deliver the intended 2.0 capability end to end in a new codebase.
+description: Discover a named legacy feature, split large work into bounded subagent task packages, separate frontend/backend surfaces when present, persist source evidence, split feature points into Markdown, reconcile with 2.0 design docs, reject legacy dross and smells, write an approvable migration design, then implement only after approval. Use for cross-repository feature migration, full-stack frontend/backend migration, context-bounded subagent delegation, non-one-to-one modernization, CodeHub-backed migration through the matching MCP, legacy smell remediation, 取其精华去其糟粕, 前后端分开迁移, subagent 分工迁移, 功能点拆分, 方案审批后迁移, 功能迁移, 特性迁移, 旧系统升级到 2.0, 功能优化, 设计文档落地, or reconstructing a feature end to end in a new codebase.
 ---
 
 # Migrate Feature To V2
 
-Recover the legacy behavior from the source repository, split large work into bounded subagent task packages, split the explored feature points into focused Markdown artifacts, classify legacy code smells, extract the valuable essence, reject the dross, reconcile the evidence with the intended 2.0 design, then write an approvable migration design. Implement target code only after the design is approved. Treat source code as behavioral evidence, not as a template to paste; treat design documents as the intended future state, not optional commentary.
+Recover the legacy behavior from the source repository, split large work into bounded subagent task packages, separate frontend and backend surfaces when both exist, split the explored feature points into focused Markdown artifacts, classify legacy code smells, extract the valuable essence, reject the dross, reconcile the evidence with the intended 2.0 design, then write an approvable migration design. Implement target code only after the design is approved. Treat source code as behavioral evidence, not as a template to paste; treat design documents as the intended future state, not optional commentary.
 
 ## Inputs And Defaults
 
@@ -16,6 +16,7 @@ Resolve these inputs before editing:
 - **Feature request**: user-visible capability, business rule, API, workflow, job, UI behavior, or named function to migrate.
 - **Design documents**: optional PRD, technical design, API spec, OpenSpec change, ADR, issue, ticket, or acceptance document that defines the 2.0 target behavior.
 - **Change intent**: whether the work is compatible migration, optimized behavior, redesigned workflow, API replacement, feature split/merge, deprecation, or greenfield implementation informed by legacy evidence.
+- **Feature surfaces**: frontend, backend/API, jobs, events, integrations, data, configuration, and observability surfaces involved in the capability.
 - **Bad smell policy**: optional user guidance for which legacy smells, defects, or technical debt must be fixed during migration.
 - **Approval requirement**: who or what can approve the migration design before implementation. Default to the current user when no other approval source is provided.
 - **Subagent strategy**: whether to delegate exploration, design extraction, implementation slices, or verification to subagents. Default to subagents for broad migrations and to the same task-package protocol run serially when subagents are unavailable.
@@ -40,6 +41,7 @@ For remote URLs, clone or fetch only after obtaining any required approval. Do n
 - When a design document or optimization request diverges from recovered source behavior, require explicit user confirmation unless the current task already clearly authorizes that exact divergence.
 - When design documents and recovered source behavior are consistent, perform a complete migration of the feature, including edge cases, validations, permissions, persistence, side effects, configuration, observability, and tests.
 - Do not assume a one-to-one migration. Explicitly decide whether each legacy behavior is preserved, changed, replaced, deprecated, split, merged, or dropped.
+- Do not collapse full-stack work into backend-only migration. If the feature has frontend and backend behavior, explore, design, implement, and verify them as separate coordinated slices.
 - Adapt the implementation to target conventions, ownership boundaries, frameworks, and existing abstractions.
 - Take the essence and reject the dross: preserve domain rules, invariants, public contracts, proven edge cases, tests, and operational lessons; reject accidental architecture, copy-paste structure, obsolete dependencies, unsafe shortcuts, and brittle implementation mechanisms.
 - Do not blindly copy source files, legacy architecture, generated code, obsolete dependencies, or known defects.
@@ -51,6 +53,7 @@ For remote URLs, clone or fetch only after obtaining any required approval. Do n
 - Persist source exploration results before implementation so another agent or engineer can trace every recovered behavior back to source evidence.
 - Split recovered feature points into small Markdown files and use those files, not raw sprawling exploration context, as the basis for target design.
 - For large migrations, split work into bounded task packages and use subagents when available. Each subagent must receive only the minimal inputs for its package and must write a durable report or artifact.
+- Record feature surface coverage. If a frontend, UI route, page, component, state transition, validation message, permission display, API call, generated client, or end-to-end flow exists, it must be represented in feature points, task packages, design, implementation, and verification.
 - Do not modify target implementation code before the migration design is approved. Exploration artifacts and design documents may be written before approval.
 - Interpret "AI-friendly" as discoverable, explicit, composable, testable, and observable. Do not add an LLM, agent endpoint, or weaken security merely to claim AI readiness.
 
@@ -77,6 +80,8 @@ Each task package must state objective, role, allowed inputs, forbidden inputs/a
 Recommended subagent roles:
 
 - `source-entrypoint-explorer`: explore one source entry point, workflow, or domain slice; write feature-point Markdown and evidence.
+- `frontend-surface-explorer`: explore UI routes, pages, components, forms, state management, client-side validation, generated clients, permission display, analytics, and browser-visible behavior.
+- `backend-surface-explorer`: explore API handlers, domain services, persistence, jobs, events, integrations, auth, transactions, idempotency, and server-side observability.
 - `design-intent-extractor`: read only design artifacts; write target intent, acceptance criteria, explicit changes, and questions.
 - `legacy-smell-auditor`: inspect feature-point artifacts and source evidence; write smell classifications and remediation recommendations.
 - `target-architecture-mapper`: read target analogs; write owner, boundary, pattern, and verification mapping.
@@ -102,6 +107,8 @@ Read `references/subagent-coordination.md` before delegating a broad migration.
 
 Use the profile as orientation only. Read actual source files before making decisions.
 
+Identify the feature surfaces before deep exploration. Check whether the capability includes frontend routes, pages, components, forms, state, client APIs, generated clients, backend APIs, domain services, persistence, jobs, events, external integrations, data migrations, configuration, or observability. If both frontend and backend exist, create separate feature-point files and task packages for each layer plus an end-to-end coordination package.
+
 ### 2. Interpret The 2.0 Design Intent
 
 When design documents, tickets, OpenSpec changes, API specs, or explicit optimization requirements exist, analyze them before designing code:
@@ -124,7 +131,7 @@ For detailed design-doc reconciliation guidance, read `references/design-driven-
 
 Start from user-visible or externally callable entry points, then trace inward:
 
-1. Search for route paths, command names, UI labels, event names, configuration keys, database entities, logs, tests, and likely symbols with `rg`.
+1. Search for route paths, command names, UI labels, component names, client API calls, event names, configuration keys, database entities, logs, tests, and likely symbols with `rg`.
 2. Follow the call chain through controllers/handlers, orchestration, domain logic, persistence, integrations, and emitted side effects.
 3. Inspect tests, fixtures, schemas, API specifications, migrations, and configuration that constrain behavior.
 4. Use `git log`, `git blame`, and historical diffs when current intent is unclear.
@@ -146,6 +153,7 @@ Use the target repository's existing artifact directory if it has one. Read `ref
 Keep context bounded:
 
 - Assign source exploration by entry point, workflow, domain concept, or integration boundary to `source-entrypoint-explorer` packages when one pass would overload context.
+- For full-stack features, assign frontend and backend exploration separately. Do not let a backend package claim the feature is migrated until the frontend surface has been checked or explicitly recorded as not applicable.
 - After exploration, summarize each coherent feature point into its own Markdown file.
 - Keep one feature point per file: entry points, behavior, data/integration evidence, essence/dross, smells, open questions, and verification ideas.
 - Use `feature-point-index.md` as the navigation map. Load only the index and the feature-point files needed for the current design decision.
@@ -154,6 +162,7 @@ Keep context bounded:
 Recover at least:
 
 - inputs, outputs, defaults, and error semantics
+- frontend routes, pages, components, forms, client state, generated clients, browser-visible validation, loading/empty/error states, permissions display, and analytics or telemetry hooks
 - permissions, validation, and security constraints
 - state transitions, transactions, and idempotency
 - persistence reads/writes and data shape
@@ -217,9 +226,9 @@ Apply the confirmation gate:
 
 Explore the target before designing. For broad targets, delegate one or more `target-architecture-mapper` packages by target owner or analogous feature:
 
-1. Find the closest analogous feature and identify its entry-point, domain, persistence, integration, test, and observability patterns.
+1. Find the closest analogous feature and identify its frontend, backend/API, domain, persistence, integration, test, and observability patterns.
 2. Reuse target-owned abstractions when they genuinely match the intended 2.0 responsibility.
-3. Build a responsibility map: source responsibility, design requirement, target owner, implementation action, and verification.
+3. Build a responsibility map: source responsibility, surface, design requirement, target owner, implementation action, and verification.
 4. Identify compatibility gaps in data models, APIs, event schemas, dependencies, or operational assumptions.
 5. Prefer a thin adapter at a real boundary over spreading legacy assumptions through target code.
 
@@ -237,11 +246,12 @@ The design must include:
 
 - scope and non-goals
 - feature point summary with links to `feature-points/*.md`
+- surface coverage for frontend, backend/API, jobs/events, integrations, data, configuration, observability, and end-to-end flows
 - target architecture mapping
 - behavior compatibility and intentional differences
 - simple/severe legacy smell remediation decisions
 - data, API, event, integration, rollout, and observability changes
-- implementation slices
+- implementation slices split by surface when applicable, especially frontend and backend/API
 - task package plan that maps slices to subagent packages, allowed write sets, outputs, and verification
 - verification plan
 - open questions and approval status
@@ -276,6 +286,12 @@ Proceed autonomously through exploration and design artifacts when evidence supp
 
 After design approval, implement the smallest complete approved slice that delivers the intended 2.0 capability through its real entry point. Use `implementation-slice-agent` packages for independent slices with disjoint write sets; each package must work from `migration-design.md`, `design-approval.md`, relevant feature-point files, and target owner context instead of reopening the full source exploration.
 
+For full-stack features, implement coordinated but separate slices:
+
+- frontend slice: routes, pages, components, forms, client state, API client usage, generated types, validation presentation, loading/empty/error states, permissions display, accessibility, and frontend tests
+- backend slice: API contracts, handlers, domain behavior, persistence, jobs/events, integrations, authorization, validation, transactions, idempotency, observability, and backend tests
+- end-to-end slice: contract alignment, user workflow, request/response compatibility, error display, rollout flags, and end-to-end or integration verification
+
 1. Add or update explicit contracts and schemas.
 2. Implement domain behavior in the target's existing ownership boundaries according to the design decision matrix.
 3. Wire persistence, integrations, configuration, dependency injection, routes, handlers, jobs, or UI as required.
@@ -291,6 +307,7 @@ For detailed 2.0 design guidance, read `references/ai-friendly-v2.md` when choos
 Derive verification scenarios from both the target design and the recovered source baseline, not merely from copied source tests.
 
 - Add focused unit tests for business rules and edge cases.
+- Add frontend tests when a UI or browser/client surface exists, including visible states and user interactions.
 - Add integration or contract tests for boundaries changed by the migration.
 - Use `verification-agent` packages for independent verification slices when test scope is broad or risk is high.
 - Use differential, golden, or fixture-based comparison against the source for preserved behavior, and explicit new expectations for redesigned behavior.
@@ -298,6 +315,7 @@ Derive verification scenarios from both the target design and the recovered sour
 - Search for missing registrations, routes, dependency injection wiring, schemas, migrations, flags, and documentation.
 - Verify failure paths, authorization, idempotency, and side effects, not only the happy path.
 - Verify compatibility adapters, deprecation paths, data migrations, rollout flags, and backfill behavior when the 2.0 design changes external contracts.
+- Verify end-to-end behavior across frontend and backend when both exist; do not declare completion from backend tests alone.
 - For aligned behavior, verify complete migration coverage against the source baseline: all entry points, edge cases, validation failures, permissions, data mutations, emitted events, external calls, config-controlled behavior, logs, metrics, and audit output that matter externally.
 - Verify that every `simple-fix` and `severe-fix` smell has a target-side remediation, test, static check, or documented reason when deferred.
 - Verify implementation matches the approved `migration-design.md`; if the implementation must deviate, update the design and get approval before continuing.
@@ -317,6 +335,7 @@ Report:
 - legacy smells fixed, severe issues remediated, and any deferred smells with reasons
 - essence kept and dross intentionally rejected
 - target files and architecture owners changed
+- frontend/backend surface coverage, or evidence that a surface is not applicable
 - preserved behaviors, optimized behaviors, deprecated behaviors, and intentional differences
 - verification commands and outcomes
 - remaining assumptions, risks, and follow-up work
@@ -331,6 +350,7 @@ Do not declare the migration complete while required target wiring, tests, or ve
 - When a design document is vague, use the source baseline to fill business-rule gaps but do not invent 2.0 changes beyond the documented intent.
 - When a design document is older than current target code or conflicts with target architecture, verify the current code path before implementing the document literally.
 - When source behavior and design intent agree, migrate the complete feature contract before calling the work done.
+- When a feature has both frontend and backend surfaces, split them into separate coordinated slices and verify the end-to-end user workflow.
 - Preserve the source's business essence, not its accidental implementation shape.
 - Reject source dross even when it is easy to copy.
 - Design from the persisted feature point Markdown files, not from an overloaded in-memory exploration context.

@@ -35,12 +35,16 @@ Required before implementation.
 - Non-goals:
 
 ## Feature Point Summary
-| Feature point | Source markdown | Target decision | Notes |
-|---|---|---|---|
+| Surface | Feature point | Source markdown | Target decision | Notes |
+|---|---|---|---|---|
+
+## Surface Coverage
+| Surface | Source evidence | Target owner | Decision | Verification |
+|---|---|---|---|---|
 
 ## Target Architecture
-| Target owner/module | Responsibility | Source/design basis |
-|---|---|---|
+| Target owner/module | Surface | Responsibility | Source/design basis |
+|---|---|---|---|
 
 ## Behavior Compatibility
 | Behavior | Decision | Evidence | Verification |
@@ -55,12 +59,16 @@ Required before implementation.
 |---|---|---|---|
 
 ## Implementation Slices
-| Slice | Files/modules | Depends on | Verification |
-|---|---|---|---|
+| Slice | Surface | Files/modules | Depends on | Verification |
+|---|---|---|---|---|
 
 ## Task Package Plan
 | Package | Role | Slice/feature point | Inputs | Allowed files/modules | Outputs | Verification | Status |
 |---|---|---|---|---|---|---|---|
+
+## Full-Stack Coordination
+| Flow | Frontend slice | Backend/API slice | Contract or integration check | E2E verification |
+|---|---|---|---|---|
 
 ## Rollout And Operations
 | Concern | Plan |
@@ -90,7 +98,7 @@ Required before implementation starts.
 - Approval source: conversation | ticket | PR | design review | other
 
 ## Approved Scope
-| Slice/package/decision | Approved? | Notes |
+| Surface/slice/package/decision | Approved? | Notes |
 |---|---|---|
 
 ## Required Changes Before Implementation
@@ -106,6 +114,7 @@ Required before implementation starts.
 
 - Do not edit target implementation code before approval is recorded.
 - If approval is partial, implement only approved slices and task packages.
+- If frontend and backend surfaces both exist, approval should identify which frontend slices, backend/API slices, and end-to-end checks are approved.
 - If a package is not approved, do not hand it to an implementation-slice agent.
 - If design changes affect package inputs, mark the old package `stale`, update the package plan, and get approval for the changed package before implementation.
 - If the implementation discovers a design-changing fact, update `migration-design.md` and get approval again before continuing.

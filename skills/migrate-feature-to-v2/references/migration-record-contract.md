@@ -36,8 +36,12 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 |---|---|---|---|---|---|---|
 
 ## Feature Point Files
-| Feature point | Markdown file | Used in design? | Notes |
-|---|---|---|---|
+| Surface | Feature point | Markdown file | Used in design? | Notes |
+|---|---|---|---|---|
+
+## Surface Coverage
+| Surface | Present? | Source evidence | Target owner | Implementation status | Verification |
+|---|---|---|---|---|---|
 
 ## Design Approval
 | Item | Status | Evidence |
@@ -72,8 +76,8 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 |---|---|---|---|
 
 ## Target Mapping
-| Source/design responsibility | Target owner/pattern | Action | Verification |
-|---|---|---|---|
+| Source/design responsibility | Surface | Target owner/pattern | Action | Verification |
+|---|---|---|---|---|
 
 ## Intentional Differences
 | Difference | Reason | Compatibility impact | Approval/evidence |
@@ -93,7 +97,11 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - [ ] Subagent package reports integrated
 - [ ] Context recovery file current
 - [ ] Feature point Markdown split
+- [ ] Surface coverage recorded
 - [ ] Migration design approved
+- [ ] Frontend slice complete or documented not applicable
+- [ ] Backend/API slice complete or documented not applicable
+- [ ] End-to-end flow verified when frontend and backend both exist
 - [ ] Design-doc behavior
 - [ ] Legacy compatibility behavior
 - [ ] Full migration coverage for aligned behavior
@@ -119,6 +127,7 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - Link each important contract claim to code, test, schema, config, history, or runtime evidence.
 - Link source behavior claims to persisted source exploration artifacts where possible.
 - Link delegated work to task-package files and subagent reports; do not cite unpersisted chat-only handoffs.
+- Link frontend, backend/API, and end-to-end coverage to feature-point files, target files, and verification evidence.
 - Link design decisions to feature point Markdown files and approval evidence.
 - Link essence/dross decisions to source evidence, target decisions, and verification.
 - Link legacy smell and severe issue decisions to source evidence and verification.
@@ -127,5 +136,6 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - Link every non-one-to-one behavior decision to a design document, user instruction, or explicit compatibility decision.
 - Mark design/source divergences as unconfirmed until the current user request or another explicit approval confirms them.
 - For aligned behavior, record how complete migration coverage was verified.
+- Do not mark the migration complete when a present frontend or backend surface is unimplemented or unverified.
 - Record the canonical reload set and stale package status before pausing or handing work off.
 - Keep raw copied source code out of the record; cite it and summarize the behavior.

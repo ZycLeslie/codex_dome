@@ -23,6 +23,7 @@ Examples:
 - magic constants that should become named constants or configuration
 - weak or noisy logging
 - obvious missing null/empty guard where the behavior is clear
+- duplicated frontend formatting, local state, or client-side validation that can be centralized without changing visible behavior
 - local exception handling cleanup
 - small test fixture or helper cleanup
 
@@ -46,6 +47,7 @@ Examples:
 - hard-coded secrets or privileged endpoints
 - unsafe retries, duplicate side effects, or missing compensation
 - unbounded queries, N+1 patterns, or severe performance cliffs
+- frontend permission display that disagrees with server authorization, unsafe client-only validation, stale generated API clients, or UI flows that can submit invalid state
 - framework misuse that breaks lifecycle, validation, transactions, caching, or security
 - god-object logic or circular coupling that would damage target ownership
 

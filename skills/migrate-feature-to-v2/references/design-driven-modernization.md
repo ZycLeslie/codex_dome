@@ -29,6 +29,7 @@ From each design artifact, extract:
 
 - target user/business outcome
 - public API, UI, event, job, or tool entry points
+- frontend/backend surface expectations, including page behavior, API contracts, client state, and end-to-end flow
 - entities, state transitions, and data ownership
 - required compatibility with legacy callers, data, URLs, events, or reports
 - intentional behavior changes and removed behavior
@@ -49,6 +50,8 @@ When design documents are large, a `design-intent-extractor` package may read on
 - open questions and approval ambiguity
 
 The design subagent must not decide that source-only behavior can be dropped. Source-only, divergent, or dropped behavior decisions belong to the reconciliation stage after source feature-point Markdown files and design intent are reviewed together.
+
+If the design includes UI, frontend, or user journey requirements, keep those requirements separate from backend/API requirements so reconciliation can produce independent frontend, backend, and end-to-end slices.
 
 ## Design And Source Alignment
 
@@ -131,6 +134,7 @@ Use when source code is evidence but not a blueprint.
 - Which source edge cases are missing from the design document?
 - Which aligned behaviors still need full migration coverage?
 - Which target abstractions already own each responsibility?
+- Which frontend, backend/API, and end-to-end surfaces are present, absent, or explicitly out of scope?
 - Which data migrations, adapters, flags, or rollout steps are required?
 - Which tests prove legacy compatibility and which prove redesigned behavior?
 - Which differences need explicit user or stakeholder confirmation?

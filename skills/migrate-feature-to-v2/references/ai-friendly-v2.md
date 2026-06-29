@@ -19,6 +19,7 @@ Apply these priorities in order:
 ### Discoverable
 
 - Give the feature a clear entry point and stable owner.
+- For full-stack features, make both frontend entry points and backend/API entry points discoverable and connected by explicit contracts.
 - Use names that reflect business concepts rather than historical implementation details.
 - Keep route, command, event, configuration, and schema definitions near their owners or linked through established target conventions.
 - Add concise documentation only where repository conventions expect it.
@@ -42,6 +43,7 @@ Apply these priorities in order:
 ### Testable
 
 - Encode recovered behavior as focused tests and realistic boundary tests.
+- When a frontend exists, test user-visible states and interactions in addition to backend business rules.
 - Make fixtures and examples small, readable, and representative.
 - Support deterministic substitutes for time, IDs, external calls, and event delivery where target patterns allow.
 - Test authorization, validation, idempotency, error paths, and side effects.
@@ -72,6 +74,7 @@ Apply these priorities in order:
 - Can an engineer find the feature from its public entry point and trace it to its business owner?
 - Can another caller reuse the business capability without bypassing authorization or duplicating rules?
 - Are inputs, outputs, errors, state transitions, and side effects explicit?
+- If both frontend and backend exist, are their contracts, visible states, and end-to-end flow verified?
 - Can tests run deterministically without real external services?
 - Can operators understand success, failure, retry, and partial completion?
 - Does the design look native to the target repository?

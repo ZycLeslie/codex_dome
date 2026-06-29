@@ -186,6 +186,10 @@ Required sections:
 | Entry point | Type | Evidence | Notes |
 |---|---|---|---|
 
+## Surface Coverage
+| Surface | Present? | Evidence | Feature points | Notes |
+|---|---|---|---|---|
+
 ## Behavior Baseline
 | Scenario | Inputs/triggers | Outputs/results | Side effects | Evidence |
 |---|---|---|---|---|
@@ -253,12 +257,12 @@ Required sections:
 - Feature:
 
 ## Feature Points
-| ID | Feature point | Markdown file | Status | Notes |
-|---|---|---|---|---|
+| ID | Surface | Feature point | Markdown file | Status | Notes |
+|---|---|---|---|---|---|
 
 ## Design Inputs
-| Topic | Feature point files | Design impact |
-|---|---|---|
+| Topic | Surface | Feature point files | Design impact |
+|---|---|---|---|
 
 ## Open Questions
 | Question | Related feature points | Decision needed |
@@ -276,12 +280,17 @@ Required sections:
 
 ## Summary
 - ID:
+- Surface: frontend | backend-api | job-event | integration | data | config | observability | end-to-end
 - Status:
 - Owner/domain:
 
 ## Entry Points
 | Entry point | Evidence |
 |---|---|
+
+## Surface Responsibilities
+| Responsibility | Evidence | Notes |
+|---|---|---|
 
 ## Behavior
 | Scenario | Inputs/triggers | Expected result | Side effects | Evidence |
@@ -352,6 +361,9 @@ When the source repository is a CodeHub URL or the user identifies it as CodeHub
 
 - Every recovered behavior in the migration record should point to at least one evidence item.
 - Every broad migration should have task packages, package reports, and a context recovery file before implementation starts.
+- Surface coverage should explicitly mark frontend, backend/API, jobs/events, integrations, data, config, observability, and end-to-end flow as present, absent, or unknown.
+- If a frontend route, page, component, form, client API call, generated client, UI validation, visible permission state, or user workflow exists, it should have a frontend feature-point file and a verification plan.
+- If no frontend exists, record the evidence for `not applicable` instead of silently skipping frontend work.
 - Every meaningful feature point should have one focused Markdown file and an entry in `feature-point-index.md`.
 - The migration design should cite feature point Markdown files rather than raw search output whenever possible.
 - Main-agent decisions should cite persisted package reports or artifacts, not subagent private reasoning.
