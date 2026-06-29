@@ -27,6 +27,15 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - Repository access method:
 - Explicit non-goals:
 
+## Visual Workspace
+| Artifact | Purpose | Current status | Last updated |
+|---|---|---|---|
+| `README.md` | Dashboard and quick links |  |  |
+| `migration-status.md` | Phase, surface, package, approval, and verification boards |  |  |
+| `artifact-index.md` | Artifact inventory and staleness |  |  |
+| `timeline.md` | Append-only event log |  |  |
+| `resume.md` | Restart checkpoint and canonical reload set |  |  |
+
 ## Source Exploration Artifacts
 | Artifact | Purpose | Status |
 |---|---|---|
@@ -105,12 +114,14 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 
 ## Implementation Slices
 - [ ] Contract and schema
+- [ ] Visual workspace initialized and current
 - [ ] Subagent task packages prepared
 - [ ] One-pass feasibility assessed for every package
 - [ ] Oversized packages split before execution
 - [ ] Task checklist current
 - [ ] Subagent package reports integrated
 - [ ] Context recovery file current
+- [ ] Resume file current for restart after interruption
 - [ ] Feature point Markdown split
 - [ ] Surface coverage recorded
 - [ ] Migration design approved
@@ -144,6 +155,7 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - Use repository-relative file paths and line numbers where practical.
 - Link each important contract claim to code, test, schema, config, history, or runtime evidence.
 - Link source behavior claims to persisted source exploration artifacts where possible.
+- Link the current migration state to the root visual workspace files, especially `migration-status.md`, `artifact-index.md`, `timeline.md`, and `resume.md`.
 - Link delegated work to task-package files and subagent reports; do not cite unpersisted chat-only handoffs.
 - Link task status to `task-checklist.md` and final decision to `completion-check.md`.
 - Link frontend, backend/API, and end-to-end coverage to feature-point files, target files, and verification evidence.
@@ -160,4 +172,5 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - Do not mark the migration complete while a required package is `ready`, `needs-split`, `blocked`, `in-progress`, or unverified.
 - Do not mark the migration complete while legacy dross scan findings are unexplained.
 - Record the canonical reload set and stale package status before pausing or handing work off.
+- Keep `resume.md` and `orchestration/context-recovery.md` aligned before pausing, handing off, or responding after an interruption.
 - Keep raw copied source code out of the record; cite it and summarize the behavior.

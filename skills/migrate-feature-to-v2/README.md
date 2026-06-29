@@ -19,6 +19,7 @@
 - 设计文档与源代码一致时，必须完整迁移。
 - 源仓探索结果必须落盘，保证迁移过程可追溯。
 - 源仓探索出的功能点必须拆成独立 Markdown，避免上下文过大。
+- 迁移过程必须在目标项目内建立可视化工作区，记录当前阶段、任务状态、证据、审批、下一步和恢复入口。
 - 大迁移必须先拆成有边界的任务包，再用 subagent 或串行任务执行，避免一个上下文吞掉全部源仓、目标仓和设计文档。
 - 每个任务包开始前都要评估一次性能否完成；不能一次完成的，先拆分再执行。
 - 全程维护 `task-checklist.md`，防止上下文压缩或交接时丢功能、丢任务、丢验证。
@@ -29,6 +30,37 @@
 - 先基于功能点 Markdown 写迁移设计方案，方案审批后才能开始实现。
 - 如果源仓是 CodeHub 地址，必须使用对应的 CodeHub MCP 访问和探索。
 - 不盲目复制旧实现；用目标仓现有架构完成实现。
+
+## 项目内可视化迁移工作区
+
+迁移默认在目标项目内建立可恢复、可审计的工作区：
+
+```text
+.ai-migrations/feature-migrations/<feature-slug>/
+```
+
+如果目标仓已经有自己的 agent、migration、design artifact 目录约定，优先使用目标仓约定。
+
+可用脚本初始化骨架：
+
+```bash
+python3 skills/migrate-feature-to-v2/scripts/init_migration_workspace.py \
+  --target <target-root> \
+  --feature "<feature name>" \
+  --source <source-root-or-url>
+```
+
+工作区核心文件：
+
+- `README.md`：迁移总览、当前 gate、下一步和常用链接。
+- `migration-status.md`：阶段、surface、功能点、任务包、审批和验证状态看板。
+- `artifact-index.md`：所有迁移 artifact 的位置、用途、状态和更新时间。
+- `timeline.md`：追加式记录探索、拆分、审批、实现、验证、暂停和恢复事件。
+- `resume.md`：agent 中断或重开后的最小恢复入口，说明先读哪些文件、当前包是什么、下一步做什么。
+- `source-exploration/`：源仓行为基线、证据、功能点 Markdown、坏味道和糟粕清单。
+- `orchestration/`：任务包、task checklist、subagent 报告、context recovery 和 completion check。
+
+只写代码不更新工作区，不算完成迁移步骤。每次任务包完成、方案审批变化、实现切片、验证结果、上下文压缩或交接，都要更新 `migration-status.md`、`artifact-index.md`、`timeline.md` 和 `resume.md`。
 
 ## 上下文安全的多 agent 使用
 
@@ -114,21 +146,22 @@ python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
 
 1. 确认源仓、目标仓、功能范围、设计文档和验收标准。
 2. 识别功能 surface：前端、后端/API、任务、事件、集成、数据、配置和观测。
-3. 判断迁移规模，创建 `orchestration/task-package-index.md`、`task-checklist.md` 和具体任务包。
-4. 对每个任务包评估一次性能否完成；不能完成的先拆分。
-5. 用 subagent 或串行任务从源仓恢复旧功能的完整行为基线；前后端存在时分开探索。
-6. 将源仓探索结果写入 `.ai-migrations/feature-migrations/<feature-slug>/source-exploration/`。
-7. 将功能点拆成 `feature-points/<feature-point-slug>.md`，并维护 `feature-point-index.md`。
-8. 提炼源仓精华，识别糟粕和老代码坏味道。
-9. 读取 2.0 设计文档，提取目标行为和验收要求。
-10. 探索目标仓架构，确认前端 owner、后端/API owner、数据、集成、测试和观测模式。
-11. 基于功能点 Markdown、subagent 报告和目标仓架构写 `migration-design.md`，并列出 surface coverage。
-12. 方案审批通过后，记录 `design-approval.md`。
-13. 在目标仓按已批准方案和任务包实现前端、后端和端到端切片，并修复应处理的坏味道。
-14. 跑 `scan_legacy_dross.py`，清理或记录所有遗留全路径、硬编码端点和源仓特定 token。
-15. 补齐前端测试、后端测试、集成测试、契约测试或差异对比测试。
-16. 写入 `completion-check.md`，核对任务清单、功能点、surface、审批、遗留污染扫描和验证。
-17. 输出迁移记录、任务包结果和验证结果。
+3. 初始化项目内可视化迁移工作区，生成 `README.md`、`migration-status.md`、`artifact-index.md`、`timeline.md` 和 `resume.md`。
+4. 判断迁移规模，创建 `orchestration/task-package-index.md`、`task-checklist.md` 和具体任务包。
+5. 对每个任务包评估一次性能否完成；不能完成的先拆分。
+6. 用 subagent 或串行任务从源仓恢复旧功能的完整行为基线；前后端存在时分开探索。
+7. 将源仓探索结果写入 `.ai-migrations/feature-migrations/<feature-slug>/source-exploration/`。
+8. 将功能点拆成 `feature-points/<feature-point-slug>.md`，并维护 `feature-point-index.md`。
+9. 提炼源仓精华，识别糟粕和老代码坏味道。
+10. 读取 2.0 设计文档，提取目标行为和验收要求。
+11. 探索目标仓架构，确认前端 owner、后端/API owner、数据、集成、测试和观测模式。
+12. 基于功能点 Markdown、subagent 报告和目标仓架构写 `migration-design.md`，并列出 surface coverage。
+13. 方案审批通过后，记录 `design-approval.md`。
+14. 在目标仓按已批准方案和任务包实现前端、后端和端到端切片，并修复应处理的坏味道。
+15. 跑 `scan_legacy_dross.py`，清理或记录所有遗留全路径、硬编码端点和源仓特定 token。
+16. 补齐前端测试、后端测试、集成测试、契约测试或差异对比测试。
+17. 写入 `completion-check.md`，核对任务清单、功能点、surface、审批、遗留污染扫描和验证。
+18. 输出迁移记录、任务包结果、可视化工作区路径和验证结果。
 
 ## CodeHub 源仓
 
@@ -233,6 +266,15 @@ python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
 .ai-migrations/feature-migrations/<feature-slug>/migration-record.md
 ```
 
+中断后恢复时，优先读取：
+
+```text
+.ai-migrations/feature-migrations/<feature-slug>/resume.md
+.ai-migrations/feature-migrations/<feature-slug>/migration-status.md
+.ai-migrations/feature-migrations/<feature-slug>/artifact-index.md
+.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-checklist.md
+```
+
 如果目标仓已有自己的 agent、migration 或 design artifact 目录约定，则优先遵循目标仓约定。
 
 迁移记录模板见：
@@ -251,6 +293,7 @@ python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
 - [references/migration-design-approval.md](./references/migration-design-approval.md)：迁移设计方案和审批门。
 - [references/legacy-smell-remediation.md](./references/legacy-smell-remediation.md)：老代码坏味道分级与修复规则。
 - [references/ai-friendly-v2.md](./references/ai-friendly-v2.md)：AI 友好 2.0 设计准则。
+- [scripts/init_migration_workspace.py](./scripts/init_migration_workspace.py)：初始化项目内迁移工作区、可视化看板和恢复入口。
 - [scripts/profile_repositories.py](./scripts/profile_repositories.py)：源仓和目标仓画像脚本。
 - [scripts/scan_legacy_dross.py](./scripts/scan_legacy_dross.py)：扫描目标实现中疑似照搬的遗留全路径、旧 token 和硬编码实现细节。
 

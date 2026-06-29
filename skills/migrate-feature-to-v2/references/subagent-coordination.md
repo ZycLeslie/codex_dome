@@ -5,6 +5,7 @@ Use this guide when a migration is too large for one active context. The goal is
 ## Contents
 
 - Artifact Layout
+- Visual Workspace Updates
 - When To Split
 - Main-Agent Responsibilities
 - Task Sizing And Checklist
@@ -20,16 +21,43 @@ Use this guide when a migration is too large for one active context. The goal is
 Use the target repository's existing agent artifact convention when one exists. Otherwise write:
 
 ```text
-.ai-migrations/feature-migrations/<feature-slug>/orchestration/
-  task-package-index.md
-  task-checklist.md
-  context-recovery.md
-  completion-check.md
-  task-packages/
-    TP-###-<name>.md
-  subagent-reports/
-    TP-###-<name>.md
+.ai-migrations/feature-migrations/<feature-slug>/
+  README.md
+  migration-status.md
+  artifact-index.md
+  timeline.md
+  resume.md
+  orchestration/
+    task-package-index.md
+    task-checklist.md
+    context-recovery.md
+    completion-check.md
+    task-packages/
+      TP-###-<name>.md
+    subagent-reports/
+      TP-###-<name>.md
 ```
+
+## Visual Workspace Updates
+
+The migration workspace root is the visible control panel for the main agent, subagents, and humans. Initialize it before broad task splitting with:
+
+```bash
+python3 <skill-dir>/scripts/init_migration_workspace.py \
+  --target <target-root> \
+  --feature "<feature name>" \
+  --source <source-root-or-url>
+```
+
+After every package assignment, package result, split, stale decision, approval change, implementation slice, verification run, pause, or resume, the main agent should update:
+
+- `README.md`: current gate, active package, next action, and quick links.
+- `migration-status.md`: phase, surface, feature point, package, approval, and verification boards.
+- `artifact-index.md`: artifact status and staleness.
+- `timeline.md`: append-only event entry.
+- `resume.md`: latest checkpoint, canonical reload set, blockers, and next action.
+
+Subagents write package outputs and reports; the main agent reflects their results into the visual workspace.
 
 ## When To Split
 
@@ -56,6 +84,7 @@ For small migrations, a single agent may execute the same package protocol seria
 - Merge only persisted artifacts, evidence IDs, and concise reports.
 - Retire raw context after artifacts are written.
 - Mark stale packages when design, source evidence, or target ownership changes.
+- Keep the workspace dashboard, status, artifact index, timeline, and resume file current enough that a restarted agent can continue without chat history.
 
 ## Task Sizing And Checklist
 
@@ -91,6 +120,8 @@ Maintain `task-checklist.md` with:
 ```
 
 Update the checklist after every package result, approval change, split, stale decision, implementation slice, verification run, or context handoff.
+
+Mirror the checklist summary into `migration-status.md` and append the material event to `timeline.md`.
 
 ## Package Template
 
@@ -211,6 +242,7 @@ Update the checklist after every package result, approval change, split, stale d
 - Exploration and design packages may write artifacts before design approval. Implementation packages may start only after approved slices are recorded.
 - Subagents may recommend behavior changes, smell remediation, or drops, but the main agent owns reconciliation and approval gates.
 - If a package discovers evidence that changes design scope, mark dependent packages `stale`, update `context-recovery.md`, and return to design approval before implementation continues.
+- After a subagent report is accepted, update `artifact-index.md`, `migration-status.md`, `timeline.md`, and `resume.md` before assigning the next package.
 
 ## Context Recovery
 
@@ -241,6 +273,8 @@ Maintain `context-recovery.md` so work can resume without reloading the world:
 ```
 
 The canonical reload set should usually be the task-package index, task checklist, feature-point index, migration design, design approval, migration record, current package, and any feature-point files named by the current package.
+
+Also keep the root `resume.md` in sync with `context-recovery.md`. A restarted agent should read `resume.md` first, then open only the artifacts named by the current package.
 
 ## Completion Check
 

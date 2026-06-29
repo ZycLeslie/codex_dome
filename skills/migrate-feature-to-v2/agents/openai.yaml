@@ -1,4 +1,4 @@
 interface:
   display_name: "功能迁移到 AI 友好 2.0"
-  short_description: "任务清单跟踪、前后端分层和遗留污染扫描后审批迁移能力"
-  default_prompt: "Use $migrate-feature-to-v2 to split migration work into one-pass-feasible task packages, track the task checklist, separate frontend/backend surfaces, reject copied legacy paths with a dross scan, wait for design approval, implement, and finish with a completion check."
+  short_description: "项目内可视化记录、任务清单跟踪、前后端分层和遗留污染扫描后审批迁移能力"
+  default_prompt: "Use $migrate-feature-to-v2 to initialize a project-local visual migration workspace, split migration work into one-pass-feasible task packages, track the task checklist, separate frontend/backend surfaces, reject copied legacy paths with a dross scan, wait for design approval, implement, and finish with a completion check."

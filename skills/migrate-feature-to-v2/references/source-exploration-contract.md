@@ -5,6 +5,7 @@ Persist source exploration results before implementing the target feature. The g
 ## Contents
 
 - Default Location
+- Visual Workspace Artifacts
 - Required Artifacts
 - CodeHub MCP Evidence Rules
 - Quality Bar
@@ -21,6 +22,146 @@ When task packages or subagents are used, write orchestration artifacts to the s
 
 ```text
 .ai-migrations/feature-migrations/<feature-slug>/orchestration/
+```
+
+## Visual Workspace Artifacts
+
+The feature migration root is the visible, project-local control panel. Initialize it before broad exploration, preferably with:
+
+```bash
+python3 <skill-dir>/scripts/init_migration_workspace.py \
+  --target <target-root> \
+  --feature "<feature name>" \
+  --source <source-root-or-url>
+```
+
+Default layout:
+
+```text
+.ai-migrations/feature-migrations/<feature-slug>/
+  README.md
+  migration-status.md
+  artifact-index.md
+  timeline.md
+  resume.md
+  migration-record.md
+  migration-design.md
+  design-approval.md
+  source-exploration/
+  orchestration/
+```
+
+### README.md
+
+Required dashboard for humans and restarted agents.
+
+Required sections:
+
+```markdown
+# <Feature> Migration Workspace
+
+## Dashboard
+| Item | Status |
+|---|---|
+
+## Quick Links
+- `migration-status.md`
+- `artifact-index.md`
+- `timeline.md`
+- `resume.md`
+- `source-exploration/feature-point-index.md`
+- `orchestration/task-checklist.md`
+- `migration-design.md`
+- `migration-record.md`
+
+## Design Documents
+
+## Working Rule
+```
+
+### migration-status.md
+
+Required visual status board. Update it after every package result, approval change, implementation slice, verification run, and handoff.
+
+Required sections:
+
+```markdown
+# <Feature> Migration Status
+
+## Phase Board
+| Phase | Status | Owner | Evidence | Next action |
+|---|---|---|---|---|
+
+## Surface Board
+| Surface | Present? | Status | Evidence | Notes |
+|---|---|---|---|---|
+
+## Feature Point Coverage
+| Feature point | Surface | Artifact | Status | Gap |
+|---|---|---|---|---|
+
+## Package Board
+| Package | Surface | One-pass feasibility | Status | Owner | Artifact |
+|---|---|---|---|---|---|
+
+## Approval Board
+| Decision | Status | Evidence | Blocks |
+|---|---|---|---|
+
+## Verification Board
+| Scenario or command | Status | Evidence | Gap |
+|---|---|---|---|
+```
+
+### artifact-index.md
+
+Required index for traceability and stale-artifact detection.
+
+Required sections:
+
+```markdown
+# <Feature> Artifact Index
+
+| Artifact | Purpose | Status | Owner | Last updated |
+|---|---|---|---|---|
+```
+
+### timeline.md
+
+Required append-only event log. Add short entries for discoveries, splits, approvals, design changes, implementation slices, verification results, pauses, and resumes.
+
+Required sections:
+
+```markdown
+# <Feature> Migration Timeline
+
+| Time | Event | Actor | Evidence |
+|---|---|---|---|
+```
+
+### resume.md
+
+Required restart file. It should be small enough to reload first after interruption.
+
+Required sections:
+
+```markdown
+# <Feature> Resume
+
+## Read First
+
+## Latest Checkpoint
+- Last updated:
+- Current phase:
+- Current active package:
+- Next action:
+- Blockers:
+
+## Canonical Reload Set
+| Artifact | Why reload |
+|---|---|
+
+## Do Not Reload Broad Context Until
 ```
 
 ## Required Artifacts
@@ -456,6 +597,11 @@ When the source repository is a CodeHub URL or the user identifies it as CodeHub
 
 ## Quality Bar
 
+- The migration workspace root should contain `README.md`, `migration-status.md`, `artifact-index.md`, `timeline.md`, and `resume.md` before broad exploration expands.
+- `migration-status.md` should make the current phase, active package, surface coverage, approval gate, verification gaps, and next action visible without reading every artifact.
+- `artifact-index.md` should list every required artifact, whether it is pending/current/stale, and who or what last updated it.
+- `timeline.md` should record every material discovery, split, approval, implementation slice, verification run, pause, and resume.
+- `resume.md` should identify the canonical reload set and next action so another agent can continue without relying on chat history.
 - Every recovered behavior in the migration record should point to at least one evidence item.
 - Every broad migration should have task packages, package reports, and a context recovery file before implementation starts.
 - Every task package should have a one-pass feasibility decision before execution.

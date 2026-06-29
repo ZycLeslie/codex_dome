@@ -1,11 +1,11 @@
 ---
 name: migrate-feature-to-v2
-description: Discover a named legacy feature, split large work into bounded subagent task packages, assess whether each task can finish in one pass, track task checklists, separate frontend/backend surfaces when present, persist source evidence, split feature points into Markdown, reconcile with 2.0 design docs, reject legacy dross and smells, write an approvable migration design, then implement only after approval. Use for cross-repository feature migration, full-stack frontend/backend migration, context-bounded subagent delegation, non-one-to-one modernization, CodeHub-backed migration through the matching MCP, legacy smell remediation, 取其精华去其糟粕, 任务清单跟踪, 一次性完成评估, 前后端分开迁移, subagent 分工迁移, 功能点拆分, 方案审批后迁移, 功能迁移, 旧系统升级到 2.0, 功能优化, or reconstructing a feature end to end.
+description: Discover a named legacy feature, create a project-local visual migration workspace, split large work into bounded subagent task packages, assess whether each task can finish in one pass, track task checklists, separate frontend/backend surfaces when present, persist source evidence, split feature points into Markdown, reconcile with 2.0 design docs, reject legacy dross and smells, write an approvable migration design, then implement only after approval. Use for cross-repository feature migration, full-stack frontend/backend migration, restart-safe migration records, context-bounded subagent delegation, non-one-to-one modernization, CodeHub-backed migration through the matching MCP, legacy smell remediation, 取其精华去其糟粕, 任务清单跟踪, 一次性完成评估, 前后端分开迁移, subagent 分工迁移, 功能点拆分, 方案审批后迁移, 功能迁移, 旧系统升级到 2.0, 功能优化, or reconstructing a feature end to end.
 ---
 
 # Migrate Feature To V2
 
-Recover the legacy behavior from the source repository, split large work into bounded subagent task packages, assess each task for one-pass feasibility, track every task in a durable checklist, separate frontend and backend surfaces when both exist, split the explored feature points into focused Markdown artifacts, classify legacy code smells, extract the valuable essence, reject the dross, reconcile the evidence with the intended 2.0 design, then write an approvable migration design. Implement target code only after the design is approved. Treat source code as behavioral evidence, not as a template to paste; treat design documents as the intended future state, not optional commentary.
+Recover the legacy behavior from the source repository, create a project-local visual migration workspace, split large work into bounded subagent task packages, assess each task for one-pass feasibility, track every task in a durable checklist, separate frontend and backend surfaces when both exist, split the explored feature points into focused Markdown artifacts, classify legacy code smells, extract the valuable essence, reject the dross, reconcile the evidence with the intended 2.0 design, then write an approvable migration design. Implement target code only after the design is approved. Treat source code as behavioral evidence, not as a template to paste; treat design documents as the intended future state, not optional commentary.
 
 ## Inputs And Defaults
 
@@ -20,6 +20,7 @@ Resolve these inputs before editing:
 - **Bad smell policy**: optional user guidance for which legacy smells, defects, or technical debt must be fixed during migration.
 - **Approval requirement**: who or what can approve the migration design before implementation. Default to the current user when no other approval source is provided.
 - **Subagent strategy**: whether to delegate exploration, design extraction, implementation slices, or verification to subagents. Default to subagents for broad migrations and to the same task-package protocol run serially when subagents are unavailable.
+- **Migration workspace**: project-local artifact directory used as the visual dashboard and restart point. Default to `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/` unless the target repo already has an established artifact convention.
 - **Task tracking strategy**: where to maintain task checklist, one-pass feasibility decisions, and final completion check. Default to the migration orchestration artifacts.
 - **Acceptance criteria**: explicit requirements when provided; otherwise recover them from source behavior and tests.
 
@@ -34,6 +35,35 @@ For remote URLs, clone or fetch only after obtaining any required approval. Do n
 - Treat any URL or user label that identifies CodeHub as a CodeHub repository. Use the matching CodeHub MCP for repository metadata, branch discovery, file reads, code search, history, pull/merge request context, and permission-safe access.
 - Do not silently downgrade a CodeHub URL to generic `git clone`, browser scraping, or unauthenticated HTTP access. If the matching CodeHub MCP is unavailable, use tool discovery or connector installation when possible; otherwise stop and ask the user to provide or enable the CodeHub MCP.
 - When both CodeHub MCP evidence and local checkout evidence exist, record which source each claim came from.
+
+## Project-Local Visual Migration Workspace
+
+Every migration must have a human-readable workspace inside the target repository before broad exploration, design, or implementation work expands. Use the target repository's existing agent, migration, or design artifact convention when one exists. Otherwise use:
+
+```text
+<target-root>/.ai-migrations/feature-migrations/<feature-slug>/
+```
+
+Initialize or refresh the workspace before broad exploration, preferably with:
+
+```bash
+python3 <skill-dir>/scripts/init_migration_workspace.py \
+  --target <target-root> \
+  --feature "<feature name>" \
+  --source <source-root-or-url>
+```
+
+The workspace is the visible control panel and the restart anchor:
+
+- `README.md`: dashboard with current gate, phase summary, quick links, and next action.
+- `migration-status.md`: visual status board for phases, surfaces, feature points, packages, approvals, and verification.
+- `artifact-index.md`: index of every migration artifact, purpose, status, owner, and update time.
+- `timeline.md`: append-only timeline of discoveries, decisions, approvals, splits, implementation slices, and verification runs.
+- `resume.md`: minimal restart instructions, canonical reload set, active package, next action, and blockers.
+- `source-exploration/`: source baseline, evidence, feature-point Markdown, smell and dross inventory.
+- `orchestration/`: task packages, task checklist, subagent reports, context recovery, and completion check.
+
+Update `README.md`, `migration-status.md`, `artifact-index.md`, `timeline.md`, and `resume.md` after every package result, approval change, implementation slice, verification run, context handoff, or pause. If the agent is interrupted, restarted, or context-compressed, reload `resume.md`, `migration-status.md`, `artifact-index.md`, `orchestration/task-checklist.md`, and the current package before continuing.
 
 ## Non-Negotiables
 
@@ -52,6 +82,7 @@ For remote URLs, clone or fetch only after obtaining any required approval. Do n
 - Keep the target repository buildable throughout the migration and protect unrelated user changes.
 - Add tests that prove the recovered contract and requested 2.0 behavior.
 - Make intentional behavior differences explicit in the migration record and final report.
+- Keep the migration process visible in a project-local workspace. Do not rely on chat history, private subagent context, or memory as the only record of current status, next action, approvals, or recovered behavior.
 - Persist source exploration results before implementation so another agent or engineer can trace every recovered behavior back to source evidence.
 - Split recovered feature points into small Markdown files and use those files, not raw sprawling exploration context, as the basis for target design.
 - For large migrations, split work into bounded task packages and use subagents when available. Each subagent must receive only the minimal inputs for its package and must write a durable report or artifact.
@@ -75,6 +106,11 @@ The main agent is the orchestrator:
 
 Before broad exploration or implementation, create or update:
 
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/README.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/migration-status.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/artifact-index.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/timeline.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/resume.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-package-index.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-checklist.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-packages/TP-###-<name>.md`
@@ -92,6 +128,8 @@ One-pass feasibility must answer:
 - What is the split plan if the answer is no?
 
 Keep `task-checklist.md` as the source of truth for package status. The checklist should include package ID, surface, objective, one-pass feasibility, dependencies, status, owner/subagent, artifacts, verification, and final check status.
+
+Mirror checklist progress into the workspace dashboard files so a human can see the migration state without reading every package file. `resume.md` must always identify the next artifact to load and the next package or gate to work on.
 
 Recommended subagent roles:
 
@@ -117,10 +155,11 @@ Read `references/subagent-coordination.md` before delegating a broad migration.
 3. If the source or target is a CodeHub address, access it through the matching CodeHub MCP before attempting any generic Git operation.
 4. Read repository instructions, manifests, architecture docs, and recent relevant changes in both repositories.
 5. Inspect target worktree changes before editing. Never overwrite unrelated changes.
-6. Profile both repositories when they are unfamiliar:
+6. Create or update the project-local migration workspace and dashboard. Use `scripts/init_migration_workspace.py` unless the target repository already has a stronger artifact convention.
+7. Profile both repositories when they are unfamiliar:
 
    `python3 <skill-dir>/scripts/profile_repositories.py --source <source-root> --target <target-root> --output-dir <target-root>/.ai-migrations/feature-migrations/<feature-slug>`
-7. If the migration is broad, create the orchestration task-package index before expanding exploration.
+8. If the migration is broad, create the orchestration task-package index before expanding exploration.
 
 Use the profile as orientation only. Read actual source files before making decisions.
 
@@ -158,6 +197,11 @@ Start from user-visible or externally callable entry points, then trace inward:
 
 Persist the exploration as you go. Before implementation, create or update:
 
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/README.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/migration-status.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/artifact-index.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/timeline.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/resume.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/source-exploration.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/source-evidence.json`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/feature-point-index.md`
@@ -304,7 +348,9 @@ Before substantial edits, create or update a migration record. Use the target re
 
 `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/migration-record.md`
 
-Include the legacy baseline, split feature point artifacts, subagent task ledger, task checklist, context recovery ledger, design inputs, design approval, essence/dross decisions, legacy smell inventory, baseline-vs-target matrix, target mapping, intentional differences, risk decisions, implementation slices, and verification plan. Use `references/migration-record-contract.md` for the required shape.
+Include the legacy baseline, split feature point artifacts, visual workspace status, subagent task ledger, task checklist, context recovery ledger, design inputs, design approval, essence/dross decisions, legacy smell inventory, baseline-vs-target matrix, target mapping, intentional differences, risk decisions, implementation slices, and verification plan. Use `references/migration-record-contract.md` for the required shape.
+
+The migration record should link to the workspace dashboard files and summarize their current status instead of duplicating every row.
 
 Proceed autonomously through exploration and design artifacts when evidence supports it. Pause before implementation until design approval is recorded, and also pause when an unresolved ambiguity could materially change business behavior, security, data integrity, or the public contract.
 
@@ -363,6 +409,7 @@ Report:
 
 - design documents or optimization requirements used
 - source entry points and strongest implementation evidence
+- visual migration workspace dashboard, status, artifact index, timeline, and resume paths
 - persisted source exploration artifact paths
 - subagent task packages, reports, and context-recovery artifact paths
 - task checklist and completion-check artifact paths
@@ -395,6 +442,7 @@ Do not declare the migration complete while required target wiring, tests, or ve
 - Use bounded task packages and subagents for broad migrations; if subagents are unavailable, run the same packages serially and keep the same artifacts.
 - Split any task that is not feasible to finish in one pass before assigning or executing it.
 - Keep the task checklist current; when context is compressed or work is handed off, reload from the checklist and current package instead of reconstructing from memory.
+- Keep the visual workspace current; when context is compressed, interrupted, or handed off, reload from `resume.md` and `migration-status.md` before opening broad source or target context again.
 - Treat the final completion check as the last gate before saying the migration is done.
 - Do not implement until the migration design is approved or an explicit approval source is recorded.
 - When source code contains simple low-risk smells, fix them in the target implementation as part of migration.
