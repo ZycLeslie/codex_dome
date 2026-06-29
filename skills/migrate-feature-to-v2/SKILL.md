@@ -1,11 +1,11 @@
 ---
 name: migrate-feature-to-v2
-description: Discover a named feature or business capability in a legacy source repository, persist source exploration evidence to disk, recover observable behavior, extract the valuable business essence, reject legacy dross and code smells, reconcile everything with 2.0 design documents or requested optimizations, then implement and verify an architecture-appropriate, AI-friendly target version. Use when an AI coding agent, automation workflow, or engineering team needs to perform cross-repository feature migration, non-one-to-one modernization, design-doc-driven implementation, CodeHub-backed migration through the matching CodeHub MCP, legacy smell remediation, 取其精华去其糟粕, 功能迁移, 特性迁移, 老仓功能探索, 旧系统升级到 2.0, 功能优化, 设计文档落地, or reconstruct a function from source code and deliver the intended 2.0 capability end to end in a new codebase.
+description: Discover a named feature or business capability in a legacy source repository, persist source exploration evidence to disk, split recovered feature points into focused Markdown files, recover observable behavior, extract the valuable business essence, reject legacy dross and code smells, reconcile everything with 2.0 design documents or requested optimizations, produce an approvable migration design, then implement only after approval. Use when an AI coding agent, automation workflow, or engineering team needs to perform cross-repository feature migration, non-one-to-one modernization, design-doc-driven implementation, CodeHub-backed migration through the matching CodeHub MCP, legacy smell remediation, 取其精华去其糟粕, 功能点拆分, 方案审批后迁移, 功能迁移, 特性迁移, 老仓功能探索, 旧系统升级到 2.0, 功能优化, 设计文档落地, or reconstruct a function from source code and deliver the intended 2.0 capability end to end in a new codebase.
 ---
 
 # Migrate Feature To V2
 
-Recover the legacy behavior from the source repository, classify legacy code smells, extract the valuable essence, reject the dross, reconcile the evidence with the intended 2.0 design, then implement the target capability using the target repository's architecture. Treat source code as behavioral evidence, not as a template to paste; treat design documents as the intended future state, not optional commentary.
+Recover the legacy behavior from the source repository, split the explored feature points into focused Markdown artifacts, classify legacy code smells, extract the valuable essence, reject the dross, reconcile the evidence with the intended 2.0 design, then write an approvable migration design. Implement target code only after the design is approved. Treat source code as behavioral evidence, not as a template to paste; treat design documents as the intended future state, not optional commentary.
 
 ## Inputs And Defaults
 
@@ -17,6 +17,7 @@ Resolve these inputs before editing:
 - **Design documents**: optional PRD, technical design, API spec, OpenSpec change, ADR, issue, ticket, or acceptance document that defines the 2.0 target behavior.
 - **Change intent**: whether the work is compatible migration, optimized behavior, redesigned workflow, API replacement, feature split/merge, deprecation, or greenfield implementation informed by legacy evidence.
 - **Bad smell policy**: optional user guidance for which legacy smells, defects, or technical debt must be fixed during migration.
+- **Approval requirement**: who or what can approve the migration design before implementation. Default to the current user when no other approval source is provided.
 - **Acceptance criteria**: explicit requirements when provided; otherwise recover them from source behavior and tests.
 
 Use the current workspace as the target repository when the user gives only a source repository. Treat a user-provided repository as the source unless they explicitly call it the 2.0 target. If both repository roles remain ambiguous and editing the wrong repository is plausible, ask one concise question before modifying code.
@@ -47,6 +48,8 @@ For remote URLs, clone or fetch only after obtaining any required approval. Do n
 - Add tests that prove the recovered contract and requested 2.0 behavior.
 - Make intentional behavior differences explicit in the migration record and final report.
 - Persist source exploration results before implementation so another agent or engineer can trace every recovered behavior back to source evidence.
+- Split recovered feature points into small Markdown files and use those files, not raw sprawling exploration context, as the basis for target design.
+- Do not modify target implementation code before the migration design is approved. Exploration artifacts and design documents may be written before approval.
 - Interpret "AI-friendly" as discoverable, explicit, composable, testable, and observable. Do not add an LLM, agent endpoint, or weaken security merely to claim AI readiness.
 
 ## Workflow
@@ -96,10 +99,19 @@ Persist the exploration as you go. Before implementation, create or update:
 
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/source-exploration.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/source-evidence.json`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/feature-point-index.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/feature-points/<feature-point-slug>.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/legacy-smells.md`
 - supporting artifacts such as `search-log.md`, `candidate-files.txt`, `call-trace.md`, or `codehub-mcp-evidence.md` when useful
 
 Use the target repository's existing artifact directory if it has one. Read `references/source-exploration-contract.md` for the required structure.
+
+Keep context bounded:
+
+- After exploration, summarize each coherent feature point into its own Markdown file.
+- Keep one feature point per file: entry points, behavior, data/integration evidence, essence/dross, smells, open questions, and verification ideas.
+- Use `feature-point-index.md` as the navigation map. Load only the index and the feature-point files needed for the current design decision.
+- Do not carry full raw source dumps, broad search logs, or every inspected file in active context once the artifacts are written.
 
 Recover at least:
 
@@ -142,7 +154,7 @@ Apply these rules:
 
 ### 5. Reconcile Legacy Behavior With The Target Design
 
-Build a baseline-vs-target matrix before implementation:
+Build a baseline-vs-target matrix from the feature point Markdown files before implementation:
 
 - legacy scenario or behavior
 - source evidence
@@ -175,19 +187,55 @@ Explore the target before designing:
 
 Do not create a parallel architecture just because the source repository used one.
 
-### 7. Write A Migration And Design Record
+### 7. Write The Migration Design For Approval
+
+Before changing target implementation code, create:
+
+`<target-root>/.ai-migrations/feature-migrations/<feature-slug>/migration-design.md`
+
+Base the design on the split feature point Markdown files, the design documents, target architecture exploration, and the essence/dross decisions. Do not rely on unreduced raw exploration context as the design source of truth.
+
+The design must include:
+
+- scope and non-goals
+- feature point summary with links to `feature-points/*.md`
+- target architecture mapping
+- behavior compatibility and intentional differences
+- simple/severe legacy smell remediation decisions
+- data, API, event, integration, rollout, and observability changes
+- implementation slices
+- verification plan
+- open questions and approval status
+
+Read `references/migration-design-approval.md` for the required design and approval record shape.
+
+### 8. Get Approval Before Implementation
+
+Pause after producing `migration-design.md` unless one of these is true:
+
+- the current user explicitly approves the design in the conversation
+- an existing approval artifact or ticket is provided and clearly authorizes the design
+- the user explicitly pre-authorized implementation after design generation for this exact scope
+
+Record approval in:
+
+`<target-root>/.ai-migrations/feature-migrations/<feature-slug>/design-approval.md`
+
+If approval is partial, implement only the approved slices. If approval requests changes, update the feature point mapping and migration design before proceeding.
+
+### 9. Write A Migration And Design Record
 
 Before substantial edits, create or update a migration record. Use the target repository's existing agent/workflow artifact convention when one exists; otherwise default to:
 
 `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/migration-record.md`
 
-Include the legacy baseline, design inputs, essence/dross decisions, legacy smell inventory, baseline-vs-target matrix, target mapping, intentional differences, risk decisions, implementation slices, and verification plan. Use `references/migration-record-contract.md` for the required shape.
+Include the legacy baseline, split feature point artifacts, design inputs, design approval, essence/dross decisions, legacy smell inventory, baseline-vs-target matrix, target mapping, intentional differences, risk decisions, implementation slices, and verification plan. Use `references/migration-record-contract.md` for the required shape.
 
-Proceed autonomously when evidence supports a safe implementation. Pause only when an unresolved ambiguity could materially change business behavior, security, data integrity, or the public contract.
+Proceed autonomously through exploration and design artifacts when evidence supports it. Pause before implementation until design approval is recorded, and also pause when an unresolved ambiguity could materially change business behavior, security, data integrity, or the public contract.
 
-### 8. Implement A Complete Vertical Slice
+### 10. Implement A Complete Vertical Slice
 
-Implement the smallest complete slice that delivers the intended 2.0 capability through its real entry point:
+After design approval, implement the smallest complete approved slice that delivers the intended 2.0 capability through its real entry point:
 
 1. Add or update explicit contracts and schemas.
 2. Implement domain behavior in the target's existing ownership boundaries according to the design decision matrix.
@@ -199,7 +247,7 @@ Implement the smallest complete slice that delivers the intended 2.0 capability 
 
 For detailed 2.0 design guidance, read `references/ai-friendly-v2.md` when choosing between multiple viable target designs.
 
-### 9. Verify Behavior, Design, Smell Remediation, And Integration
+### 11. Verify Behavior, Design, Smell Remediation, And Integration
 
 Derive verification scenarios from both the target design and the recovered source baseline, not merely from copied source tests.
 
@@ -212,16 +260,19 @@ Derive verification scenarios from both the target design and the recovered sour
 - Verify compatibility adapters, deprecation paths, data migrations, rollout flags, and backfill behavior when the 2.0 design changes external contracts.
 - For aligned behavior, verify complete migration coverage against the source baseline: all entry points, edge cases, validation failures, permissions, data mutations, emitted events, external calls, config-controlled behavior, logs, metrics, and audit output that matter externally.
 - Verify that every `simple-fix` and `severe-fix` smell has a target-side remediation, test, static check, or documented reason when deferred.
+- Verify implementation matches the approved `migration-design.md`; if the implementation must deviate, update the design and get approval before continuing.
 
 If the source behavior cannot be executed, state which claims are proven by static evidence and which remain assumptions.
 
-### 10. Report The Result
+### 12. Report The Result
 
 Report:
 
 - design documents or optimization requirements used
 - source entry points and strongest implementation evidence
 - persisted source exploration artifact paths
+- feature point Markdown files used for design
+- design approval source and approved implementation slices
 - legacy smells fixed, severe issues remediated, and any deferred smells with reasons
 - essence kept and dross intentionally rejected
 - target files and architecture owners changed
@@ -241,6 +292,8 @@ Do not declare the migration complete while required target wiring, tests, or ve
 - When source behavior and design intent agree, migrate the complete feature contract before calling the work done.
 - Preserve the source's business essence, not its accidental implementation shape.
 - Reject source dross even when it is easy to copy.
+- Design from the persisted feature point Markdown files, not from an overloaded in-memory exploration context.
+- Do not implement until the migration design is approved or an explicit approval source is recorded.
 - When source code contains simple low-risk smells, fix them in the target implementation as part of migration.
 - When source code contains severe security, correctness, reliability, performance, or data-integrity problems, remediate them in the target design and record the decision.
 - When a target abstraction almost fits but would distort the contract, add a narrow adapter or extend the abstraction with tests.

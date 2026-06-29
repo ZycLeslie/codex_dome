@@ -18,8 +18,10 @@
 - 设计文档与源代码偏离时，需要用户确认后才能改变旧行为。
 - 设计文档与源代码一致时，必须完整迁移。
 - 源仓探索结果必须落盘，保证迁移过程可追溯。
+- 源仓探索出的功能点必须拆成独立 Markdown，避免上下文过大。
 - 取其精华，去其糟粕：保留业务规则和生产经验，丢掉偶然架构、坏味道和不安全实现。
 - 老代码中的简单坏味道要在目标实现中顺手修掉，严重问题必须重构或修复，不能照搬。
+- 先基于功能点 Markdown 写迁移设计方案，方案审批后才能开始实现。
 - 如果源仓是 CodeHub 地址，必须使用对应的 CodeHub MCP 访问和探索。
 - 不盲目复制旧实现；用目标仓现有架构完成实现。
 
@@ -28,13 +30,15 @@
 1. 确认源仓、目标仓、功能范围、设计文档和验收标准。
 2. 从源仓恢复旧功能的完整行为基线。
 3. 将源仓探索结果写入 `.ai-migrations/feature-migrations/<feature-slug>/source-exploration/`。
-4. 提炼源仓精华，识别糟粕和老代码坏味道。
-5. 读取 2.0 设计文档，提取目标行为和验收要求。
-6. 建立“旧行为 vs 目标设计”矩阵。
-7. 对设计文档与源代码偏离的行为先确认。
-8. 在目标仓按现有架构实现完整纵向切片，并修复应处理的坏味道。
-9. 补齐单元测试、集成测试、契约测试或差异对比测试。
-10. 输出迁移记录和验证结果。
+4. 将功能点拆成 `feature-points/<feature-point-slug>.md`，并维护 `feature-point-index.md`。
+5. 提炼源仓精华，识别糟粕和老代码坏味道。
+6. 读取 2.0 设计文档，提取目标行为和验收要求。
+7. 探索目标仓架构，确认目标 owner、接口、数据、集成、测试和观测模式。
+8. 基于功能点 Markdown 和目标仓架构写 `migration-design.md`。
+9. 方案审批通过后，记录 `design-approval.md`。
+10. 在目标仓按已批准方案实现完整纵向切片，并修复应处理的坏味道。
+11. 补齐单元测试、集成测试、契约测试或差异对比测试。
+12. 输出迁移记录和验证结果。
 
 ## CodeHub 源仓
 
@@ -105,6 +109,20 @@
 .ai-migrations/feature-migrations/<feature-slug>/source-exploration/
 ```
 
+功能点拆分默认写入：
+
+```text
+.ai-migrations/feature-migrations/<feature-slug>/source-exploration/feature-point-index.md
+.ai-migrations/feature-migrations/<feature-slug>/source-exploration/feature-points/<feature-point-slug>.md
+```
+
+迁移设计和审批记录默认写入：
+
+```text
+.ai-migrations/feature-migrations/<feature-slug>/migration-design.md
+.ai-migrations/feature-migrations/<feature-slug>/design-approval.md
+```
+
 迁移记录默认写入：
 
 ```text
@@ -116,6 +134,7 @@
 迁移记录模板见：
 
 - [references/source-exploration-contract.md](./references/source-exploration-contract.md)
+- [references/migration-design-approval.md](./references/migration-design-approval.md)
 - [references/legacy-smell-remediation.md](./references/legacy-smell-remediation.md)
 - [references/migration-record-contract.md](./references/migration-record-contract.md)
 
@@ -123,6 +142,7 @@
 
 - [SKILL.md](./SKILL.md)：agent 执行迁移时使用的核心流程。
 - [references/design-driven-modernization.md](./references/design-driven-modernization.md)：设计文档驱动的现代化规则。
+- [references/migration-design-approval.md](./references/migration-design-approval.md)：迁移设计方案和审批门。
 - [references/legacy-smell-remediation.md](./references/legacy-smell-remediation.md)：老代码坏味道分级与修复规则。
 - [references/ai-friendly-v2.md](./references/ai-friendly-v2.md)：AI 友好 2.0 设计准则。
 - [scripts/profile_repositories.py](./scripts/profile_repositories.py)：源仓和目标仓画像脚本。
@@ -132,5 +152,6 @@
 ```text
 使用 migrate-feature-to-v2，把旧仓的“订单退款”功能迁移到当前 2.0 仓。
 参考 docs/refund-v2-design.md。
-如果设计文档和旧仓行为不一致，先列出差异并等待确认；一致的部分要完整迁移。
+先把源仓探索出的功能点拆成 Markdown，再基于这些 Markdown 给出迁移设计方案。
+如果设计文档和旧仓行为不一致，先列出差异并等待确认；方案审批通过后再开始实现。
 ```

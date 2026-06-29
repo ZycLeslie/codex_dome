@@ -83,6 +83,76 @@ Recommended shape:
 }
 ```
 
+### feature-point-index.md
+
+Required navigation map for split feature point files. Use it to avoid carrying the full source exploration context in memory.
+
+Required sections:
+
+```markdown
+# <Feature> Feature Point Index
+
+## Overview
+- Source:
+- Ref:
+- Feature:
+
+## Feature Points
+| ID | Feature point | Markdown file | Status | Notes |
+|---|---|---|---|---|
+
+## Design Inputs
+| Topic | Feature point files | Design impact |
+|---|---|---|
+
+## Open Questions
+| Question | Related feature points | Decision needed |
+|---|---|---|
+```
+
+### feature-points/<feature-point-slug>.md
+
+Required for every coherent feature point discovered during source exploration. Keep each file focused and small enough to load independently.
+
+Required sections:
+
+```markdown
+# <Feature Point>
+
+## Summary
+- ID:
+- Status:
+- Owner/domain:
+
+## Entry Points
+| Entry point | Evidence |
+|---|---|
+
+## Behavior
+| Scenario | Inputs/triggers | Expected result | Side effects | Evidence |
+|---|---|---|---|---|
+
+## Data And Integration
+| Concern | Evidence | Notes |
+|---|---|---|
+
+## Essence And Dross
+| Item | Classification | Evidence | Migration decision |
+|---|---|---|---|
+
+## Legacy Smells
+| Smell/problem | Classification | Evidence | Target decision |
+|---|---|---|---|
+
+## Target Design Hints
+| Hint | Reason | Evidence |
+|---|---|---|
+
+## Open Questions
+| Question | Why it matters | Needed before implementation? |
+|---|---|---|
+```
+
 ### legacy-smells.md
 
 Required smell inventory. If no relevant smells are found, write `none found` with the evidence scope checked.
@@ -126,6 +196,8 @@ When the source repository is a CodeHub URL or the user identifies it as CodeHub
 ## Quality Bar
 
 - Every recovered behavior in the migration record should point to at least one evidence item.
+- Every meaningful feature point should have one focused Markdown file and an entry in `feature-point-index.md`.
+- The migration design should cite feature point Markdown files rather than raw search output whenever possible.
 - Every important essence/dross decision should point to evidence and a migration decision.
 - Every severe smell or defect discovered in the feature path should be recorded with a remediation or deferral decision.
 - Label uncertain claims as assumptions.

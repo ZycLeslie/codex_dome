@@ -26,6 +26,14 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 | Artifact | Purpose | Status |
 |---|---|---|
 
+## Feature Point Files
+| Feature point | Markdown file | Used in design? | Notes |
+|---|---|---|---|
+
+## Design Approval
+| Item | Status | Evidence |
+|---|---|---|
+
 ## Essence And Dross Decisions
 | Source item | Classification | Source evidence | Target decision | Verification |
 |---|---|---|---|---|
@@ -68,6 +76,8 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 
 ## Implementation Slices
 - [ ] Contract and schema
+- [ ] Feature point Markdown split
+- [ ] Migration design approved
 - [ ] Design-doc behavior
 - [ ] Legacy compatibility behavior
 - [ ] Full migration coverage for aligned behavior
@@ -92,6 +102,7 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - Use repository-relative file paths and line numbers where practical.
 - Link each important contract claim to code, test, schema, config, history, or runtime evidence.
 - Link source behavior claims to persisted source exploration artifacts where possible.
+- Link design decisions to feature point Markdown files and approval evidence.
 - Link essence/dross decisions to source evidence, target decisions, and verification.
 - Link legacy smell and severe issue decisions to source evidence and verification.
 - Label uncertain claims as assumptions instead of presenting them as facts.
