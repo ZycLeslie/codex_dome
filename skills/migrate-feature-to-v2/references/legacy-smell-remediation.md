@@ -6,6 +6,7 @@ Use this guide when source exploration finds legacy code smells, defects, or tec
 
 - Classification
 - Smell Inventory Fields
+- Legacy Dross Firewall
 - Smell-Audit Task Package Rules
 - Decision Rules
 
@@ -21,6 +22,7 @@ Examples:
 - misleading names
 - small long-method extraction opportunities
 - magic constants that should become named constants or configuration
+- hard-coded absolute paths that clearly should become target configuration or repo-relative resources
 - weak or noisy logging
 - obvious missing null/empty guard where the behavior is clear
 - duplicated frontend formatting, local state, or client-side validation that can be centralized without changing visible behavior
@@ -45,6 +47,7 @@ Examples:
 - race conditions or idempotency flaws
 - resource leaks or unbounded memory/file/network use
 - hard-coded secrets or privileged endpoints
+- hard-coded environment-specific filesystem paths, legacy service endpoints, or file URLs that can affect production behavior
 - unsafe retries, duplicate side effects, or missing compensation
 - unbounded queries, N+1 patterns, or severe performance cliffs
 - frontend permission display that disagrees with server authorization, unsafe client-only validation, stale generated API clients, or UI flows that can submit invalid state
@@ -103,6 +106,10 @@ Examples:
 
 - accidental class/module layout
 - copy-paste structure
+- absolute filesystem paths such as `/Users/...`, `/home/...`, `/opt/...`, `/var/...`, or Windows drive paths
+- `file://` URLs and generated source paths
+- source repository paths, source package prefixes, and fully qualified class/module names copied as shortcuts
+- old hostnames, hard-coded localhost endpoints, and environment-specific directory names
 - obsolete dependencies
 - framework workarounds no longer needed
 - dead code and unused branches
@@ -112,18 +119,64 @@ Action:
 
 - Do not migrate.
 - Record why it is dropped when it appears in the feature path.
+- Replace with target-owned configuration, imports, adapters, route names, storage abstractions, generated target clients, or repo-relative resources.
 - Confirm only if dropping it could affect an external contract.
+
+### needs-reconciliation
+
+Use when an item looks like dross but might be externally visible.
+
+Examples:
+
+- a legacy path returned in an API response
+- a fully qualified name used by external configuration
+- a hard-coded URL consumed by another system
+- a file path that appears in audit records or exported reports
+
+Action:
+
+- Do not copy it directly into target implementation.
+- Add it to the baseline-vs-target matrix.
+- Require an explicit decision: preserve through adapter, replace with target contract, deprecate, or drop.
 
 ## Smell Inventory Fields
 
 Record each relevant smell with:
 
 - smell/problem summary
-- classification: `simple-fix`, `severe-fix`, `defer-with-record`, `preserve-by-contract`, `essence-keep`, or `dross-drop`
+- classification: `simple-fix`, `severe-fix`, `defer-with-record`, `preserve-by-contract`, `essence-keep`, `dross-drop`, or `needs-reconciliation`
 - source evidence
 - target remediation decision
 - behavior compatibility impact
 - verification command or test
+- legacy dross scan status when the item is a path, package prefix, endpoint, generated path, or source-specific token
+
+## Legacy Dross Firewall
+
+Before implementation, list source-specific implementation tokens that must not leak into 2.0:
+
+- source repository root or top-level module names
+- source package prefixes and generated-code prefixes
+- absolute filesystem path prefixes
+- old service domains, base URLs, queue/topic names, bucket names, or local endpoints
+- class names or fully qualified names that have no business meaning
+
+After implementation, run:
+
+```bash
+python3 <skill-dir>/scripts/scan_legacy_dross.py \
+  --target <target-root> \
+  --legacy-token <source-package-or-path-prefix> \
+  --output-md <target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/legacy-dross-scan.md
+```
+
+Every finding must be resolved before completion:
+
+- `fixed`: replaced with target-native configuration, abstraction, import, or adapter.
+- `approved-compatibility`: intentionally preserved because it is an external contract, with approval and tests.
+- `deferred-with-record`: not fixed now, with risk and follow-up.
+
+Unresolved findings mean the migration is not complete.
 
 ## Smell-Audit Task Package Rules
 
@@ -148,6 +201,7 @@ Each `severe-fix` recommendation must include source evidence, compatibility imp
 ## Decision Rules
 
 - Never copy severe problems merely to match old code.
+- Never copy legacy full paths, source package prefixes, or environment-specific identifiers merely because the source code used them.
 - Never use "AI-friendly" as an excuse to rewrite business behavior without confirmation.
 - Prefer target-native ownership over source class/module shape.
 - Preserve source business rules and edge cases, but replace unsafe or brittle implementation mechanisms.

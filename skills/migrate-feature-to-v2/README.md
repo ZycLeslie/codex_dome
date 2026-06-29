@@ -23,6 +23,7 @@
 - 每个任务包开始前都要评估一次性能否完成；不能一次完成的，先拆分再执行。
 - 全程维护 `task-checklist.md`，防止上下文压缩或交接时丢功能、丢任务、丢验证。
 - 如果功能同时包含前端和后端，必须分开探索、分开设计、分开实现、分开验证，并增加端到端闭环；不能只迁后端。
+- 源代码里的丑陋全路径、硬编码环境路径、源仓包名前缀、全限定类名、旧域名和生成代码路径默认都是糟粕；除非是外部契约，否则不能照搬到 2.0。
 - 取其精华，去其糟粕：保留业务规则和生产经验，丢掉偶然架构、坏味道和不安全实现。
 - 老代码中的简单坏味道要在目标实现中顺手修掉，严重问题必须重构或修复，不能照搬。
 - 先基于功能点 Markdown 写迁移设计方案，方案审批后才能开始实现。
@@ -80,6 +81,35 @@ subagent 的结果必须落盘到 `orchestration/subagent-reports/` 或对应迁
 
 只有后端测试通过不能代表全功能迁移完成。当前端存在时，至少要验证页面/组件行为、API 对接、错误态和关键用户路径。
 
+## 防止照搬遗留全路径
+
+迁移时要特别拦截这些“看起来能跑，但其实把旧系统污染带进 2.0”的内容：
+
+- 绝对文件系统路径，例如 `/Users/...`、`/home/...`、`/opt/...`、`/var/...`。
+- Windows 全路径，例如 `C:\...`。
+- `file://` URL。
+- 源仓目录结构和生成代码路径。
+- 源仓包名前缀、全限定类名或模块路径。
+- 旧域名、旧服务地址、硬编码 localhost。
+- 老框架绕路、反射字符串、类名字符串、环境特定配置。
+
+默认处理方式：
+
+- 如果它只是实现细节，标记为 `dross-drop`，换成目标仓配置、别名、import、adapter、storage abstraction、路由或生成类型。
+- 如果它是外部契约，标记为 `preserve-by-contract`，只能放在清晰边界或兼容 adapter 里，并加测试。
+- 如果不确定，标记为 `needs-reconciliation`，进入设计对齐阶段，不能直接实现。
+
+实现后运行遗留污染扫描：
+
+```bash
+python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
+  --target <target-root> \
+  --legacy-token <source-package-or-path-prefix> \
+  --output-md <target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/legacy-dross-scan.md
+```
+
+`legacy-dross-scan.md` 的每个发现都必须处理：修掉、说明是已批准兼容、或记录延期原因。未解释的发现不能进入完成状态。
+
 ## 默认流程
 
 1. 确认源仓、目标仓、功能范围、设计文档和验收标准。
@@ -95,9 +125,10 @@ subagent 的结果必须落盘到 `orchestration/subagent-reports/` 或对应迁
 11. 基于功能点 Markdown、subagent 报告和目标仓架构写 `migration-design.md`，并列出 surface coverage。
 12. 方案审批通过后，记录 `design-approval.md`。
 13. 在目标仓按已批准方案和任务包实现前端、后端和端到端切片，并修复应处理的坏味道。
-14. 补齐前端测试、后端测试、集成测试、契约测试或差异对比测试。
-15. 写入 `completion-check.md`，核对任务清单、功能点、surface、审批和验证。
-16. 输出迁移记录、任务包结果和验证结果。
+14. 跑 `scan_legacy_dross.py`，清理或记录所有遗留全路径、硬编码端点和源仓特定 token。
+15. 补齐前端测试、后端测试、集成测试、契约测试或差异对比测试。
+16. 写入 `completion-check.md`，核对任务清单、功能点、surface、审批、遗留污染扫描和验证。
+17. 输出迁移记录、任务包结果和验证结果。
 
 ## CodeHub 源仓
 
@@ -145,6 +176,7 @@ subagent 的结果必须落盘到 `orchestration/subagent-reports/` 或对应迁
 | 前端用户路径、可见状态、交互约束 | 作为 frontend slice 和端到端验收保留 |
 | 日志、指标、审计、运维经验 | 按目标仓规范保留或升级 |
 | 偶然类结构、复制粘贴、框架绕路、过时依赖 | 不迁入目标设计 |
+| 全路径、硬编码环境路径、源仓包名、旧域名 | 默认丢弃，改成目标侧配置或 adapter |
 | 不安全实现、严重坏味道、已知缺陷 | 修复或重构，并补验证 |
 
 ## 老代码坏味道处理
@@ -220,6 +252,7 @@ subagent 的结果必须落盘到 `orchestration/subagent-reports/` 或对应迁
 - [references/legacy-smell-remediation.md](./references/legacy-smell-remediation.md)：老代码坏味道分级与修复规则。
 - [references/ai-friendly-v2.md](./references/ai-friendly-v2.md)：AI 友好 2.0 设计准则。
 - [scripts/profile_repositories.py](./scripts/profile_repositories.py)：源仓和目标仓画像脚本。
+- [scripts/scan_legacy_dross.py](./scripts/scan_legacy_dross.py)：扫描目标实现中疑似照搬的遗留全路径、旧 token 和硬编码实现细节。
 
 ## 示例请求
 

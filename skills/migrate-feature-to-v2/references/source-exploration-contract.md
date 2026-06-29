@@ -241,6 +241,10 @@ Required sections:
 | Command/scenario | Result | Evidence |
 |---|---|---|
 
+## Legacy Dross Scan
+| Finding | Decision | Evidence |
+|---|---|---|
+
 ## Final Decision
 - Complete? yes/no
 - Remaining gaps:
@@ -284,6 +288,10 @@ Required sections:
 
 ## Essence And Dross
 | Item | Classification | Evidence | Migration decision |
+|---|---|---|---|
+
+## Implementation Detail Dross
+| Source-specific token/path/prefix | Type | Evidence | Target replacement or decision |
 |---|---|---|---|
 
 ## Legacy Smells
@@ -388,6 +396,10 @@ Required sections:
 | Smell/problem | Classification | Evidence | Target decision |
 |---|---|---|---|
 
+## Legacy Dross Firewall
+| Token/path/prefix | Type | Target replacement | Scan token? |
+|---|---|---|---|
+
 ## Target Design Hints
 | Hint | Reason | Evidence |
 |---|---|---|
@@ -414,6 +426,10 @@ Required sections:
 | Smell/problem | Classification | Source evidence | Target decision | Verification |
 |---|---|---|---|---|
 
+## Implementation Detail Dross
+| Token/path/prefix | Type | Source evidence | Target decision | Scan status |
+|---|---|---|---|---|
+
 ## Deferred Items
 | Item | Reason deferred | Risk | Follow-up |
 |---|---|---|---|
@@ -426,6 +442,7 @@ Create only when useful:
 - `search-log.md`: high-signal searches and why they mattered.
 - `candidate-files.txt`: files inspected or rejected.
 - `call-trace.md`: entry point to domain/persistence/integration call chain.
+- `legacy-dross-candidates.md`: full paths, source package prefixes, old endpoints, generated paths, and source-specific tokens that must not leak into target code.
 - `codehub-mcp-evidence.md`: CodeHub MCP queries, resources, branch/ref details, and evidence IDs.
 
 ## CodeHub MCP Evidence Rules
@@ -451,6 +468,8 @@ When the source repository is a CodeHub URL or the user identifies it as CodeHub
 - The migration design should cite feature point Markdown files rather than raw search output whenever possible.
 - Main-agent decisions should cite persisted package reports or artifacts, not subagent private reasoning.
 - Every important essence/dross decision should point to evidence and a migration decision.
+- Every source-specific full path, package prefix, endpoint, generated path, or identifier found in the feature path should be classified as dross, compatibility, or needs-reconciliation.
+- Legacy dross scan tokens should be recorded before implementation when source-specific strings are known.
 - Every severe smell or defect discovered in the feature path should be recorded with a remediation or deferral decision.
 - Label uncertain claims as assumptions.
 - Prefer source tests, schemas, configs, and externally visible entry points over comments.

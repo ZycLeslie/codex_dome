@@ -60,6 +60,10 @@ Required before implementation.
 | Item | Classification | Target action | Verification |
 |---|---|---|---|
 
+## Legacy Dross Firewall
+| Source token/path/prefix | Classification | Target replacement | Compatibility approval needed? | Verification |
+|---|---|---|---|---|
+
 ## Implementation Slices
 | Slice | Surface | Files/modules | Depends on | Verification |
 |---|---|---|---|---|
@@ -123,6 +127,7 @@ Required before implementation starts.
 - If approval is partial, implement only approved slices and task packages.
 - If frontend and backend surfaces both exist, approval should identify which frontend slices, backend/API slices, and end-to-end checks are approved.
 - Do not approve an implementation package that is `no-needs-split` or missing one-pass feasibility.
+- Do not approve a design that copies legacy full paths, source package prefixes, file URLs, hard-coded endpoints, or environment-specific directories without an explicit compatibility reason and verification plan.
 - If a package is not approved, do not hand it to an implementation-slice agent.
 - If design changes affect package inputs, mark the old package `stale`, update the package plan, and get approval for the changed package before implementation.
 - If the implementation discovers a design-changing fact, update `migration-design.md` and get approval again before continuing.

@@ -28,6 +28,7 @@ Apply these priorities in order:
 
 - Represent inputs, outputs, errors, events, and configuration with types or schemas where the target supports them.
 - Make defaults, limits, timeouts, retries, and feature flags visible.
+- Replace source-specific full paths, old package prefixes, hard-coded endpoints, and environment-specific constants with target-owned configuration, imports, adapters, or storage abstractions.
 - Prefer explicit dependency injection and registration over hidden global state or string-based reflection.
 - Model important state transitions and authorization decisions directly.
 - When behavior changes from legacy, encode the new contract in schemas, tests, docs, or migration records rather than leaving it as an implicit code difference.
@@ -66,6 +67,7 @@ Apply these priorities in order:
 - Hiding business rules inside framework callbacks, reflection, dynamic strings, or untestable glue.
 - Splitting code into many tiny modules that obscure the end-to-end workflow.
 - Recreating source architecture inside the target as a permanent compatibility island.
+- Carrying over source full paths, generated-code paths, package prefixes, hostnames, or file URLs as target implementation shortcuts.
 - Treating a design document as implementation-complete when legacy edge cases, compatibility obligations, or operational constraints still need source evidence.
 - Carrying forward severe legacy smells such as authorization gaps, transaction leaks, unbounded queries, hard-coded secrets, unsafe retries, or god-object coupling.
 
@@ -78,4 +80,5 @@ Apply these priorities in order:
 - Can tests run deterministically without real external services?
 - Can operators understand success, failure, retry, and partial completion?
 - Does the design look native to the target repository?
+- Are source-specific paths, package names, endpoints, and generated paths absent or explicitly isolated behind compatibility adapters?
 - Are intentional differences from legacy behavior visible, tested, and traceable to a design decision?

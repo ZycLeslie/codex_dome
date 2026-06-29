@@ -46,6 +46,7 @@ For remote URLs, clone or fetch only after obtaining any required approval. Do n
 - Adapt the implementation to target conventions, ownership boundaries, frameworks, and existing abstractions.
 - Take the essence and reject the dross: preserve domain rules, invariants, public contracts, proven edge cases, tests, and operational lessons; reject accidental architecture, copy-paste structure, obsolete dependencies, unsafe shortcuts, and brittle implementation mechanisms.
 - Do not blindly copy source files, legacy architecture, generated code, obsolete dependencies, or known defects.
+- Do not copy legacy implementation identifiers into 2.0 by default. Absolute filesystem paths, Windows paths, `file://` URLs, source repository paths, source package prefixes, fully qualified class names used as shortcuts, legacy hostnames, and hard-coded environment paths are dross unless explicitly proven to be an external contract.
 - Do not preserve legacy bad smells as compatibility. Fix simple low-risk smells in the target implementation, and remediate severe smells or defects instead of recreating them.
 - Trace security, authorization, validation, transactions, idempotency, persistence, events, and integrations explicitly.
 - Keep the target repository buildable throughout the migration and protect unrelated user changes.
@@ -99,6 +100,7 @@ Recommended subagent roles:
 - `backend-surface-explorer`: explore API handlers, domain services, persistence, jobs, events, integrations, auth, transactions, idempotency, and server-side observability.
 - `design-intent-extractor`: read only design artifacts; write target intent, acceptance criteria, explicit changes, and questions.
 - `legacy-smell-auditor`: inspect feature-point artifacts and source evidence; write smell classifications and remediation recommendations.
+- `legacy-dross-auditor`: inspect source feature points and target changes for copied implementation details such as full paths, source package prefixes, hard-coded endpoints, and obsolete wiring.
 - `target-architecture-mapper`: read target analogs; write owner, boundary, pattern, and verification mapping.
 - `reconciliation-designer`: combine reduced artifacts into the baseline-vs-target matrix and migration design.
 - `implementation-slice-agent`: after approval, implement one approved slice with a disjoint write set and minimal source/design context.
@@ -194,6 +196,7 @@ Separate **essence** from **dross**:
 
 - Essence includes business rules, domain invariants, user-visible contracts, compatibility obligations, proven edge cases, useful tests, data constraints, operational signals, and production lessons.
 - Dross includes accidental class/module layout, duplicated or tangled implementation, framework workarounds, obsolete dependencies, unsafe shortcuts, hidden globals, dead code, brittle orchestration, and known defects.
+- Implementation-detail dross includes absolute paths, source repository paths, source package/class prefixes, file URLs, hard-coded local endpoints, environment-specific directories, generated-code paths, and all source naming that has no business meaning.
 
 Do not preserve incidental class layouts, duplicated logic, or framework workarounds unless they are required for compatibility. Record each important take/drop decision in the exploration and migration records.
 
@@ -214,6 +217,7 @@ Apply these rules:
 - Fix or redesign around `severe-fix` issues. Add tests or checks that prove the severe problem was not carried forward.
 - Keep `essence-keep` items as target behavior, tests, contracts, or operational requirements.
 - Drop `dross-drop` items from the target design and record why they are not migrated.
+- Treat ugly full paths, hard-coded filesystem paths, source package prefixes, and source repo-specific identifiers as `dross-drop` by default. Replace them with target-native configuration, aliases, imports, adapters, routing, storage abstractions, or generated target types.
 - If a severe fix changes an external contract, data compatibility, or user-visible behavior, use the divergence confirmation gate unless the current task explicitly authorizes the change.
 - Do not edit the source repository to clean smells unless the user explicitly asks; remediation belongs in the target implementation and migration record.
 - Read `references/legacy-smell-remediation.md` for the full classification checklist.
@@ -269,6 +273,7 @@ The design must include:
 - target architecture mapping
 - behavior compatibility and intentional differences
 - simple/severe legacy smell remediation decisions
+- legacy dross firewall decisions: copied-looking paths, fully qualified names, source package prefixes, hard-coded endpoints, and their target replacements
 - data, API, event, integration, rollout, and observability changes
 - implementation slices split by surface when applicable, especially frontend and backend/API
 - task package plan that maps slices to subagent packages, allowed write sets, outputs, and verification
@@ -321,7 +326,8 @@ For full-stack features, implement coordinated but separate slices:
 4. Preserve or intentionally revise authorization, validation, transactional behavior, idempotency, and failure semantics according to the design record.
 5. Add logs, metrics, traces, or audit events consistent with target conventions.
 6. Remediate classified `simple-fix` and `severe-fix` smells in the target implementation.
-7. Remove temporary duplication or compatibility scaffolding that is not needed after the slice works.
+7. Replace copied legacy paths, package prefixes, fully qualified names, and environment-specific constants with target-owned abstractions or configuration.
+8. Remove temporary duplication or compatibility scaffolding that is not needed after the slice works.
 
 For detailed 2.0 design guidance, read `references/ai-friendly-v2.md` when choosing between multiple viable target designs.
 
@@ -341,6 +347,11 @@ Derive verification scenarios from both the target design and the recovered sour
 - Verify end-to-end behavior across frontend and backend when both exist; do not declare completion from backend tests alone.
 - For aligned behavior, verify complete migration coverage against the source baseline: all entry points, edge cases, validation failures, permissions, data mutations, emitted events, external calls, config-controlled behavior, logs, metrics, and audit output that matter externally.
 - Verify that every `simple-fix` and `severe-fix` smell has a target-side remediation, test, static check, or documented reason when deferred.
+- Run the legacy dross scan against target code after implementation:
+
+  `python3 <skill-dir>/scripts/scan_legacy_dross.py --target <target-root> --output-md <target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/legacy-dross-scan.md`
+
+  Add `--legacy-token <source-package-or-path-prefix>` for known source-specific package names, repo paths, domains, or generated prefixes. Review every finding; fix it, mark it as approved compatibility, or defer it with evidence before completion.
 - Verify implementation matches the approved `migration-design.md`; if the implementation must deviate, update the design and get approval before continuing.
 - Run a final checklist pass against `task-checklist.md`, `feature-point-index.md`, `migration-design.md`, `design-approval.md`, `migration-record.md`, and verification results. Write the result to `orchestration/completion-check.md`.
 
@@ -358,6 +369,7 @@ Report:
 - feature point Markdown files used for design
 - design approval source and approved implementation slices
 - legacy smells fixed, severe issues remediated, and any deferred smells with reasons
+- legacy dross scan results and every copied-looking path or source-specific token that was fixed, approved as compatibility, or deferred
 - essence kept and dross intentionally rejected
 - target files and architecture owners changed
 - frontend/backend surface coverage, or evidence that a surface is not applicable
@@ -378,6 +390,7 @@ Do not declare the migration complete while required target wiring, tests, or ve
 - When a feature has both frontend and backend surfaces, split them into separate coordinated slices and verify the end-to-end user workflow.
 - Preserve the source's business essence, not its accidental implementation shape.
 - Reject source dross even when it is easy to copy.
+- Treat copied legacy full paths, hard-coded endpoints, source package prefixes, and source repo-specific identifiers as defects in the migration unless the migration design explicitly approves them as compatibility.
 - Design from the persisted feature point Markdown files, not from an overloaded in-memory exploration context.
 - Use bounded task packages and subagents for broad migrations; if subagents are unavailable, run the same packages serially and keep the same artifacts.
 - Split any task that is not feasible to finish in one pass before assigning or executing it.

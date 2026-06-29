@@ -55,6 +55,10 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 | Source item | Classification | Source evidence | Target decision | Verification |
 |---|---|---|---|---|
 
+## Legacy Dross Firewall
+| Source token/path/prefix | Type | Target replacement or compatibility decision | Scan result | Verification |
+|---|---|---|---|---|
+
 ## Legacy Smell Remediation
 | Smell/problem | Severity | Source evidence | Target decision | Verification |
 |---|---|---|---|---|
@@ -118,6 +122,8 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - [ ] Full migration coverage for aligned behavior
 - [ ] Essence kept
 - [ ] Dross rejected
+- [ ] Legacy full paths and source-specific tokens replaced or approved
+- [ ] Legacy dross scan reviewed
 - [ ] Simple legacy smell fixes
 - [ ] Severe legacy issue remediation
 - [ ] Domain behavior
@@ -143,6 +149,7 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - Link frontend, backend/API, and end-to-end coverage to feature-point files, target files, and verification evidence.
 - Link design decisions to feature point Markdown files and approval evidence.
 - Link essence/dross decisions to source evidence, target decisions, and verification.
+- Link every legacy dross scan finding to a fix, approved compatibility decision, or deferred record.
 - Link legacy smell and severe issue decisions to source evidence and verification.
 - Label uncertain claims as assumptions instead of presenting them as facts.
 - Record intentional differences before or during implementation, not only after tests fail.
@@ -151,5 +158,6 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - For aligned behavior, record how complete migration coverage was verified.
 - Do not mark the migration complete when a present frontend or backend surface is unimplemented or unverified.
 - Do not mark the migration complete while a required package is `ready`, `needs-split`, `blocked`, `in-progress`, or unverified.
+- Do not mark the migration complete while legacy dross scan findings are unexplained.
 - Record the canonical reload set and stale package status before pausing or handing work off.
 - Keep raw copied source code out of the record; cite it and summarize the behavior.

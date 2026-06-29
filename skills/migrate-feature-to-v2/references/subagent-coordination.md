@@ -39,6 +39,7 @@ Create task packages when any of these are true:
 - The candidate source files or call chain are too large to keep in memory.
 - The target implementation crosses multiple owners such as API, domain, persistence, UI, jobs, or integrations.
 - The feature has both frontend and backend/API surfaces that need separate owners, tests, and approval.
+- Source exploration finds full paths, source package prefixes, hard-coded endpoints, generated paths, or other source-specific implementation tokens.
 - Design documents are large, contradictory, or contain multiple alternatives.
 - Implementation can be split into disjoint approved slices.
 - Verification needs independent coverage of compatibility, security, data, or integration behavior.
@@ -193,6 +194,7 @@ Update the checklist after every package result, approval change, split, stale d
 | `backend-surface-explorer` | API contracts, handlers, domain services, persistence, jobs/events, integrations, authorization, validation, transactions, idempotency | backend/API feature-point files, evidence IDs, report |
 | `design-intent-extractor` | Large or ambiguous design documents | target intent, acceptance criteria, explicit changes, questions |
 | `legacy-smell-auditor` | Smell and dross classification after feature points exist | `legacy-smells.md` updates and severe-fix recommendations |
+| `legacy-dross-auditor` | Full paths, source package prefixes, file URLs, old domains, generated paths, and source-specific tokens that may have been copied | `legacy-dross-scan.md`, firewall decisions, fixes or required approvals |
 | `target-architecture-mapper` | Target analogs, owners, boundaries, patterns, and tests | target mapping artifact and report |
 | `reconciliation-designer` | Combining reduced artifacts into decisions | baseline-vs-target matrix, design draft updates |
 | `implementation-slice-agent` | One approved implementation slice, preferably one surface at a time | patch in disjoint write set, tests, report |
@@ -205,6 +207,7 @@ Update the checklist after every package result, approval change, split, stale d
 - Do not assign a package marked `no-needs-split` or `blocked`; split it or unblock it first.
 - For code-edit packages, assign a disjoint write set and remind the subagent not to revert unrelated changes.
 - Split frontend and backend implementation into separate packages when both surfaces exist, then add a coordination or verification package for the end-to-end workflow.
+- Run or delegate a legacy dross audit before completion when source-specific tokens are known or the target patch contains suspicious paths.
 - Exploration and design packages may write artifacts before design approval. Implementation packages may start only after approved slices are recorded.
 - Subagents may recommend behavior changes, smell remediation, or drops, but the main agent owns reconciliation and approval gates.
 - If a package discovers evidence that changes design scope, mark dependent packages `stale`, update `context-recovery.md`, and return to design approval before implementation continues.
