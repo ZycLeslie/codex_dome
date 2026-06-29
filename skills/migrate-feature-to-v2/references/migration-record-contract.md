@@ -8,6 +8,11 @@ If the target repository already has an established location for agent, migratio
 
 Keep it concise but evidence-backed. Update it as discoveries invalidate earlier assumptions.
 
+## Contents
+
+- Required Shape
+- Evidence Rules
+
 ## Required Shape
 
 ```markdown
@@ -25,6 +30,10 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 ## Source Exploration Artifacts
 | Artifact | Purpose | Status |
 |---|---|---|
+
+## Subagent Task Ledger
+| Package ID | Role | Scope | Inputs | Outputs | Status | Decision impact |
+|---|---|---|---|---|---|---|
 
 ## Feature Point Files
 | Feature point | Markdown file | Used in design? | Notes |
@@ -74,8 +83,15 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 | Item | Status | Mitigation or decision |
 |---|---|---|
 
+## Context Recovery Ledger
+| Item | Artifact or context | Status | Notes |
+|---|---|---|---|
+
 ## Implementation Slices
 - [ ] Contract and schema
+- [ ] Subagent task packages prepared
+- [ ] Subagent package reports integrated
+- [ ] Context recovery file current
 - [ ] Feature point Markdown split
 - [ ] Migration design approved
 - [ ] Design-doc behavior
@@ -102,6 +118,7 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - Use repository-relative file paths and line numbers where practical.
 - Link each important contract claim to code, test, schema, config, history, or runtime evidence.
 - Link source behavior claims to persisted source exploration artifacts where possible.
+- Link delegated work to task-package files and subagent reports; do not cite unpersisted chat-only handoffs.
 - Link design decisions to feature point Markdown files and approval evidence.
 - Link essence/dross decisions to source evidence, target decisions, and verification.
 - Link legacy smell and severe issue decisions to source evidence and verification.
@@ -110,4 +127,5 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - Link every non-one-to-one behavior decision to a design document, user instruction, or explicit compatibility decision.
 - Mark design/source divergences as unconfirmed until the current user request or another explicit approval confirms them.
 - For aligned behavior, record how complete migration coverage was verified.
+- Record the canonical reload set and stale package status before pausing or handing work off.
 - Keep raw copied source code out of the record; cite it and summarize the behavior.

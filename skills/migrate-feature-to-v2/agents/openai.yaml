@@ -1,4 +1,4 @@
 interface:
   display_name: "功能迁移到 AI 友好 2.0"
-  short_description: "拆分功能点文档并审批方案后实现可验证的AI友好2.0能力"
-  default_prompt: "Use $migrate-feature-to-v2 to persist source exploration evidence, split feature points into Markdown, design the migration from those files, wait for approval, and implement the intended AI-friendly target capability."
+  short_description: "用任务包分工、subagent协作和方案审批迁移AI友好2.0能力"
+  default_prompt: "Use $migrate-feature-to-v2 to split a large migration into bounded subagent task packages, persist feature-point Markdown, design from those artifacts, wait for approval, then implement the AI-friendly 2.0 capability."

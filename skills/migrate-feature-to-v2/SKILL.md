@@ -1,11 +1,11 @@
 ---
 name: migrate-feature-to-v2
-description: Discover a named feature or business capability in a legacy source repository, persist source exploration evidence to disk, split recovered feature points into focused Markdown files, recover observable behavior, extract the valuable business essence, reject legacy dross and code smells, reconcile everything with 2.0 design documents or requested optimizations, produce an approvable migration design, then implement only after approval. Use when an AI coding agent, automation workflow, or engineering team needs to perform cross-repository feature migration, non-one-to-one modernization, design-doc-driven implementation, CodeHub-backed migration through the matching CodeHub MCP, legacy smell remediation, 取其精华去其糟粕, 功能点拆分, 方案审批后迁移, 功能迁移, 特性迁移, 老仓功能探索, 旧系统升级到 2.0, 功能优化, 设计文档落地, or reconstruct a function from source code and deliver the intended 2.0 capability end to end in a new codebase.
+description: Discover a named feature or business capability in a legacy source repository, split large migrations into bounded subagent task packages, persist source exploration evidence to disk, split recovered feature points into focused Markdown files, recover observable behavior, extract the valuable business essence, reject legacy dross and code smells, reconcile everything with 2.0 design documents or requested optimizations, produce an approvable migration design, then implement only after approval. Use when an AI coding agent, automation workflow, or engineering team needs to perform cross-repository feature migration, context-bounded subagent delegation, non-one-to-one modernization, design-doc-driven implementation, CodeHub-backed migration through the matching CodeHub MCP, legacy smell remediation, 取其精华去其糟粕, subagent 分工迁移, 功能点拆分, 方案审批后迁移, 功能迁移, 特性迁移, 老仓功能探索, 旧系统升级到 2.0, 功能优化, 设计文档落地, or reconstruct a function from source code and deliver the intended 2.0 capability end to end in a new codebase.
 ---
 
 # Migrate Feature To V2
 
-Recover the legacy behavior from the source repository, split the explored feature points into focused Markdown artifacts, classify legacy code smells, extract the valuable essence, reject the dross, reconcile the evidence with the intended 2.0 design, then write an approvable migration design. Implement target code only after the design is approved. Treat source code as behavioral evidence, not as a template to paste; treat design documents as the intended future state, not optional commentary.
+Recover the legacy behavior from the source repository, split large work into bounded subagent task packages, split the explored feature points into focused Markdown artifacts, classify legacy code smells, extract the valuable essence, reject the dross, reconcile the evidence with the intended 2.0 design, then write an approvable migration design. Implement target code only after the design is approved. Treat source code as behavioral evidence, not as a template to paste; treat design documents as the intended future state, not optional commentary.
 
 ## Inputs And Defaults
 
@@ -18,6 +18,7 @@ Resolve these inputs before editing:
 - **Change intent**: whether the work is compatible migration, optimized behavior, redesigned workflow, API replacement, feature split/merge, deprecation, or greenfield implementation informed by legacy evidence.
 - **Bad smell policy**: optional user guidance for which legacy smells, defects, or technical debt must be fixed during migration.
 - **Approval requirement**: who or what can approve the migration design before implementation. Default to the current user when no other approval source is provided.
+- **Subagent strategy**: whether to delegate exploration, design extraction, implementation slices, or verification to subagents. Default to subagents for broad migrations and to the same task-package protocol run serially when subagents are unavailable.
 - **Acceptance criteria**: explicit requirements when provided; otherwise recover them from source behavior and tests.
 
 Use the current workspace as the target repository when the user gives only a source repository. Treat a user-provided repository as the source unless they explicitly call it the 2.0 target. If both repository roles remain ambiguous and editing the wrong repository is plausible, ask one concise question before modifying code.
@@ -49,8 +50,41 @@ For remote URLs, clone or fetch only after obtaining any required approval. Do n
 - Make intentional behavior differences explicit in the migration record and final report.
 - Persist source exploration results before implementation so another agent or engineer can trace every recovered behavior back to source evidence.
 - Split recovered feature points into small Markdown files and use those files, not raw sprawling exploration context, as the basis for target design.
+- For large migrations, split work into bounded task packages and use subagents when available. Each subagent must receive only the minimal inputs for its package and must write a durable report or artifact.
 - Do not modify target implementation code before the migration design is approved. Exploration artifacts and design documents may be written before approval.
 - Interpret "AI-friendly" as discoverable, explicit, composable, testable, and observable. Do not add an LLM, agent endpoint, or weaken security merely to claim AI readiness.
+
+## Context-Bounded Subagent Orchestration
+
+Use subagents when the migration has multiple entry points, many candidate files, multiple target owners, large design documents, source/target repositories that cannot fit comfortably in one context, or repeated signs of context pressure. If subagents are not available, still use the same task packages and run them serially.
+
+The main agent is the orchestrator:
+
+- Own the user conversation, repository-role decisions, approval gates, final design, integration, and final report.
+- Keep only the current request, `task-package-index.md`, `feature-point-index.md`, `migration-design.md`, `migration-record.md`, and the current task package in active context.
+- Do not keep raw source dumps, broad search logs, full call chains, or subagent private reasoning in active context after their artifacts are written.
+- Merge decisions only from persisted artifacts, evidence IDs, and concise subagent reports.
+
+Before broad exploration or implementation, create or update:
+
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-package-index.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-packages/TP-###-<name>.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/subagent-reports/TP-###-<name>.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/context-recovery.md`
+
+Each task package must state objective, role, allowed inputs, forbidden inputs/actions, scope boundaries, output paths, evidence format, stop conditions, acceptance checks, and context retirement rule. No package should ask a subagent to read the complete source repository, complete target repository, and complete design corpus at the same time unless that broad read is explicitly justified.
+
+Recommended subagent roles:
+
+- `source-entrypoint-explorer`: explore one source entry point, workflow, or domain slice; write feature-point Markdown and evidence.
+- `design-intent-extractor`: read only design artifacts; write target intent, acceptance criteria, explicit changes, and questions.
+- `legacy-smell-auditor`: inspect feature-point artifacts and source evidence; write smell classifications and remediation recommendations.
+- `target-architecture-mapper`: read target analogs; write owner, boundary, pattern, and verification mapping.
+- `reconciliation-designer`: combine reduced artifacts into the baseline-vs-target matrix and migration design.
+- `implementation-slice-agent`: after approval, implement one approved slice with a disjoint write set and minimal source/design context.
+- `verification-agent`: verify implementation, design approval, migration record, and test coverage against persisted artifacts.
+
+Read `references/subagent-coordination.md` before delegating a broad migration.
 
 ## Workflow
 
@@ -64,6 +98,7 @@ For remote URLs, clone or fetch only after obtaining any required approval. Do n
 6. Profile both repositories when they are unfamiliar:
 
    `python3 <skill-dir>/scripts/profile_repositories.py --source <source-root> --target <target-root> --output-dir <target-root>/.ai-migrations/feature-migrations/<feature-slug>`
+7. If the migration is broad, create the orchestration task-package index before expanding exploration.
 
 Use the profile as orientation only. Read actual source files before making decisions.
 
@@ -83,7 +118,7 @@ When design documents, tickets, OpenSpec changes, API specs, or explicit optimiz
    - `greenfield with legacy reference`: source is evidence, not the implementation blueprint.
 4. Record unclear design requirements as questions only when a reasonable implementation would risk business behavior, security, data integrity, or public compatibility.
 
-For detailed design-doc reconciliation guidance, read `references/design-driven-modernization.md`.
+For detailed design-doc reconciliation guidance, read `references/design-driven-modernization.md`. For broad design documents, delegate a `design-intent-extractor` package that outputs a compact design-intent artifact instead of carrying the whole document set forward.
 
 ### 3. Recover And Persist The Source Baseline
 
@@ -102,16 +137,19 @@ Persist the exploration as you go. Before implementation, create or update:
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/feature-point-index.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/feature-points/<feature-point-slug>.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/legacy-smells.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-package-index.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/context-recovery.md`
 - supporting artifacts such as `search-log.md`, `candidate-files.txt`, `call-trace.md`, or `codehub-mcp-evidence.md` when useful
 
 Use the target repository's existing artifact directory if it has one. Read `references/source-exploration-contract.md` for the required structure.
 
 Keep context bounded:
 
+- Assign source exploration by entry point, workflow, domain concept, or integration boundary to `source-entrypoint-explorer` packages when one pass would overload context.
 - After exploration, summarize each coherent feature point into its own Markdown file.
 - Keep one feature point per file: entry points, behavior, data/integration evidence, essence/dross, smells, open questions, and verification ideas.
 - Use `feature-point-index.md` as the navigation map. Load only the index and the feature-point files needed for the current design decision.
-- Do not carry full raw source dumps, broad search logs, or every inspected file in active context once the artifacts are written.
+- Do not carry full raw source dumps, broad search logs, subagent conversations, or every inspected file in active context once the artifacts are written.
 
 Recover at least:
 
@@ -133,7 +171,7 @@ Do not preserve incidental class layouts, duplicated logic, or framework workaro
 
 ### 4. Classify And Remediate Legacy Smells
 
-Build a legacy smell and dross inventory before target implementation. Classify each item as:
+Build a legacy smell and dross inventory before target implementation. For large feature paths, delegate a `legacy-smell-auditor` package after feature-point Markdown files exist. Classify each item as:
 
 - `simple-fix`: low-risk technical debt that can be corrected while preserving behavior, such as duplicated local logic, misleading names, small long-method extractions, magic constants, weak logging, missing null/empty guards, local exception handling cleanup, or obvious test fixture cleanup.
 - `severe-fix`: serious design, correctness, security, reliability, performance, or data-integrity problems that must not be copied into 2.0, such as authorization bypasses, injection risks, transaction leaks, race/idempotency flaws, data corruption, resource leaks, unsafe retries, hard-coded secrets, unbounded queries, N+1 behavior, framework misuse, or highly coupled god-object logic.
@@ -177,7 +215,7 @@ Apply the confirmation gate:
 
 ### 6. Map The Target Capability Onto The Target Architecture
 
-Explore the target before designing:
+Explore the target before designing. For broad targets, delegate one or more `target-architecture-mapper` packages by target owner or analogous feature:
 
 1. Find the closest analogous feature and identify its entry-point, domain, persistence, integration, test, and observability patterns.
 2. Reuse target-owned abstractions when they genuinely match the intended 2.0 responsibility.
@@ -204,6 +242,7 @@ The design must include:
 - simple/severe legacy smell remediation decisions
 - data, API, event, integration, rollout, and observability changes
 - implementation slices
+- task package plan that maps slices to subagent packages, allowed write sets, outputs, and verification
 - verification plan
 - open questions and approval status
 
@@ -221,7 +260,7 @@ Record approval in:
 
 `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/design-approval.md`
 
-If approval is partial, implement only the approved slices. If approval requests changes, update the feature point mapping and migration design before proceeding.
+If approval is partial, implement only the approved slices and task packages. If approval requests changes, update the feature point mapping, task-package plan, and migration design before proceeding.
 
 ### 9. Write A Migration And Design Record
 
@@ -229,13 +268,13 @@ Before substantial edits, create or update a migration record. Use the target re
 
 `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/migration-record.md`
 
-Include the legacy baseline, split feature point artifacts, design inputs, design approval, essence/dross decisions, legacy smell inventory, baseline-vs-target matrix, target mapping, intentional differences, risk decisions, implementation slices, and verification plan. Use `references/migration-record-contract.md` for the required shape.
+Include the legacy baseline, split feature point artifacts, subagent task ledger, context recovery ledger, design inputs, design approval, essence/dross decisions, legacy smell inventory, baseline-vs-target matrix, target mapping, intentional differences, risk decisions, implementation slices, and verification plan. Use `references/migration-record-contract.md` for the required shape.
 
 Proceed autonomously through exploration and design artifacts when evidence supports it. Pause before implementation until design approval is recorded, and also pause when an unresolved ambiguity could materially change business behavior, security, data integrity, or the public contract.
 
 ### 10. Implement A Complete Vertical Slice
 
-After design approval, implement the smallest complete approved slice that delivers the intended 2.0 capability through its real entry point:
+After design approval, implement the smallest complete approved slice that delivers the intended 2.0 capability through its real entry point. Use `implementation-slice-agent` packages for independent slices with disjoint write sets; each package must work from `migration-design.md`, `design-approval.md`, relevant feature-point files, and target owner context instead of reopening the full source exploration.
 
 1. Add or update explicit contracts and schemas.
 2. Implement domain behavior in the target's existing ownership boundaries according to the design decision matrix.
@@ -253,6 +292,7 @@ Derive verification scenarios from both the target design and the recovered sour
 
 - Add focused unit tests for business rules and edge cases.
 - Add integration or contract tests for boundaries changed by the migration.
+- Use `verification-agent` packages for independent verification slices when test scope is broad or risk is high.
 - Use differential, golden, or fixture-based comparison against the source for preserved behavior, and explicit new expectations for redesigned behavior.
 - Run target formatting, static checks, build, and relevant tests; broaden checks when shared behavior changed.
 - Search for missing registrations, routes, dependency injection wiring, schemas, migrations, flags, and documentation.
@@ -271,6 +311,7 @@ Report:
 - design documents or optimization requirements used
 - source entry points and strongest implementation evidence
 - persisted source exploration artifact paths
+- subagent task packages, reports, and context-recovery artifact paths
 - feature point Markdown files used for design
 - design approval source and approved implementation slices
 - legacy smells fixed, severe issues remediated, and any deferred smells with reasons
@@ -293,6 +334,7 @@ Do not declare the migration complete while required target wiring, tests, or ve
 - Preserve the source's business essence, not its accidental implementation shape.
 - Reject source dross even when it is easy to copy.
 - Design from the persisted feature point Markdown files, not from an overloaded in-memory exploration context.
+- Use bounded task packages and subagents for broad migrations; if subagents are unavailable, run the same packages serially and keep the same artifacts.
 - Do not implement until the migration design is approved or an explicit approval source is recorded.
 - When source code contains simple low-risk smells, fix them in the target implementation as part of migration.
 - When source code contains severe security, correctness, reliability, performance, or data-integrity problems, remediate them in the target design and record the decision.

@@ -2,6 +2,13 @@
 
 Use this guide after source exploration is persisted and feature points are split into Markdown files. The goal is to move from discovery to implementation through an explicit, reviewable design gate.
 
+## Contents
+
+- Required Files
+- migration-design.md
+- design-approval.md
+- Gate Rules
+
 ## Required Files
 
 Use the target repository's existing artifact convention when one exists. Otherwise write:
@@ -9,6 +16,8 @@ Use the target repository's existing artifact convention when one exists. Otherw
 ```text
 .ai-migrations/feature-migrations/<feature-slug>/migration-design.md
 .ai-migrations/feature-migrations/<feature-slug>/design-approval.md
+.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-package-index.md
+.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-packages/TP-###-<name>.md
 ```
 
 ## migration-design.md
@@ -49,6 +58,10 @@ Required before implementation.
 | Slice | Files/modules | Depends on | Verification |
 |---|---|---|---|
 
+## Task Package Plan
+| Package | Role | Slice/feature point | Inputs | Allowed files/modules | Outputs | Verification | Status |
+|---|---|---|---|---|---|---|---|
+
 ## Rollout And Operations
 | Concern | Plan |
 |---|---|
@@ -77,7 +90,7 @@ Required before implementation starts.
 - Approval source: conversation | ticket | PR | design review | other
 
 ## Approved Scope
-| Slice/decision | Approved? | Notes |
+| Slice/package/decision | Approved? | Notes |
 |---|---|---|
 
 ## Required Changes Before Implementation
@@ -92,7 +105,9 @@ Required before implementation starts.
 ## Gate Rules
 
 - Do not edit target implementation code before approval is recorded.
-- If approval is partial, implement only approved slices.
+- If approval is partial, implement only approved slices and task packages.
+- If a package is not approved, do not hand it to an implementation-slice agent.
+- If design changes affect package inputs, mark the old package `stale`, update the package plan, and get approval for the changed package before implementation.
 - If the implementation discovers a design-changing fact, update `migration-design.md` and get approval again before continuing.
 - If the user explicitly says to proceed after reviewing the design in the current conversation, record that as approval evidence.
 - Exploration artifacts, feature point Markdown files, and design documents may be created before approval.

@@ -2,6 +2,13 @@
 
 Use this guide when source exploration finds legacy code smells, defects, or technical debt in the feature path. The target implementation should preserve required business behavior and useful production lessons, not legacy implementation damage.
 
+## Contents
+
+- Classification
+- Smell Inventory Fields
+- Smell-Audit Task Package Rules
+- Decision Rules
+
 ## Classification
 
 ### simple-fix
@@ -115,6 +122,26 @@ Record each relevant smell with:
 - target remediation decision
 - behavior compatibility impact
 - verification command or test
+
+## Smell-Audit Task Package Rules
+
+Use a `legacy-smell-auditor` package when the feature path is broad or when multiple feature-point files may contain quality, security, reliability, or data-integrity risks.
+
+The smell auditor may:
+
+- classify smells, dross, and essence from feature-point Markdown files and cited source evidence
+- recommend target remediation and verification
+- flag compatibility impact
+- mark uncertain items as `needs-reconciliation`
+
+The smell auditor must not:
+
+- expand implementation scope without main-agent approval
+- decide that externally visible behavior can be dropped
+- edit target implementation code before design approval
+- treat weak evidence as a confirmed severe defect
+
+Each `severe-fix` recommendation must include source evidence, compatibility impact, target remediation, and verification. When it is unclear whether an item is required behavior or a smell, mark it `needs-reconciliation` and hand it to the design/source alignment stage.
 
 ## Decision Rules
 

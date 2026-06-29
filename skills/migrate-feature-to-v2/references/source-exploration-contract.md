@@ -2,6 +2,13 @@
 
 Persist source exploration results before implementing the target feature. The goal is traceability: another agent or engineer should be able to understand how the legacy behavior was recovered without redoing the whole search.
 
+## Contents
+
+- Default Location
+- Required Artifacts
+- CodeHub MCP Evidence Rules
+- Quality Bar
+
 ## Default Location
 
 Use the target repository's existing artifact convention when one exists. Otherwise write to:
@@ -10,7 +17,155 @@ Use the target repository's existing artifact convention when one exists. Otherw
 .ai-migrations/feature-migrations/<feature-slug>/source-exploration/
 ```
 
+When task packages or subagents are used, write orchestration artifacts to the sibling directory:
+
+```text
+.ai-migrations/feature-migrations/<feature-slug>/orchestration/
+```
+
 ## Required Artifacts
+
+### orchestration/task-package-index.md
+
+Required when the migration is broad enough to split across subagents or serial task packages. Use it as the work ledger so the main agent does not need to keep every exploration thread in active context.
+
+Required sections:
+
+```markdown
+# <Feature> Task Package Index
+
+## Overview
+- Feature:
+- Source:
+- Target:
+- Current active package:
+
+## Packages
+| Package ID | Role | Scope | Inputs | Outputs | Status | Notes |
+|---|---|---|---|---|---|---|
+
+## Dependencies
+| Package | Depends on | Reason |
+|---|---|---|
+
+## Approval Or Gate Status
+| Package | Gate | Status | Evidence |
+|---|---|---|---|
+```
+
+### orchestration/task-packages/TP-###-<name>.md
+
+Required for every delegated or serial bounded task.
+
+Required sections:
+
+```markdown
+# TP-### <Task Name>
+
+## Objective
+- Outcome:
+- Role:
+- Blocks:
+
+## Allowed Inputs
+| Input | Path or source | Purpose |
+|---|---|---|
+
+## Forbidden Inputs And Actions
+- Do not read:
+- Do not modify:
+- Do not decide:
+
+## Scope Boundaries
+| In scope | Out of scope |
+|---|---|
+
+## Output Paths
+| Artifact | Required content |
+|---|---|
+
+## Evidence Format
+- Evidence IDs:
+- Required file/line citations:
+- Assumptions must be labeled: yes
+
+## Stop Conditions
+- Stop if:
+- Ask main agent if:
+
+## Acceptance Checks
+| Check | Expected |
+|---|---|
+
+## Context Retirement Rule
+- After this package completes, retain only:
+- Retire:
+```
+
+### orchestration/subagent-reports/TP-###-<name>.md
+
+Required after every subagent package or serial package completes. The report is the handoff artifact; do not depend on chat-only summaries.
+
+Required sections:
+
+```markdown
+# TP-### <Task Name> Report
+
+## Result
+- Status: completed | blocked | partial | stale
+- Summary:
+
+## Artifacts Written
+| Artifact | Purpose |
+|---|---|
+
+## Evidence
+| Claim | Evidence ID or location | Confidence |
+|---|---|---|
+
+## Decisions Or Recommendations
+| Item | Recommendation | Requires approval? |
+|---|---|---|
+
+## Open Questions
+| Question | Blocks next step? | Suggested owner |
+|---|---|---|
+
+## Context To Retire
+- Raw files searched:
+- Search logs:
+- Long excerpts:
+```
+
+### orchestration/context-recovery.md
+
+Required when task packages are used. Keep it current enough that another agent can resume without reloading broad source, target, and design context.
+
+Required sections:
+
+```markdown
+# <Feature> Context Recovery
+
+## Canonical Reload Set
+| Artifact | Why reload |
+|---|---|
+
+## Active Package
+- Package:
+- Reason:
+
+## Retired Context
+| Context | Replacement artifact |
+|---|---|
+
+## Stale Artifacts
+| Artifact/package | Reason | Replacement needed? |
+|---|---|---|
+
+## Pending Questions
+| Question | Owner | Blocks |
+|---|---|---|
+```
 
 ### source-exploration.md
 
@@ -196,8 +351,10 @@ When the source repository is a CodeHub URL or the user identifies it as CodeHub
 ## Quality Bar
 
 - Every recovered behavior in the migration record should point to at least one evidence item.
+- Every broad migration should have task packages, package reports, and a context recovery file before implementation starts.
 - Every meaningful feature point should have one focused Markdown file and an entry in `feature-point-index.md`.
 - The migration design should cite feature point Markdown files rather than raw search output whenever possible.
+- Main-agent decisions should cite persisted package reports or artifacts, not subagent private reasoning.
 - Every important essence/dross decision should point to evidence and a migration decision.
 - Every severe smell or defect discovered in the feature path should be recorded with a remediation or deferral decision.
 - Label uncertain claims as assumptions.

@@ -19,26 +19,45 @@
 - 设计文档与源代码一致时，必须完整迁移。
 - 源仓探索结果必须落盘，保证迁移过程可追溯。
 - 源仓探索出的功能点必须拆成独立 Markdown，避免上下文过大。
+- 大迁移必须先拆成有边界的任务包，再用 subagent 或串行任务执行，避免一个上下文吞掉全部源仓、目标仓和设计文档。
 - 取其精华，去其糟粕：保留业务规则和生产经验，丢掉偶然架构、坏味道和不安全实现。
 - 老代码中的简单坏味道要在目标实现中顺手修掉，严重问题必须重构或修复，不能照搬。
 - 先基于功能点 Markdown 写迁移设计方案，方案审批后才能开始实现。
 - 如果源仓是 CodeHub 地址，必须使用对应的 CodeHub MCP 访问和探索。
 - 不盲目复制旧实现；用目标仓现有架构完成实现。
 
+## 上下文安全的多 agent 使用
+
+小迁移可以由单 agent 完成；只要出现多入口、多模块、多设计文档、候选文件过多、目标 owner 多、或上下文压力明显，就必须先做任务包分工。
+
+主 agent 只做编排和最终决策：维护用户确认、方案审批、迁移设计、迁移记录和最终集成。subagent 负责局部探索、设计提取、坏味道审计、目标架构映射、单个实现切片或独立验证。
+
+每个 subagent 任务必须有：
+
+- 任务包 ID、角色和目标。
+- 允许读取的输入 artifact。
+- 禁止读取或修改的范围。
+- 输出路径和证据格式。
+- 停止条件和验收标准。
+- 上下文回收规则。
+
+subagent 的结果必须落盘到 `orchestration/subagent-reports/` 或对应迁移 artifact。主 agent 最终只基于持久化 artifact、证据 ID 和简短报告继续设计和实现，不基于散落的聊天上下文。
+
 ## 默认流程
 
 1. 确认源仓、目标仓、功能范围、设计文档和验收标准。
-2. 从源仓恢复旧功能的完整行为基线。
-3. 将源仓探索结果写入 `.ai-migrations/feature-migrations/<feature-slug>/source-exploration/`。
-4. 将功能点拆成 `feature-points/<feature-point-slug>.md`，并维护 `feature-point-index.md`。
-5. 提炼源仓精华，识别糟粕和老代码坏味道。
-6. 读取 2.0 设计文档，提取目标行为和验收要求。
-7. 探索目标仓架构，确认目标 owner、接口、数据、集成、测试和观测模式。
-8. 基于功能点 Markdown 和目标仓架构写 `migration-design.md`。
-9. 方案审批通过后，记录 `design-approval.md`。
-10. 在目标仓按已批准方案实现完整纵向切片，并修复应处理的坏味道。
-11. 补齐单元测试、集成测试、契约测试或差异对比测试。
-12. 输出迁移记录和验证结果。
+2. 判断迁移规模，必要时创建 `orchestration/task-package-index.md` 和具体任务包。
+3. 用 subagent 或串行任务从源仓恢复旧功能的完整行为基线。
+4. 将源仓探索结果写入 `.ai-migrations/feature-migrations/<feature-slug>/source-exploration/`。
+5. 将功能点拆成 `feature-points/<feature-point-slug>.md`，并维护 `feature-point-index.md`。
+6. 提炼源仓精华，识别糟粕和老代码坏味道。
+7. 读取 2.0 设计文档，提取目标行为和验收要求。
+8. 探索目标仓架构，确认目标 owner、接口、数据、集成、测试和观测模式。
+9. 基于功能点 Markdown、subagent 报告和目标仓架构写 `migration-design.md`。
+10. 方案审批通过后，记录 `design-approval.md`。
+11. 在目标仓按已批准方案和任务包实现完整纵向切片，并修复应处理的坏味道。
+12. 补齐单元测试、集成测试、契约测试或差异对比测试。
+13. 输出迁移记录、任务包结果和验证结果。
 
 ## CodeHub 源仓
 
@@ -123,6 +142,15 @@
 .ai-migrations/feature-migrations/<feature-slug>/design-approval.md
 ```
 
+任务包和 subagent 交付物默认写入：
+
+```text
+.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-package-index.md
+.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-packages/TP-###-<name>.md
+.ai-migrations/feature-migrations/<feature-slug>/orchestration/subagent-reports/TP-###-<name>.md
+.ai-migrations/feature-migrations/<feature-slug>/orchestration/context-recovery.md
+```
+
 迁移记录默认写入：
 
 ```text
@@ -134,6 +162,7 @@
 迁移记录模板见：
 
 - [references/source-exploration-contract.md](./references/source-exploration-contract.md)
+- [references/subagent-coordination.md](./references/subagent-coordination.md)
 - [references/migration-design-approval.md](./references/migration-design-approval.md)
 - [references/legacy-smell-remediation.md](./references/legacy-smell-remediation.md)
 - [references/migration-record-contract.md](./references/migration-record-contract.md)
@@ -141,6 +170,7 @@
 ## 相关文件
 
 - [SKILL.md](./SKILL.md)：agent 执行迁移时使用的核心流程。
+- [references/subagent-coordination.md](./references/subagent-coordination.md)：大迁移的 subagent 分工、任务包和上下文回收规则。
 - [references/design-driven-modernization.md](./references/design-driven-modernization.md)：设计文档驱动的现代化规则。
 - [references/migration-design-approval.md](./references/migration-design-approval.md)：迁移设计方案和审批门。
 - [references/legacy-smell-remediation.md](./references/legacy-smell-remediation.md)：老代码坏味道分级与修复规则。
@@ -152,6 +182,7 @@
 ```text
 使用 migrate-feature-to-v2，把旧仓的“订单退款”功能迁移到当前 2.0 仓。
 参考 docs/refund-v2-design.md。
+如果源仓或目标仓上下文太大，先拆任务包并使用 subagent 探索入口、提取设计、映射目标架构和验证。
 先把源仓探索出的功能点拆成 Markdown，再基于这些 Markdown 给出迁移设计方案。
 如果设计文档和旧仓行为不一致，先列出差异并等待确认；方案审批通过后再开始实现。
 ```

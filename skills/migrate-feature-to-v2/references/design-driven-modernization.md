@@ -2,6 +2,15 @@
 
 Use this guide when migration is not one-to-one, when the user provides a design document, or when the task includes feature optimization.
 
+## Contents
+
+- Source Of Truth Order
+- Design Document Extraction
+- Design Subagent Boundary
+- Design And Source Alignment
+- Migration Modes
+- Reconciliation Checklist
+
 ## Source Of Truth Order
 
 Apply this order unless the user says otherwise. A design document can define the target state, but a design/source conflict is not automatically approved.
@@ -29,6 +38,17 @@ From each design artifact, extract:
 - open questions and explicitly out-of-scope items
 
 If the document contains multiple alternatives, identify which alternative is approved. If approval is unclear and the choice affects public behavior or data, ask before editing.
+
+## Design Subagent Boundary
+
+When design documents are large, a `design-intent-extractor` package may read only the design artifacts and produce a compact design-intent summary. That subagent should output:
+
+- target outcomes and callers
+- explicit additions, removals, replacements, and compatibility notes
+- acceptance criteria and rollout constraints
+- open questions and approval ambiguity
+
+The design subagent must not decide that source-only behavior can be dropped. Source-only, divergent, or dropped behavior decisions belong to the reconciliation stage after source feature-point Markdown files and design intent are reviewed together.
 
 ## Design And Source Alignment
 
