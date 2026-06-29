@@ -32,8 +32,12 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 |---|---|---|
 
 ## Subagent Task Ledger
-| Package ID | Role | Scope | Inputs | Outputs | Status | Decision impact |
-|---|---|---|---|---|---|---|
+| Package ID | Role | Scope | One-pass feasibility | Inputs | Outputs | Status | Decision impact |
+|---|---|---|---|---|---|---|---|
+
+## Task Checklist
+| Package | Surface | Objective | Status | Verification | Final check |
+|---|---|---|---|---|---|
 
 ## Feature Point Files
 | Surface | Feature point | Markdown file | Used in design? | Notes |
@@ -91,9 +95,16 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 | Item | Artifact or context | Status | Notes |
 |---|---|---|---|
 
+## Completion Check
+| Item | Status | Evidence |
+|---|---|---|
+
 ## Implementation Slices
 - [ ] Contract and schema
 - [ ] Subagent task packages prepared
+- [ ] One-pass feasibility assessed for every package
+- [ ] Oversized packages split before execution
+- [ ] Task checklist current
 - [ ] Subagent package reports integrated
 - [ ] Context recovery file current
 - [ ] Feature point Markdown split
@@ -115,6 +126,7 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - [ ] Rollout, flags, migration, or deprecation path
 - [ ] Observability
 - [ ] Tests and verification
+- [ ] Completion check passed or gaps recorded
 
 ## Verification
 | Command/scenario | Expected | Result |
@@ -127,6 +139,7 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - Link each important contract claim to code, test, schema, config, history, or runtime evidence.
 - Link source behavior claims to persisted source exploration artifacts where possible.
 - Link delegated work to task-package files and subagent reports; do not cite unpersisted chat-only handoffs.
+- Link task status to `task-checklist.md` and final decision to `completion-check.md`.
 - Link frontend, backend/API, and end-to-end coverage to feature-point files, target files, and verification evidence.
 - Link design decisions to feature point Markdown files and approval evidence.
 - Link essence/dross decisions to source evidence, target decisions, and verification.
@@ -137,5 +150,6 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - Mark design/source divergences as unconfirmed until the current user request or another explicit approval confirms them.
 - For aligned behavior, record how complete migration coverage was verified.
 - Do not mark the migration complete when a present frontend or backend surface is unimplemented or unverified.
+- Do not mark the migration complete while a required package is `ready`, `needs-split`, `blocked`, `in-progress`, or unverified.
 - Record the canonical reload set and stale package status before pausing or handing work off.
 - Keep raw copied source code out of the record; cite it and summarize the behavior.

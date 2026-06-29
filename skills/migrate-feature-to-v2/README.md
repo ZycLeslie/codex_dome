@@ -20,6 +20,8 @@
 - 源仓探索结果必须落盘，保证迁移过程可追溯。
 - 源仓探索出的功能点必须拆成独立 Markdown，避免上下文过大。
 - 大迁移必须先拆成有边界的任务包，再用 subagent 或串行任务执行，避免一个上下文吞掉全部源仓、目标仓和设计文档。
+- 每个任务包开始前都要评估一次性能否完成；不能一次完成的，先拆分再执行。
+- 全程维护 `task-checklist.md`，防止上下文压缩或交接时丢功能、丢任务、丢验证。
 - 如果功能同时包含前端和后端，必须分开探索、分开设计、分开实现、分开验证，并增加端到端闭环；不能只迁后端。
 - 取其精华，去其糟粕：保留业务规则和生产经验，丢掉偶然架构、坏味道和不安全实现。
 - 老代码中的简单坏味道要在目标实现中顺手修掉，严重问题必须重构或修复，不能照搬。
@@ -36,13 +38,35 @@
 每个 subagent 任务必须有：
 
 - 任务包 ID、角色和目标。
+- 一次性完成评估：能否在当前上下文、输入、权限、依赖和写入范围内完成。
 - 允许读取的输入 artifact。
 - 禁止读取或修改的范围。
 - 输出路径和证据格式。
 - 停止条件和验收标准。
+- checklist 更新规则。
 - 上下文回收规则。
 
 subagent 的结果必须落盘到 `orchestration/subagent-reports/` 或对应迁移 artifact。主 agent 最终只基于持久化 artifact、证据 ID 和简短报告继续设计和实现，不基于散落的聊天上下文。
+
+## 任务清单和完成检查
+
+迁移必须维护可恢复、可审计的任务清单：
+
+- `task-package-index.md`：任务包索引和依赖。
+- `task-checklist.md`：每个任务的一次性完成评估、状态、负责人、产物、验证和最终 check 状态。
+- `completion-check.md`：收尾时的最终核对结果。
+
+任务状态至少包含：`ready`、`needs-split`、`blocked`、`in-progress`、`done`、`verified`、`deferred`、`stale`。
+
+如果任务被标记为 `needs-split`，必须先拆成更小任务包，再交给 subagent 或串行执行。任务完成后要更新 checklist；上下文压缩、任务交接、审批变化、实现变化或验证失败时也要更新。
+
+最终不能只说“代码写完了”。必须检查：
+
+- 每个功能点是否有任务覆盖。
+- 每个前端/后端/端到端 surface 是否完成或明确不适用。
+- 每个已审批 slice/package 是否完成并验证。
+- 每个设计差异、坏味道修复、延期项是否记录。
+- 验证命令是否有结果。
 
 ## 前后端分层迁移
 
@@ -60,18 +84,20 @@ subagent 的结果必须落盘到 `orchestration/subagent-reports/` 或对应迁
 
 1. 确认源仓、目标仓、功能范围、设计文档和验收标准。
 2. 识别功能 surface：前端、后端/API、任务、事件、集成、数据、配置和观测。
-3. 判断迁移规模，必要时创建 `orchestration/task-package-index.md` 和具体任务包。
-4. 用 subagent 或串行任务从源仓恢复旧功能的完整行为基线；前后端存在时分开探索。
-5. 将源仓探索结果写入 `.ai-migrations/feature-migrations/<feature-slug>/source-exploration/`。
-6. 将功能点拆成 `feature-points/<feature-point-slug>.md`，并维护 `feature-point-index.md`。
-7. 提炼源仓精华，识别糟粕和老代码坏味道。
-8. 读取 2.0 设计文档，提取目标行为和验收要求。
-9. 探索目标仓架构，确认前端 owner、后端/API owner、数据、集成、测试和观测模式。
-10. 基于功能点 Markdown、subagent 报告和目标仓架构写 `migration-design.md`，并列出 surface coverage。
-11. 方案审批通过后，记录 `design-approval.md`。
-12. 在目标仓按已批准方案和任务包实现前端、后端和端到端切片，并修复应处理的坏味道。
-13. 补齐前端测试、后端测试、集成测试、契约测试或差异对比测试。
-14. 输出迁移记录、任务包结果和验证结果。
+3. 判断迁移规模，创建 `orchestration/task-package-index.md`、`task-checklist.md` 和具体任务包。
+4. 对每个任务包评估一次性能否完成；不能完成的先拆分。
+5. 用 subagent 或串行任务从源仓恢复旧功能的完整行为基线；前后端存在时分开探索。
+6. 将源仓探索结果写入 `.ai-migrations/feature-migrations/<feature-slug>/source-exploration/`。
+7. 将功能点拆成 `feature-points/<feature-point-slug>.md`，并维护 `feature-point-index.md`。
+8. 提炼源仓精华，识别糟粕和老代码坏味道。
+9. 读取 2.0 设计文档，提取目标行为和验收要求。
+10. 探索目标仓架构，确认前端 owner、后端/API owner、数据、集成、测试和观测模式。
+11. 基于功能点 Markdown、subagent 报告和目标仓架构写 `migration-design.md`，并列出 surface coverage。
+12. 方案审批通过后，记录 `design-approval.md`。
+13. 在目标仓按已批准方案和任务包实现前端、后端和端到端切片，并修复应处理的坏味道。
+14. 补齐前端测试、后端测试、集成测试、契约测试或差异对比测试。
+15. 写入 `completion-check.md`，核对任务清单、功能点、surface、审批和验证。
+16. 输出迁移记录、任务包结果和验证结果。
 
 ## CodeHub 源仓
 
@@ -162,9 +188,11 @@ subagent 的结果必须落盘到 `orchestration/subagent-reports/` 或对应迁
 
 ```text
 .ai-migrations/feature-migrations/<feature-slug>/orchestration/task-package-index.md
+.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-checklist.md
 .ai-migrations/feature-migrations/<feature-slug>/orchestration/task-packages/TP-###-<name>.md
 .ai-migrations/feature-migrations/<feature-slug>/orchestration/subagent-reports/TP-###-<name>.md
 .ai-migrations/feature-migrations/<feature-slug>/orchestration/context-recovery.md
+.ai-migrations/feature-migrations/<feature-slug>/orchestration/completion-check.md
 ```
 
 迁移记录默认写入：
@@ -199,6 +227,7 @@ subagent 的结果必须落盘到 `orchestration/subagent-reports/` 或对应迁
 使用 migrate-feature-to-v2，把旧仓的“订单退款”功能迁移到当前 2.0 仓。
 参考 docs/refund-v2-design.md。
 如果源仓或目标仓上下文太大，先拆任务包并使用 subagent 探索入口、提取设计、映射目标架构和验证。
+每个任务包先评估一次性能否完成，维护 task-checklist，最终输出 completion-check。
 先把源仓探索出的功能点拆成 Markdown，再基于这些 Markdown 给出迁移设计方案。
 如果设计文档和旧仓行为不一致，先列出差异并等待确认；方案审批通过后再开始实现。
 ```

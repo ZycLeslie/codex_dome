@@ -1,11 +1,11 @@
 ---
 name: migrate-feature-to-v2
-description: Discover a named legacy feature, split large work into bounded subagent task packages, separate frontend/backend surfaces when present, persist source evidence, split feature points into Markdown, reconcile with 2.0 design docs, reject legacy dross and smells, write an approvable migration design, then implement only after approval. Use for cross-repository feature migration, full-stack frontend/backend migration, context-bounded subagent delegation, non-one-to-one modernization, CodeHub-backed migration through the matching MCP, legacy smell remediation, 取其精华去其糟粕, 前后端分开迁移, subagent 分工迁移, 功能点拆分, 方案审批后迁移, 功能迁移, 特性迁移, 旧系统升级到 2.0, 功能优化, 设计文档落地, or reconstructing a feature end to end in a new codebase.
+description: Discover a named legacy feature, split large work into bounded subagent task packages, assess whether each task can finish in one pass, track task checklists, separate frontend/backend surfaces when present, persist source evidence, split feature points into Markdown, reconcile with 2.0 design docs, reject legacy dross and smells, write an approvable migration design, then implement only after approval. Use for cross-repository feature migration, full-stack frontend/backend migration, context-bounded subagent delegation, non-one-to-one modernization, CodeHub-backed migration through the matching MCP, legacy smell remediation, 取其精华去其糟粕, 任务清单跟踪, 一次性完成评估, 前后端分开迁移, subagent 分工迁移, 功能点拆分, 方案审批后迁移, 功能迁移, 旧系统升级到 2.0, 功能优化, or reconstructing a feature end to end.
 ---
 
 # Migrate Feature To V2
 
-Recover the legacy behavior from the source repository, split large work into bounded subagent task packages, separate frontend and backend surfaces when both exist, split the explored feature points into focused Markdown artifacts, classify legacy code smells, extract the valuable essence, reject the dross, reconcile the evidence with the intended 2.0 design, then write an approvable migration design. Implement target code only after the design is approved. Treat source code as behavioral evidence, not as a template to paste; treat design documents as the intended future state, not optional commentary.
+Recover the legacy behavior from the source repository, split large work into bounded subagent task packages, assess each task for one-pass feasibility, track every task in a durable checklist, separate frontend and backend surfaces when both exist, split the explored feature points into focused Markdown artifacts, classify legacy code smells, extract the valuable essence, reject the dross, reconcile the evidence with the intended 2.0 design, then write an approvable migration design. Implement target code only after the design is approved. Treat source code as behavioral evidence, not as a template to paste; treat design documents as the intended future state, not optional commentary.
 
 ## Inputs And Defaults
 
@@ -20,6 +20,7 @@ Resolve these inputs before editing:
 - **Bad smell policy**: optional user guidance for which legacy smells, defects, or technical debt must be fixed during migration.
 - **Approval requirement**: who or what can approve the migration design before implementation. Default to the current user when no other approval source is provided.
 - **Subagent strategy**: whether to delegate exploration, design extraction, implementation slices, or verification to subagents. Default to subagents for broad migrations and to the same task-package protocol run serially when subagents are unavailable.
+- **Task tracking strategy**: where to maintain task checklist, one-pass feasibility decisions, and final completion check. Default to the migration orchestration artifacts.
 - **Acceptance criteria**: explicit requirements when provided; otherwise recover them from source behavior and tests.
 
 Use the current workspace as the target repository when the user gives only a source repository. Treat a user-provided repository as the source unless they explicitly call it the 2.0 target. If both repository roles remain ambiguous and editing the wrong repository is plausible, ask one concise question before modifying code.
@@ -53,7 +54,10 @@ For remote URLs, clone or fetch only after obtaining any required approval. Do n
 - Persist source exploration results before implementation so another agent or engineer can trace every recovered behavior back to source evidence.
 - Split recovered feature points into small Markdown files and use those files, not raw sprawling exploration context, as the basis for target design.
 - For large migrations, split work into bounded task packages and use subagents when available. Each subagent must receive only the minimal inputs for its package and must write a durable report or artifact.
+- Before executing any task package, assess whether it can be completed in one pass with the available context, tools, permissions, and dependencies. If not, split it before work starts.
+- Maintain a durable task checklist and update it after every package, context handoff, approval change, implementation slice, and verification run.
 - Record feature surface coverage. If a frontend, UI route, page, component, state transition, validation message, permission display, API call, generated client, or end-to-end flow exists, it must be represented in feature points, task packages, design, implementation, and verification.
+- Do not declare completion until a final completion check proves that all required tasks, feature points, surfaces, approved slices, and verification items are complete or explicitly deferred with reasons.
 - Do not modify target implementation code before the migration design is approved. Exploration artifacts and design documents may be written before approval.
 - Interpret "AI-friendly" as discoverable, explicit, composable, testable, and observable. Do not add an LLM, agent endpoint, or weaken security merely to claim AI readiness.
 
@@ -71,11 +75,22 @@ The main agent is the orchestrator:
 Before broad exploration or implementation, create or update:
 
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-package-index.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-checklist.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-packages/TP-###-<name>.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/subagent-reports/TP-###-<name>.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/context-recovery.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/completion-check.md`
 
-Each task package must state objective, role, allowed inputs, forbidden inputs/actions, scope boundaries, output paths, evidence format, stop conditions, acceptance checks, and context retirement rule. No package should ask a subagent to read the complete source repository, complete target repository, and complete design corpus at the same time unless that broad read is explicitly justified.
+Each task package must state objective, role, one-pass feasibility, allowed inputs, forbidden inputs/actions, scope boundaries, output paths, evidence format, stop conditions, acceptance checks, checklist update rule, and context retirement rule. No package should ask a subagent to read the complete source repository, complete target repository, and complete design corpus at the same time unless that broad read is explicitly justified.
+
+One-pass feasibility must answer:
+
+- Can this package reasonably finish in one pass without overloading context?
+- Are required inputs, permissions, tools, approvals, and dependencies available?
+- Is the write set disjoint and small enough for safe implementation or review?
+- What is the split plan if the answer is no?
+
+Keep `task-checklist.md` as the source of truth for package status. The checklist should include package ID, surface, objective, one-pass feasibility, dependencies, status, owner/subagent, artifacts, verification, and final check status.
 
 Recommended subagent roles:
 
@@ -108,6 +123,8 @@ Read `references/subagent-coordination.md` before delegating a broad migration.
 Use the profile as orientation only. Read actual source files before making decisions.
 
 Identify the feature surfaces before deep exploration. Check whether the capability includes frontend routes, pages, components, forms, state, client APIs, generated clients, backend APIs, domain services, persistence, jobs, events, external integrations, data migrations, configuration, or observability. If both frontend and backend exist, create separate feature-point files and task packages for each layer plus an end-to-end coordination package.
+
+Before starting any exploration package, create or update `task-checklist.md`. Mark packages as `ready`, `needs-split`, `blocked`, `in-progress`, `done`, `verified`, or `deferred`. If a task is `needs-split`, split it and update the checklist before assigning it to a subagent or executing it serially.
 
 ### 2. Interpret The 2.0 Design Intent
 
@@ -145,6 +162,7 @@ Persist the exploration as you go. Before implementation, create or update:
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/feature-points/<feature-point-slug>.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/legacy-smells.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-package-index.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-checklist.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/context-recovery.md`
 - supporting artifacts such as `search-log.md`, `candidate-files.txt`, `call-trace.md`, or `codehub-mcp-evidence.md` when useful
 
@@ -157,6 +175,7 @@ Keep context bounded:
 - After exploration, summarize each coherent feature point into its own Markdown file.
 - Keep one feature point per file: entry points, behavior, data/integration evidence, essence/dross, smells, open questions, and verification ideas.
 - Use `feature-point-index.md` as the navigation map. Load only the index and the feature-point files needed for the current design decision.
+- Update `task-checklist.md` whenever a feature point is discovered, split, completed, verified, or deferred.
 - Do not carry full raw source dumps, broad search logs, subagent conversations, or every inspected file in active context once the artifacts are written.
 
 Recover at least:
@@ -253,6 +272,8 @@ The design must include:
 - data, API, event, integration, rollout, and observability changes
 - implementation slices split by surface when applicable, especially frontend and backend/API
 - task package plan that maps slices to subagent packages, allowed write sets, outputs, and verification
+- one-pass feasibility and split decision for every package
+- task checklist coverage for every feature point, surface, and approved slice
 - verification plan
 - open questions and approval status
 
@@ -270,7 +291,7 @@ Record approval in:
 
 `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/design-approval.md`
 
-If approval is partial, implement only the approved slices and task packages. If approval requests changes, update the feature point mapping, task-package plan, and migration design before proceeding.
+If approval is partial, implement only the approved slices and task packages. If approval requests changes, update the feature point mapping, task-package plan, task checklist, and migration design before proceeding.
 
 ### 9. Write A Migration And Design Record
 
@@ -278,13 +299,15 @@ Before substantial edits, create or update a migration record. Use the target re
 
 `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/migration-record.md`
 
-Include the legacy baseline, split feature point artifacts, subagent task ledger, context recovery ledger, design inputs, design approval, essence/dross decisions, legacy smell inventory, baseline-vs-target matrix, target mapping, intentional differences, risk decisions, implementation slices, and verification plan. Use `references/migration-record-contract.md` for the required shape.
+Include the legacy baseline, split feature point artifacts, subagent task ledger, task checklist, context recovery ledger, design inputs, design approval, essence/dross decisions, legacy smell inventory, baseline-vs-target matrix, target mapping, intentional differences, risk decisions, implementation slices, and verification plan. Use `references/migration-record-contract.md` for the required shape.
 
 Proceed autonomously through exploration and design artifacts when evidence supports it. Pause before implementation until design approval is recorded, and also pause when an unresolved ambiguity could materially change business behavior, security, data integrity, or the public contract.
 
 ### 10. Implement A Complete Vertical Slice
 
 After design approval, implement the smallest complete approved slice that delivers the intended 2.0 capability through its real entry point. Use `implementation-slice-agent` packages for independent slices with disjoint write sets; each package must work from `migration-design.md`, `design-approval.md`, relevant feature-point files, and target owner context instead of reopening the full source exploration.
+
+Before starting each implementation package, re-check one-pass feasibility against current code, approvals, dependencies, and worktree state. If the package no longer fits in one pass, split it, mark the old package `stale` or `needs-split`, and update `task-checklist.md`.
 
 For full-stack features, implement coordinated but separate slices:
 
@@ -319,6 +342,7 @@ Derive verification scenarios from both the target design and the recovered sour
 - For aligned behavior, verify complete migration coverage against the source baseline: all entry points, edge cases, validation failures, permissions, data mutations, emitted events, external calls, config-controlled behavior, logs, metrics, and audit output that matter externally.
 - Verify that every `simple-fix` and `severe-fix` smell has a target-side remediation, test, static check, or documented reason when deferred.
 - Verify implementation matches the approved `migration-design.md`; if the implementation must deviate, update the design and get approval before continuing.
+- Run a final checklist pass against `task-checklist.md`, `feature-point-index.md`, `migration-design.md`, `design-approval.md`, `migration-record.md`, and verification results. Write the result to `orchestration/completion-check.md`.
 
 If the source behavior cannot be executed, state which claims are proven by static evidence and which remain assumptions.
 
@@ -330,6 +354,7 @@ Report:
 - source entry points and strongest implementation evidence
 - persisted source exploration artifact paths
 - subagent task packages, reports, and context-recovery artifact paths
+- task checklist and completion-check artifact paths
 - feature point Markdown files used for design
 - design approval source and approved implementation slices
 - legacy smells fixed, severe issues remediated, and any deferred smells with reasons
@@ -355,6 +380,9 @@ Do not declare the migration complete while required target wiring, tests, or ve
 - Reject source dross even when it is easy to copy.
 - Design from the persisted feature point Markdown files, not from an overloaded in-memory exploration context.
 - Use bounded task packages and subagents for broad migrations; if subagents are unavailable, run the same packages serially and keep the same artifacts.
+- Split any task that is not feasible to finish in one pass before assigning or executing it.
+- Keep the task checklist current; when context is compressed or work is handed off, reload from the checklist and current package instead of reconstructing from memory.
+- Treat the final completion check as the last gate before saying the migration is done.
 - Do not implement until the migration design is approved or an explicit approval source is recorded.
 - When source code contains simple low-risk smells, fix them in the target implementation as part of migration.
 - When source code contains severe security, correctness, reliability, performance, or data-integrity problems, remediate them in the target design and record the decision.

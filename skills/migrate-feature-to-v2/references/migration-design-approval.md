@@ -17,7 +17,9 @@ Use the target repository's existing artifact convention when one exists. Otherw
 .ai-migrations/feature-migrations/<feature-slug>/migration-design.md
 .ai-migrations/feature-migrations/<feature-slug>/design-approval.md
 .ai-migrations/feature-migrations/<feature-slug>/orchestration/task-package-index.md
+.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-checklist.md
 .ai-migrations/feature-migrations/<feature-slug>/orchestration/task-packages/TP-###-<name>.md
+.ai-migrations/feature-migrations/<feature-slug>/orchestration/completion-check.md
 ```
 
 ## migration-design.md
@@ -63,8 +65,12 @@ Required before implementation.
 |---|---|---|---|---|
 
 ## Task Package Plan
-| Package | Role | Slice/feature point | Inputs | Allowed files/modules | Outputs | Verification | Status |
-|---|---|---|---|---|---|---|---|
+| Package | Role | Slice/feature point | One-pass feasibility | Inputs | Allowed files/modules | Outputs | Verification | Status |
+|---|---|---|---|---|---|---|---|---|
+
+## Task Checklist Coverage
+| Feature point/surface/slice | Covered by packages | One-pass feasible? | Gap |
+|---|---|---|---|
 
 ## Full-Stack Coordination
 | Flow | Frontend slice | Backend/API slice | Contract or integration check | E2E verification |
@@ -82,6 +88,7 @@ Required before implementation.
 - Requested approver:
 - Approval scope:
 - Approved slices:
+- Approved task packages:
 ```
 
 ## design-approval.md
@@ -115,6 +122,7 @@ Required before implementation starts.
 - Do not edit target implementation code before approval is recorded.
 - If approval is partial, implement only approved slices and task packages.
 - If frontend and backend surfaces both exist, approval should identify which frontend slices, backend/API slices, and end-to-end checks are approved.
+- Do not approve an implementation package that is `no-needs-split` or missing one-pass feasibility.
 - If a package is not approved, do not hand it to an implementation-slice agent.
 - If design changes affect package inputs, mark the old package `stale`, update the package plan, and get approval for the changed package before implementation.
 - If the implementation discovers a design-changing fact, update `migration-design.md` and get approval again before continuing.

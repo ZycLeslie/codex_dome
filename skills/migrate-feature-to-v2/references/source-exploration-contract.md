@@ -41,8 +41,8 @@ Required sections:
 - Current active package:
 
 ## Packages
-| Package ID | Role | Scope | Inputs | Outputs | Status | Notes |
-|---|---|---|---|---|---|---|
+| Package ID | Role | Scope | One-pass feasibility | Inputs | Outputs | Status | Notes |
+|---|---|---|---|---|---|---|---|
 
 ## Dependencies
 | Package | Depends on | Reason |
@@ -50,6 +50,34 @@ Required sections:
 
 ## Approval Or Gate Status
 | Package | Gate | Status | Evidence |
+|---|---|---|---|
+```
+
+### orchestration/task-checklist.md
+
+Required for every multi-package migration. Use it to prevent task loss across context compression, subagent handoffs, and partial approvals.
+
+Required sections:
+
+```markdown
+# <Feature> Task Checklist
+
+## Summary
+- Feature:
+- Current active package:
+- Last updated:
+- Completion check:
+
+## Tasks
+| Package | Surface | Objective | One-pass feasibility | Depends on | Status | Owner | Artifacts | Verification | Final check |
+|---|---|---|---|---|---|---|---|---|---|
+
+## Lost-Function Guard
+| Feature point/surface | Covered by packages | Verified? | Gap |
+|---|---|---|---|
+
+## Deferred Or Blocked
+| Task | Reason | Approval/evidence | Follow-up |
 |---|---|---|---|
 ```
 
@@ -66,6 +94,14 @@ Required sections:
 - Outcome:
 - Role:
 - Blocks:
+
+## One-Pass Feasibility
+- Feasibility: yes | no-needs-split | blocked | risky
+- Reason:
+- Required inputs ready? yes/no
+- Required permissions/tools ready? yes/no
+- Write set small and disjoint? yes/no/not applicable
+- Split plan if not feasible:
 
 ## Allowed Inputs
 | Input | Path or source | Purpose |
@@ -97,6 +133,11 @@ Required sections:
 | Check | Expected |
 |---|---|
 
+## Checklist Update
+- Checklist row:
+- Status to set when complete:
+- Verification to record:
+
 ## Context Retirement Rule
 - After this package completes, retain only:
 - Retire:
@@ -118,6 +159,10 @@ Required sections:
 ## Artifacts Written
 | Artifact | Purpose |
 |---|---|
+
+## Checklist Updates
+| Package | Status | Verification | Notes |
+|---|---|---|---|
 
 ## Evidence
 | Claim | Evidence ID or location | Confidence |
@@ -165,6 +210,41 @@ Required sections:
 ## Pending Questions
 | Question | Owner | Blocks |
 |---|---|---|
+```
+
+### orchestration/completion-check.md
+
+Required before declaring a migration complete. It should check task coverage, feature coverage, approvals, surfaces, and verification.
+
+Required sections:
+
+```markdown
+# <Feature> Completion Check
+
+## Inputs Checked
+| Artifact | Status |
+|---|---|
+
+## Checklist Status
+| Package | Status | Verified? | Notes |
+|---|---|---|---|
+
+## Feature Coverage
+| Feature point/surface | Implemented? | Verified? | Evidence |
+|---|---|---|---|
+
+## Approval And Divergence
+| Decision | Approved? | Evidence |
+|---|---|---|
+
+## Verification Results
+| Command/scenario | Result | Evidence |
+|---|---|---|
+
+## Final Decision
+- Complete? yes/no
+- Remaining gaps:
+- Deferred items:
 ```
 
 ### source-exploration.md
@@ -361,6 +441,9 @@ When the source repository is a CodeHub URL or the user identifies it as CodeHub
 
 - Every recovered behavior in the migration record should point to at least one evidence item.
 - Every broad migration should have task packages, package reports, and a context recovery file before implementation starts.
+- Every task package should have a one-pass feasibility decision before execution.
+- Every multi-package migration should maintain `task-checklist.md` and finish with `completion-check.md`.
+- Tasks marked `no-needs-split` should be split before assignment or execution.
 - Surface coverage should explicitly mark frontend, backend/API, jobs/events, integrations, data, config, observability, and end-to-end flow as present, absent, or unknown.
 - If a frontend route, page, component, form, client API call, generated client, UI validation, visible permission state, or user workflow exists, it should have a frontend feature-point file and a verification plan.
 - If no frontend exists, record the evidence for `not applicable` instead of silently skipping frontend work.
