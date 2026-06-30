@@ -1,11 +1,11 @@
 ---
 name: migrate-feature-to-v2
-description: Discover a named legacy feature, create a project-local visual migration workspace, split large work into bounded subagent task packages, force subagent delegation after resume/interruption, assess whether each task can finish in one pass, track task checklists, separate frontend/backend surfaces when present, split frontend work into route/page/component/state/API/form/visible-state micro-packages, persist source evidence, split feature points into Markdown, reconcile with 2.0 design docs, reject legacy dross and smells, write an approvable migration design, then implement only after approval. Use for cross-repository feature migration, full-stack frontend/backend migration, restart-safe migration records, context-bounded subagent delegation, non-one-to-one modernization, CodeHub-backed migration through the matching MCP, legacy smell remediation, 取其精华去其糟粕, 任务清单跟踪, 一次性完成评估, 中断恢复后强制 subagent 派工, 前端细粒度任务拆分, 前后端分开迁移, subagent 分工迁移, 功能点拆分, 方案审批后迁移, 功能迁移, 旧系统升级到 2.0, 功能优化, or reconstructing a feature end to end.
+description: Move a legacy feature into an AI-friendly 2.0 repo. Use for 功能迁移, 旧系统升级到 2.0, full-stack migration, frontend micro-slicing, resume-safe subagent dispatch, CodeHub MCP access, evidence records, design approval, and legacy dross cleanup.
 ---
 
 # Migrate Feature To V2
 
-Recover the legacy behavior from the source repository, create a project-local visual migration workspace, split large work into bounded subagent task packages, assess each task for one-pass feasibility, track every task in a durable checklist, separate frontend and backend surfaces when both exist, split the explored feature points into focused Markdown artifacts, classify legacy code smells, extract the valuable essence, reject the dross, reconcile the evidence with the intended 2.0 design, then write an approvable migration design. Implement target code only after the design is approved. Treat source code as behavioral evidence, not as a template to paste; treat design documents as the intended future state, not optional commentary.
+Recover legacy behavior as evidence, reconcile it with 2.0 design docs, split work into bounded task packages, and implement only after approval. Keep evidence, task state, resume state, frontend slices, subagent reports, smell/dross decisions, and verification in project-local artifacts.
 
 ## Inputs And Defaults
 
