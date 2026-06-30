@@ -60,6 +60,14 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 | Surface | Present? | Source evidence | Target owner | Implementation status | Verification |
 |---|---|---|---|---|---|
 
+## Config Center Inventory
+| Key | Provider | Namespace/group/app | Profile/env | Target mapping | Required? | Sensitive? | Owner | Status | Verification |
+|---|---|---|---|---|---|---|---|---|---|
+
+## Missing Or Blocked Config
+| Config | Why needed | Blocks | Owner | Decision |
+|---|---|---|---|---|
+
 ## Design Approval
 | Item | Status | Evidence |
 |---|---|---|
@@ -129,6 +137,8 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - [ ] Resume file current for restart after interruption
 - [ ] Feature point Markdown split
 - [ ] Surface coverage recorded
+- [ ] Third-party config center inventory complete or documented not applicable
+- [ ] Required target config mapped, provisioned, or blocked with owner
 - [ ] Migration design approved
 - [ ] Frontend thin surface index written when frontend is present or unknown
 - [ ] Frontend route/page/component/state/API/form/visible-state tasks split when applicable
@@ -149,6 +159,7 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - [ ] Persistence and integrations
 - [ ] Entry-point wiring
 - [ ] Rollout, flags, migration, or deprecation path
+- [ ] Config center keys, profiles, feature flags, secrets, and dynamic refresh behavior verified
 - [ ] Observability
 - [ ] Tests and verification
 - [ ] Completion check passed or gaps recorded
@@ -167,6 +178,7 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - Link delegated work to task-package files and subagent reports; do not cite unpersisted chat-only handoffs.
 - Link task status to `task-checklist.md` and final decision to `completion-check.md`.
 - Link frontend, backend/API, and end-to-end coverage to feature-point files, target files, and verification evidence.
+- Link config center entries to source evidence, target mappings, owners, and verification; do not expose secret values.
 - Link design decisions to feature point Markdown files and approval evidence.
 - Link essence/dross decisions to source evidence, target decisions, and verification.
 - Link every legacy dross scan finding to a fix, approved compatibility decision, or deferred record.
@@ -179,6 +191,7 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - Do not mark the migration complete when a present frontend or backend surface is unimplemented or unverified.
 - Do not mark the migration complete while a required package is `ready`, `needs-split`, `blocked`, `in-progress`, or unverified.
 - Do not mark the migration complete when mandatory-subagent frontend, resumed, or broad work was executed only by the main agent without a recorded exception.
+- Do not mark the migration complete while required third-party config center entries are missing, unmapped, ownerless, or unverified.
 - Do not mark the migration complete while legacy dross scan findings are unexplained.
 - Record the canonical reload set and stale package status before pausing or handing work off.
 - Keep `resume.md` and `orchestration/context-recovery.md` aligned before pausing, handing off, or responding after an interruption.

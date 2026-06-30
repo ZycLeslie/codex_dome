@@ -639,6 +639,42 @@ Required sections:
 |---|---|---|
 ```
 
+### config/config-center-inventory.md
+
+Required when a config surface is present or unknown, especially when the feature reads from Nacos, Apollo, Spring Cloud Config, Consul, etcd, Vault, Kubernetes ConfigMap/Secret, feature-flag systems, platform config, runtime env injection, or any remote config SDK.
+
+Required sections:
+
+```markdown
+# <Feature> Config Center Inventory
+
+## Summary
+- Config center present? yes | no | unknown
+- Providers:
+- Environments/profiles checked:
+- Runtime blocker? yes | no
+
+## Config Entries
+| Key | Provider | Namespace/group/app | Profile/env | Source location | Current/default value | Target value/source | Required? | Sensitive? | Owner | Verification |
+|---|---|---|---|---|---|---|---|---|---|---|
+
+## Dynamic Behavior
+| Key or group | Refresh mode | Listener/effect | Fallback behavior | Evidence |
+|---|---|---|---|---|
+
+## Target Mapping
+| Source config | Target config | Transformation | Compatibility decision | Approval |
+|---|---|---|---|---|
+
+## Missing Or Blocked Config
+| Config | Why needed | Blocker | Owner | Next action |
+|---|---|---|---|---|
+
+## Verification Plan
+| Check | Command/scenario | Expected |
+|---|---|---|
+```
+
 ### legacy-smells.md
 
 Required smell inventory. If no relevant smells are found, write `none found` with the evidence scope checked.
@@ -673,6 +709,7 @@ Create only when useful:
 - `candidate-files.txt`: files inspected or rejected.
 - `call-trace.md`: entry point to domain/persistence/integration call chain.
 - `frontend/frontend-open-questions.md`: unresolved frontend route, component, state/API, validation, or visible-state questions.
+- `config/config-center-inventory.md`: third-party config center keys, target mapping, owners, blockers, and verification plan.
 - `legacy-dross-candidates.md`: full paths, source package prefixes, old endpoints, generated paths, and source-specific tokens that must not leak into target code.
 - `codehub-mcp-evidence.md`: CodeHub MCP queries, resources, branch/ref details, and evidence IDs.
 
@@ -704,6 +741,9 @@ When the source repository is a CodeHub URL or the user identifies it as CodeHub
 - If a frontend route, page, component, form, client API call, generated client, UI validation, visible permission state, or user workflow exists, it should have a frontend feature-point file and a verification plan.
 - No frontend package should require understanding the whole frontend project, broad `src/pages`, broad `src/components`, broad store trees, or broad generated clients. Split first.
 - If no frontend exists, record the evidence for `not applicable` instead of silently skipping frontend work.
+- If config center usage is present or unknown, create `config/config-center-inventory.md`; missing required config blocks completion.
+- Every required external config should have provider, namespace/group/app, profile/env, key, default/current value or sensitive marker, target mapping, owner, and verification.
+- Dynamic refresh behavior should be recorded when present; startup-only config is not equivalent to runtime-refresh config.
 - Every meaningful feature point should have one focused Markdown file and an entry in `feature-point-index.md`.
 - The migration design should cite feature point Markdown files rather than raw search output whenever possible.
 - Main-agent decisions should cite persisted package reports or artifacts, not subagent private reasoning.

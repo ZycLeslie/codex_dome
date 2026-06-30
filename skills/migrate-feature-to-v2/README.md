@@ -26,6 +26,7 @@
 - 中断、重开或上下文压缩后，必须先跑恢复门，重建 `subagent-assignment-queue.md`，再派工；不能让主 agent 直接接着写前端或大实现。
 - 如果功能同时包含前端和后端，必须分开探索、分开设计、分开实现、分开验证，并增加端到端闭环；不能只迁后端。
 - 前端任务必须比“前端整体迁移”更细：先做薄索引，再按路由、页面/容器、组件、状态/API、表单校验、可见状态和测试拆微任务。
+- 第三方配置中心必须列清楚：key、namespace/group/app、环境、默认值、目标映射、owner、敏感性和验证方式；缺配置就是运行阻塞。
 - 源代码里的丑陋全路径、硬编码环境路径、源仓包名前缀、全限定类名、旧域名和生成代码路径默认都是糟粕；除非是外部契约，否则不能照搬到 2.0。
 - 取其精华，去其糟粕：保留业务规则和生产经验，丢掉偶然架构、坏味道和不安全实现。
 - 老代码中的简单坏味道要在目标实现中顺手修掉，严重问题必须重构或修复，不能照搬。
@@ -141,6 +142,24 @@ subagent 的结果必须落盘到 `orchestration/subagent-reports/` 或对应迁
 
 如果某个前端任务需要阅读整个 `src/pages`、`src/components`、`src/store`、`src/api` 或生成客户端目录，必须标记为 `needs-split`，先拆分再执行。前端实现也要按 route wiring、page/container、component、form validation、state/API、visible states、tests 分包。
 
+## 配置中心清单
+
+如果功能依赖 Nacos、Apollo、Spring Cloud Config、Consul、etcd、Vault、Kubernetes ConfigMap/Secret、平台配置或 feature flag，必须写入：
+
+```text
+.ai-migrations/feature-migrations/<feature-slug>/source-exploration/config/config-center-inventory.md
+```
+
+至少列出：
+
+- 配置 key、provider、namespace/group/app、profile/env。
+- 源仓位置、默认值或当前值；敏感值只记录存在性和 owner，不暴露明文。
+- 2.0 目标配置名、目标值来源、转换规则、兼容决策。
+- 动态刷新方式、监听器影响、fallback 行为。
+- 缺失配置、开通 owner、阻塞原因和验证方式。
+
+代码迁过去但配置中心没建好，不能算完成。
+
 ## 防止照搬遗留全路径
 
 迁移时要特别拦截这些“看起来能跑，但其实把旧系统污染带进 2.0”的内容：
@@ -182,14 +201,15 @@ python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
 8. 将功能点拆成 `feature-points/<feature-point-slug>.md`，并维护 `feature-point-index.md`。
 9. 提炼源仓精华，识别糟粕和老代码坏味道。
 10. 读取 2.0 设计文档，提取目标行为和验收要求。
-11. 探索目标仓架构，确认前端 owner、后端/API owner、数据、集成、测试和观测模式。
-12. 基于功能点 Markdown、subagent 报告和目标仓架构写 `migration-design.md`，并列出 surface coverage。
-13. 方案审批通过后，记录 `design-approval.md`。
-14. 在目标仓按已批准方案和任务包实现前端、后端和端到端切片，并修复应处理的坏味道。
-15. 跑 `scan_legacy_dross.py`，清理或记录所有遗留全路径、硬编码端点和源仓特定 token。
-16. 补齐前端测试、后端测试、集成测试、契约测试或差异对比测试。
-17. 写入 `completion-check.md`，核对任务清单、功能点、surface、审批、遗留污染扫描和验证。
-18. 输出迁移记录、任务包结果、可视化工作区路径和验证结果。
+11. 列出第三方配置中心配置项，确认目标环境映射、owner 和缺失配置阻塞。
+12. 探索目标仓架构，确认前端 owner、后端/API owner、数据、集成、测试和观测模式。
+13. 基于功能点 Markdown、subagent 报告和目标仓架构写 `migration-design.md`，并列出 surface coverage。
+14. 方案审批通过后，记录 `design-approval.md`。
+15. 在目标仓按已批准方案和任务包实现前端、后端和端到端切片，并修复应处理的坏味道。
+16. 跑 `scan_legacy_dross.py`，清理或记录所有遗留全路径、硬编码端点和源仓特定 token。
+17. 补齐前端测试、后端测试、集成测试、契约测试、配置中心验证或差异对比测试。
+18. 写入 `completion-check.md`，核对任务清单、功能点、surface、审批、配置中心清单、遗留污染扫描和验证。
+19. 输出迁移记录、任务包结果、可视化工作区路径和验证结果。
 
 ## CodeHub 源仓
 
@@ -212,6 +232,7 @@ python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
 - 同步和异步副作用
 - 外部集成、超时、重试和降级
 - 配置、开关、限制和兼容窗口
+- 第三方配置中心 key、namespace/group/app、profile/env、默认值、目标映射、owner 和验证结果
 - 日志、指标、链路追踪和审计事件
 - 关键边界条件和失败路径
 
@@ -268,6 +289,7 @@ python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
 ```text
 .ai-migrations/feature-migrations/<feature-slug>/source-exploration/feature-point-index.md
 .ai-migrations/feature-migrations/<feature-slug>/source-exploration/feature-points/<feature-point-slug>.md
+.ai-migrations/feature-migrations/<feature-slug>/source-exploration/config/config-center-inventory.md
 ```
 
 迁移设计和审批记录默认写入：
@@ -320,6 +342,7 @@ python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
 - [SKILL.md](./SKILL.md)：agent 执行迁移时使用的核心流程。
 - [references/subagent-coordination.md](./references/subagent-coordination.md)：大迁移的 subagent 分工、任务包和上下文回收规则。
 - [references/frontend-task-slicing.md](./references/frontend-task-slicing.md)：前端薄索引、微任务拆分和上下文预算规则。
+- [references/config-center-inventory.md](./references/config-center-inventory.md)：第三方配置中心配置项清单和迁移阻塞规则。
 - [references/design-driven-modernization.md](./references/design-driven-modernization.md)：设计文档驱动的现代化规则。
 - [references/migration-design-approval.md](./references/migration-design-approval.md)：迁移设计方案和审批门。
 - [references/legacy-smell-remediation.md](./references/legacy-smell-remediation.md)：老代码坏味道分级与修复规则。

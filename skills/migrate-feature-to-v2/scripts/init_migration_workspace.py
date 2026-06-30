@@ -79,6 +79,14 @@ def empty_record_template(feature: str, source: str, target: str) -> str:
 | Artifact | Purpose | Status |
 |---|---|---|
 
+## Config Center Inventory
+| Key | Provider | Namespace/group/app | Profile/env | Target mapping | Required? | Sensitive? | Owner | Status | Verification |
+|---|---|---|---|---|---|---|---|---|---|
+
+## Missing Or Blocked Config
+| Config | Why needed | Blocks | Owner | Decision |
+|---|---|---|---|---|
+
 ## Completion Check
 | Item | Status | Evidence |
 |---|---|---|
@@ -102,6 +110,10 @@ def empty_design_template(feature: str) -> str:
 ## Surface Coverage
 | Surface | Present? | Target action | Verification |
 |---|---|---|---|
+
+## Config Center Target Mapping
+| Source config | Target config | Required? | Owner | Verification |
+|---|---|---|---|---|
 
 ## Baseline Vs Target Matrix
 | Legacy behavior | Source evidence | 2.0 design requirement | Alignment | Decision | Confirmation | Verification |
@@ -154,6 +166,7 @@ def build_templates(args: argparse.Namespace, root: Path, slug: str) -> Dict[Pat
         ("source-exploration/frontend/frontend-surface-index.md", "Thin frontend surface index", "pending"),
         ("source-exploration/frontend/frontend-task-map.md", "Frontend micro-package map", "pending"),
         ("source-exploration/frontend/frontend-open-questions.md", "Frontend open questions", "pending"),
+        ("source-exploration/config/config-center-inventory.md", "Third-party config center inventory", "pending"),
         ("source-exploration/legacy-smells.md", "Legacy smell and dross inventory", "pending"),
         ("orchestration/task-package-index.md", "Task package ledger", "pending"),
         ("orchestration/task-checklist.md", "Package status and lost-function guard", "pending"),
@@ -274,6 +287,7 @@ This folder is the source of truth for migration progress. After interruption or
 | `orchestration/task-checklist.md` | Package state and lost-function guard |
 | `orchestration/subagent-assignment-queue.md` | Resume-time subagent dispatch queue |
 | `source-exploration/feature-point-index.md` | Feature point navigation after exploration |
+| `source-exploration/config/config-center-inventory.md` | Third-party config center blockers and mappings |
 | `migration-design.md` | Approved or pending target design |
 | `design-approval.md` | Approval status before implementation |
 | `migration-record.md` | Evidence-backed decision ledger |
@@ -401,6 +415,34 @@ This folder is the source of truth for migration progress. After interruption or
 
 | Question | Related route/page/component/state | Blocks | Suggested owner |
 |---|---|---|---|
+""",
+        root / "source-exploration" / "config" / "config-center-inventory.md": f"""# {feature} Config Center Inventory
+
+## Summary
+- Config center present? unknown
+- Providers:
+- Environments/profiles checked:
+- Runtime blocker? unknown
+
+## Config Entries
+| Key | Provider | Namespace/group/app | Profile/env | Source location | Current/default value | Target value/source | Required? | Sensitive? | Owner | Verification |
+|---|---|---|---|---|---|---|---|---|---|---|
+
+## Dynamic Behavior
+| Key or group | Refresh mode | Listener/effect | Fallback behavior | Evidence |
+|---|---|---|---|---|
+
+## Target Mapping
+| Source config | Target config | Transformation | Compatibility decision | Approval |
+|---|---|---|---|---|
+
+## Missing Or Blocked Config
+| Config | Why needed | Blocker | Owner | Next action |
+|---|---|---|---|---|
+
+## Verification Plan
+| Check | Command/scenario | Expected |
+|---|---|---|
 """,
         root / "source-exploration" / "legacy-smells.md": f"""# {feature} Legacy Smells
 
@@ -533,6 +575,10 @@ This folder is the source of truth for migration progress. After interruption or
 | Finding | Decision | Evidence |
 |---|---|---|
 
+## Config Center Check
+| Config/key | Required? | Target provisioned or deferred? | Owner | Verification |
+|---|---|---|---|---|
+
 ## Final Decision
 - Complete? no
 - Remaining gaps:
@@ -586,6 +632,7 @@ def main() -> int:
         root,
         root / "source-exploration" / "feature-points",
         root / "source-exploration" / "frontend",
+        root / "source-exploration" / "config",
         root / "orchestration" / "task-packages",
         root / "orchestration" / "subagent-reports",
     ]:

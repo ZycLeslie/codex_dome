@@ -281,6 +281,7 @@ Mirror dispatch status into `subagent-assignment-queue.md`; completion is blocke
 | `frontend-form-validation-explorer` | One form, validation path, submit path, or visible message set | form/validation feature point |
 | `frontend-visible-state-explorer` | Loading, empty, error, permission, disabled, accessibility, i18n, analytics, or telemetry behavior | visible-state feature point |
 | `backend-surface-explorer` | API contracts, handlers, domain services, persistence, jobs/events, integrations, authorization, validation, transactions, idempotency | backend/API feature-point files, evidence IDs, report |
+| `config-center-explorer` | Nacos, Apollo, Spring Cloud Config, Consul, etcd, Vault, ConfigMap/Secret, feature flag, platform config, env injection | `source-exploration/config/config-center-inventory.md`, blockers, owners, verification plan |
 | `design-intent-extractor` | Large or ambiguous design documents | target intent, acceptance criteria, explicit changes, questions |
 | `legacy-smell-auditor` | Smell and dross classification after feature points exist | `legacy-smells.md` updates and severe-fix recommendations |
 | `legacy-dross-auditor` | Full paths, source package prefixes, file URLs, old domains, generated paths, and source-specific tokens that may have been copied | `legacy-dross-scan.md`, firewall decisions, fixes or required approvals |
@@ -295,6 +296,7 @@ Mirror dispatch status into `subagent-assignment-queue.md`; completion is blocke
 - Do not ask one subagent to ingest the complete source, complete target, and complete design corpus unless the package explicitly justifies it.
 - Do not ask a frontend subagent to understand the whole frontend project. Require a `frontend-route-indexer` or existing `frontend-surface-index.md` before page/component/state/API exploration.
 - Split frontend work by route, page/container, component cluster, state/API path, form/validation path, visible states, and tests when any one package would read broad directories or more than a small direct file set.
+- Assign third-party config center discovery to a bounded `config-center-explorer` package when config usage is present or unknown. Do not hide missing external config inside backend implementation notes.
 - After resume, assign frontend exploration, frontend implementation, frontend verification, and broad implementation packages to subagents. Main-agent ownership is allowed only for orchestration and tiny non-frontend mechanical edits.
 - Do not assign a package marked `no-needs-split` or `blocked`; split it or unblock it first.
 - For code-edit packages, assign a disjoint write set and remind the subagent not to revert unrelated changes.

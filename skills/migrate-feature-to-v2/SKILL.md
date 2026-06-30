@@ -1,6 +1,6 @@
 ---
 name: migrate-feature-to-v2
-description: Move a legacy feature into an AI-friendly 2.0 repo. Use for 功能迁移, 旧系统升级到 2.0, full-stack migration, frontend micro-slicing, resume-safe subagent dispatch, CodeHub MCP access, evidence records, design approval, and legacy dross cleanup.
+description: Move a legacy feature into an AI-friendly 2.0 repo. Use for 功能迁移, 旧系统升级到 2.0, full-stack migration, frontend micro-slicing, resume-safe subagent dispatch, CodeHub MCP access, config-center inventory, evidence records, design approval, and legacy dross cleanup.
 ---
 
 # Migrate Feature To V2
@@ -80,6 +80,7 @@ Update `README.md`, `migration-status.md`, `artifact-index.md`, `timeline.md`, a
 - Do not copy legacy implementation identifiers into 2.0 by default. Absolute filesystem paths, Windows paths, `file://` URLs, source repository paths, source package prefixes, fully qualified class names used as shortcuts, legacy hostnames, and hard-coded environment paths are dross unless explicitly proven to be an external contract.
 - Do not preserve legacy bad smells as compatibility. Fix simple low-risk smells in the target implementation, and remediate severe smells or defects instead of recreating them.
 - Trace security, authorization, validation, transactions, idempotency, persistence, events, and integrations explicitly.
+- List third-party configuration center dependencies before implementation. Include keys, namespaces/groups, profiles/environments, defaults, ownership, sensitivity, target mappings, and rollout requirements; code migration is not complete while required external config is missing.
 - Keep the target repository buildable throughout the migration and protect unrelated user changes.
 - Add tests that prove the recovered contract and requested 2.0 behavior.
 - Make intentional behavior differences explicit in the migration record and final report.
@@ -153,6 +154,7 @@ Recommended subagent roles:
 - `frontend-state-api-explorer`: inspect one store/query/mutation/API-client/generated-type path for the feature.
 - `frontend-form-visibility-explorer`: inspect one form, validation path, visible message set, loading/empty/error/permission state, accessibility hook, or analytics hook.
 - `backend-surface-explorer`: explore API handlers, domain services, persistence, jobs, events, integrations, auth, transactions, idempotency, and server-side observability.
+- `config-center-explorer`: list third-party config center providers, keys, namespaces/groups, profiles/envs, defaults, target mappings, owners, sensitivity, dynamic refresh, and missing config blockers.
 - `design-intent-extractor`: read only design artifacts; write target intent, acceptance criteria, explicit changes, and questions.
 - `legacy-smell-auditor`: inspect feature-point artifacts and source evidence; write smell classifications and remediation recommendations.
 - `legacy-dross-auditor`: inspect source feature points and target changes for copied implementation details such as full paths, source package prefixes, hard-coded endpoints, and obsolete wiring.
@@ -161,7 +163,7 @@ Recommended subagent roles:
 - `implementation-slice-agent`: after approval, implement one approved slice with a disjoint write set and minimal source/design context.
 - `verification-agent`: verify implementation, design approval, migration record, and test coverage against persisted artifacts.
 
-Read `references/subagent-coordination.md` before delegating a broad migration or resuming interrupted work. Read `references/frontend-task-slicing.md` before exploring or implementing a frontend surface that is larger than one route, page, or component.
+Read `references/subagent-coordination.md` before delegating a broad migration or resuming interrupted work. Read `references/frontend-task-slicing.md` before exploring or implementing a frontend surface that is larger than one route, page, or component. Read `references/config-center-inventory.md` when a config surface is present or unknown.
 
 ## Workflow
 
@@ -225,6 +227,7 @@ Persist the exploration as you go. Before implementation, create or update:
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/feature-points/<feature-point-slug>.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/frontend/frontend-surface-index.md` when frontend is present or unknown
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/frontend/frontend-task-map.md` when frontend work needs multiple packages
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/config/config-center-inventory.md` when any config surface or third-party config center exists or is unknown
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/legacy-smells.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-package-index.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-checklist.md`
@@ -255,6 +258,7 @@ Recover at least:
 - synchronous and asynchronous side effects
 - integration contracts, timeouts, retries, and fallback behavior
 - configuration, flags, limits, and compatibility expectations
+- third-party config center entries such as Nacos, Apollo, Spring Cloud Config, Consul, etcd, Vault, Kubernetes ConfigMap/Secret, or platform config: key, namespace/group, profile/env, default, target value, owner, sensitivity, rollout, and verification
 - observable logs, metrics, traces, and audit events
 
 Separate **essence** from **dross**:
@@ -338,6 +342,7 @@ The design must include:
 - target architecture mapping
 - behavior compatibility and intentional differences
 - frontend thin index and micro-package map when frontend is present or unknown
+- third-party config center inventory and target environment mapping
 - simple/severe legacy smell remediation decisions
 - legacy dross firewall decisions: copied-looking paths, fully qualified names, source package prefixes, hard-coded endpoints, and their target replacements
 - data, API, event, integration, rollout, and observability changes
@@ -411,6 +416,7 @@ Derive verification scenarios from both the target design and the recovered sour
 - Use `verification-agent` packages for independent verification slices when test scope is broad or risk is high.
 - Use differential, golden, or fixture-based comparison against the source for preserved behavior, and explicit new expectations for redesigned behavior.
 - Run target formatting, static checks, build, and relevant tests; broaden checks when shared behavior changed.
+- Verify required third-party config exists or is explicitly deferred: config center namespace/group/profile, keys, secrets, feature flags, dynamic refresh behavior, target values, and owner approvals.
 - Search for missing registrations, routes, dependency injection wiring, schemas, migrations, flags, and documentation.
 - Verify failure paths, authorization, idempotency, and side effects, not only the happy path.
 - Verify compatibility adapters, deprecation paths, data migrations, rollout flags, and backfill behavior when the 2.0 design changes external contracts.
@@ -437,6 +443,7 @@ Report:
 - persisted source exploration artifact paths
 - subagent task packages, reports, and context-recovery artifact paths
 - subagent assignment queue status, including any `blocked-subagent-unavailable` packages
+- third-party config center inventory, target mappings, and any missing config blockers
 - task checklist and completion-check artifact paths
 - feature point Markdown files used for design
 - design approval source and approved implementation slices
@@ -459,6 +466,7 @@ Do not declare the migration complete while required target wiring, tests, or ve
 - When a design document is vague, use the source baseline to fill business-rule gaps but do not invent 2.0 changes beyond the documented intent.
 - When a design document is older than current target code or conflicts with target architecture, verify the current code path before implementing the document literally.
 - When source behavior and design intent agree, migrate the complete feature contract before calling the work done.
+- When the feature depends on a third-party config center, list and map the external config before implementation; missing config is a runtime blocker, not documentation follow-up.
 - When a feature has both frontend and backend surfaces, split them into separate coordinated slices and verify the end-to-end user workflow.
 - When frontend project understanding alone would consume the context, stop broad reading, write or refresh the thin frontend surface index, and split into micro-packages before continuing.
 - When resuming after interruption, force subagent assignment before implementation. A frontend package owned by `main-agent` after resume is a process defect and blocks completion.
