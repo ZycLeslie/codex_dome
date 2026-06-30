@@ -499,6 +499,66 @@ Required sections:
 |---|---|---|
 ```
 
+### frontend/frontend-surface-index.md
+
+Required when a frontend surface is present or unknown and the frontend cannot be understood in one small pass. Create this thin index before reading page, component, store, API client, or generated type internals.
+
+Required sections:
+
+```markdown
+# <Feature> Frontend Surface Index
+
+## Frontend Presence
+| Surface | Present? | Evidence | Notes |
+|---|---|---|---|
+
+## Route And Navigation Candidates
+| Route/menu/entry | Files | Evidence | Confidence |
+|---|---|---|---|
+
+## Page Or Container Candidates
+| Candidate | Direct files only | Why relevant | Split package |
+|---|---|---|---|
+
+## Component Candidates
+| Component | Direct files only | Role | Split package |
+|---|---|---|---|
+
+## State/API Candidates
+| Store/query/API/type | Files | Contract hint | Split package |
+|---|---|---|---|
+
+## Visible States And UX
+| State/message/permission/analytics | Evidence | Split package |
+|---|---|---|
+
+## Do Not Load Yet
+| Path or tree | Reason |
+|---|---|
+```
+
+### frontend/frontend-task-map.md
+
+Required when frontend work needs more than one package.
+
+Required sections:
+
+```markdown
+# <Feature> Frontend Task Map
+
+## Micro-Packages
+| Package | Type | Scope | Allowed direct files | Output artifact | Status |
+|---|---|---|---|---|---|
+
+## Dependencies
+| Package | Depends on | Reason |
+|---|---|---|
+
+## Split Decisions
+| Original scope | Reason split | New packages |
+|---|---|---|
+```
+
 ### feature-points/<feature-point-slug>.md
 
 Required for every coherent feature point discovered during source exploration. Keep each file focused and small enough to load independently.
@@ -584,6 +644,7 @@ Create only when useful:
 - `search-log.md`: high-signal searches and why they mattered.
 - `candidate-files.txt`: files inspected or rejected.
 - `call-trace.md`: entry point to domain/persistence/integration call chain.
+- `frontend/frontend-open-questions.md`: unresolved frontend route, component, state/API, validation, or visible-state questions.
 - `legacy-dross-candidates.md`: full paths, source package prefixes, old endpoints, generated paths, and source-specific tokens that must not leak into target code.
 - `codehub-mcp-evidence.md`: CodeHub MCP queries, resources, branch/ref details, and evidence IDs.
 
@@ -609,7 +670,9 @@ When the source repository is a CodeHub URL or the user identifies it as CodeHub
 - Every multi-package migration should maintain `task-checklist.md` and finish with `completion-check.md`.
 - Tasks marked `no-needs-split` should be split before assignment or execution.
 - Surface coverage should explicitly mark frontend, backend/API, jobs/events, integrations, data, config, observability, and end-to-end flow as present, absent, or unknown.
+- If frontend is present or unknown, create a thin frontend surface index before deep frontend exploration.
 - If a frontend route, page, component, form, client API call, generated client, UI validation, visible permission state, or user workflow exists, it should have a frontend feature-point file and a verification plan.
+- No frontend package should require understanding the whole frontend project, broad `src/pages`, broad `src/components`, broad store trees, or broad generated clients. Split first.
 - If no frontend exists, record the evidence for `not applicable` instead of silently skipping frontend work.
 - Every meaningful feature point should have one focused Markdown file and an entry in `feature-point-index.md`.
 - The migration design should cite feature point Markdown files rather than raw search output whenever possible.

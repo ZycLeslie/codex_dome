@@ -125,6 +125,8 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - [ ] Feature point Markdown split
 - [ ] Surface coverage recorded
 - [ ] Migration design approved
+- [ ] Frontend thin surface index written when frontend is present or unknown
+- [ ] Frontend route/page/component/state/API/form/visible-state tasks split when applicable
 - [ ] Frontend slice complete or documented not applicable
 - [ ] Backend/API slice complete or documented not applicable
 - [ ] End-to-end flow verified when frontend and backend both exist

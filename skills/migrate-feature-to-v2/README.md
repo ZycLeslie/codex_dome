@@ -24,6 +24,7 @@
 - 每个任务包开始前都要评估一次性能否完成；不能一次完成的，先拆分再执行。
 - 全程维护 `task-checklist.md`，防止上下文压缩或交接时丢功能、丢任务、丢验证。
 - 如果功能同时包含前端和后端，必须分开探索、分开设计、分开实现、分开验证，并增加端到端闭环；不能只迁后端。
+- 前端任务必须比“前端整体迁移”更细：先做薄索引，再按路由、页面/容器、组件、状态/API、表单校验、可见状态和测试拆微任务。
 - 源代码里的丑陋全路径、硬编码环境路径、源仓包名前缀、全限定类名、旧域名和生成代码路径默认都是糟粕；除非是外部契约，否则不能照搬到 2.0。
 - 取其精华，去其糟粕：保留业务规则和生产经验，丢掉偶然架构、坏味道和不安全实现。
 - 老代码中的简单坏味道要在目标实现中顺手修掉，严重问题必须重构或修复，不能照搬。
@@ -113,6 +114,20 @@ subagent 的结果必须落盘到 `orchestration/subagent-reports/` 或对应迁
 如果源仓或目标仓存在前端 surface，需要建立独立的 frontend feature point 和 task package；如果存在后端/API surface，也要建立独立的 backend feature point 和 task package。最终设计方案必须说明每个 surface 的迁移决策和验证方式。
 
 只有后端测试通过不能代表全功能迁移完成。当前端存在时，至少要验证页面/组件行为、API 对接、错误态和关键用户路径。
+
+## 前端细粒度任务
+
+前端迁移不能以“先了解完整前端项目”为任务目标。正确顺序是先建立薄索引，再拆微任务：
+
+1. `frontend-route-indexer`：只读路由表、菜单、权限、feature flag、i18n key、测试名和高信号搜索结果，输出 `source-exploration/frontend/frontend-surface-index.md`。
+2. `frontend-page-explorer`：只读一个页面或 route container 及其直接 import。
+3. `frontend-component-explorer`：只读一个组件簇及有限直接子组件。
+4. `frontend-state-api-explorer`：只读一个 store/query/mutation/API client/generated type 路径。
+5. `frontend-form-validation-explorer`：只读一个表单、校验、提交或禁用逻辑路径。
+6. `frontend-visible-state-explorer`：只读 loading、empty、error、permission、disabled、a11y、埋点或文案状态。
+7. `frontend-verification-agent`：只验证一个前端测试层或一个浏览器用户路径。
+
+如果某个前端任务需要阅读整个 `src/pages`、`src/components`、`src/store`、`src/api` 或生成客户端目录，必须标记为 `needs-split`，先拆分再执行。前端实现也要按 route wiring、page/container、component、form validation、state/API、visible states、tests 分包。
 
 ## 防止照搬遗留全路径
 
@@ -290,6 +305,7 @@ python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
 
 - [SKILL.md](./SKILL.md)：agent 执行迁移时使用的核心流程。
 - [references/subagent-coordination.md](./references/subagent-coordination.md)：大迁移的 subagent 分工、任务包和上下文回收规则。
+- [references/frontend-task-slicing.md](./references/frontend-task-slicing.md)：前端薄索引、微任务拆分和上下文预算规则。
 - [references/design-driven-modernization.md](./references/design-driven-modernization.md)：设计文档驱动的现代化规则。
 - [references/migration-design-approval.md](./references/migration-design-approval.md)：迁移设计方案和审批门。
 - [references/legacy-smell-remediation.md](./references/legacy-smell-remediation.md)：老代码坏味道分级与修复规则。

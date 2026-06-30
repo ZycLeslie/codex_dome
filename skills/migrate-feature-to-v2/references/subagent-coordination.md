@@ -68,6 +68,7 @@ Create task packages when any of these are true:
 - The candidate source files or call chain are too large to keep in memory.
 - The target implementation crosses multiple owners such as API, domain, persistence, UI, jobs, or integrations.
 - The feature has both frontend and backend/API surfaces that need separate owners, tests, and approval.
+- Frontend discovery would require reading broad route/page/component/store/API trees before producing an artifact.
 - Source exploration finds full paths, source package prefixes, hard-coded endpoints, generated paths, or other source-specific implementation tokens.
 - Design documents are large, contradictory, or contain multiple alternatives.
 - Implementation can be split into disjoint approved slices.
@@ -223,6 +224,12 @@ Mirror the checklist summary into `migration-status.md` and append the material 
 |---|---|---|
 | `source-entrypoint-explorer` | One legacy entry point, workflow, domain slice, job, event, or UI path | `feature-points/<slug>.md`, evidence IDs, report |
 | `frontend-surface-explorer` | UI routes, pages, components, forms, client state, API clients, generated types, visible validation, permissions display, analytics, accessibility | frontend feature-point files, evidence IDs, report |
+| `frontend-route-indexer` | Thin route/menu/feature-flag/auth/i18n index before deep frontend reads | `source-exploration/frontend/frontend-surface-index.md`, candidate micro-packages |
+| `frontend-page-explorer` | One page or route container and direct imports only | page/container feature point, direct files, visible behavior |
+| `frontend-component-explorer` | One component cluster with bounded children | component feature point, props/events/slots, visible states |
+| `frontend-state-api-explorer` | One store/query/mutation/API-client/generated-type path | state/API feature point, parameter and response mapping |
+| `frontend-form-validation-explorer` | One form, validation path, submit path, or visible message set | form/validation feature point |
+| `frontend-visible-state-explorer` | Loading, empty, error, permission, disabled, accessibility, i18n, analytics, or telemetry behavior | visible-state feature point |
 | `backend-surface-explorer` | API contracts, handlers, domain services, persistence, jobs/events, integrations, authorization, validation, transactions, idempotency | backend/API feature-point files, evidence IDs, report |
 | `design-intent-extractor` | Large or ambiguous design documents | target intent, acceptance criteria, explicit changes, questions |
 | `legacy-smell-auditor` | Smell and dross classification after feature points exist | `legacy-smells.md` updates and severe-fix recommendations |
@@ -236,9 +243,12 @@ Mirror the checklist summary into `migration-status.md` and append the material 
 
 - Give each subagent only the package file and the minimal referenced artifacts.
 - Do not ask one subagent to ingest the complete source, complete target, and complete design corpus unless the package explicitly justifies it.
+- Do not ask a frontend subagent to understand the whole frontend project. Require a `frontend-route-indexer` or existing `frontend-surface-index.md` before page/component/state/API exploration.
+- Split frontend work by route, page/container, component cluster, state/API path, form/validation path, visible states, and tests when any one package would read broad directories or more than a small direct file set.
 - Do not assign a package marked `no-needs-split` or `blocked`; split it or unblock it first.
 - For code-edit packages, assign a disjoint write set and remind the subagent not to revert unrelated changes.
 - Split frontend and backend implementation into separate packages when both surfaces exist, then add a coordination or verification package for the end-to-end workflow.
+- For frontend implementation, prefer separate packages for route wiring, page/container orchestration, component rendering, form validation, state/API integration, visible states, and tests.
 - Run or delegate a legacy dross audit before completion when source-specific tokens are known or the target patch contains suspicious paths.
 - Exploration and design packages may write artifacts before design approval. Implementation packages may start only after approved slices are recorded.
 - Subagents may recommend behavior changes, smell remediation, or drops, but the main agent owns reconciliation and approval gates.

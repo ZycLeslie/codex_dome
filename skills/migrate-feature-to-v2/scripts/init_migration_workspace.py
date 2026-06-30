@@ -151,6 +151,9 @@ def build_templates(args: argparse.Namespace, root: Path, slug: str) -> Dict[Pat
         ("source-exploration/source-exploration.md", "Source behavior baseline", "pending"),
         ("source-exploration/source-evidence.json", "Machine-readable evidence index", "pending"),
         ("source-exploration/feature-point-index.md", "Feature point navigation map", "pending"),
+        ("source-exploration/frontend/frontend-surface-index.md", "Thin frontend surface index", "pending"),
+        ("source-exploration/frontend/frontend-task-map.md", "Frontend micro-package map", "pending"),
+        ("source-exploration/frontend/frontend-open-questions.md", "Frontend open questions", "pending"),
         ("source-exploration/legacy-smells.md", "Legacy smell and dross inventory", "pending"),
         ("orchestration/task-package-index.md", "Task package ledger", "pending"),
         ("orchestration/task-checklist.md", "Package status and lost-function guard", "pending"),
@@ -346,6 +349,55 @@ This folder is the source of truth for migration progress. After interruption or
 | Question | Related feature points | Decision needed |
 |---|---|---|
 """,
+        root / "source-exploration" / "frontend" / "frontend-surface-index.md": f"""# {feature} Frontend Surface Index
+
+## Frontend Presence
+| Surface | Present? | Evidence | Notes |
+|---|---|---|---|
+
+## Route And Navigation Candidates
+| Route/menu/entry | Files | Evidence | Confidence |
+|---|---|---|---|
+
+## Page Or Container Candidates
+| Candidate | Direct files only | Why relevant | Split package |
+|---|---|---|---|
+
+## Component Candidates
+| Component | Direct files only | Role | Split package |
+|---|---|---|---|
+
+## State/API Candidates
+| Store/query/API/type | Files | Contract hint | Split package |
+|---|---|---|---|
+
+## Visible States And UX
+| State/message/permission/analytics | Evidence | Split package |
+|---|---|---|
+
+## Do Not Load Yet
+| Path or tree | Reason |
+|---|---|
+""",
+        root / "source-exploration" / "frontend" / "frontend-task-map.md": f"""# {feature} Frontend Task Map
+
+## Micro-Packages
+| Package | Type | Scope | Allowed direct files | Output artifact | Status |
+|---|---|---|---|---|---|
+
+## Dependencies
+| Package | Depends on | Reason |
+|---|---|---|
+
+## Split Decisions
+| Original scope | Reason split | New packages |
+|---|---|---|
+""",
+        root / "source-exploration" / "frontend" / "frontend-open-questions.md": f"""# {feature} Frontend Open Questions
+
+| Question | Related route/page/component/state | Blocks | Suggested owner |
+|---|---|---|---|
+""",
         root / "source-exploration" / "legacy-smells.md": f"""# {feature} Legacy Smells
 
 ## Summary
@@ -508,6 +560,7 @@ def main() -> int:
     for directory in [
         root,
         root / "source-exploration" / "feature-points",
+        root / "source-exploration" / "frontend",
         root / "orchestration" / "task-packages",
         root / "orchestration" / "subagent-reports",
     ]:

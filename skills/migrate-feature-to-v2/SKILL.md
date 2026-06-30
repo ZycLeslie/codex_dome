@@ -1,6 +1,6 @@
 ---
 name: migrate-feature-to-v2
-description: Discover a named legacy feature, create a project-local visual migration workspace, split large work into bounded subagent task packages, assess whether each task can finish in one pass, track task checklists, separate frontend/backend surfaces when present, persist source evidence, split feature points into Markdown, reconcile with 2.0 design docs, reject legacy dross and smells, write an approvable migration design, then implement only after approval. Use for cross-repository feature migration, full-stack frontend/backend migration, restart-safe migration records, context-bounded subagent delegation, non-one-to-one modernization, CodeHub-backed migration through the matching MCP, legacy smell remediation, 取其精华去其糟粕, 任务清单跟踪, 一次性完成评估, 前后端分开迁移, subagent 分工迁移, 功能点拆分, 方案审批后迁移, 功能迁移, 旧系统升级到 2.0, 功能优化, or reconstructing a feature end to end.
+description: Discover a named legacy feature, create a project-local visual migration workspace, split large work into bounded subagent task packages, assess whether each task can finish in one pass, track task checklists, separate frontend/backend surfaces when present, split frontend work into route/page/component/state/API/form/visible-state micro-packages, persist source evidence, split feature points into Markdown, reconcile with 2.0 design docs, reject legacy dross and smells, write an approvable migration design, then implement only after approval. Use for cross-repository feature migration, full-stack frontend/backend migration, restart-safe migration records, context-bounded subagent delegation, non-one-to-one modernization, CodeHub-backed migration through the matching MCP, legacy smell remediation, 取其精华去其糟粕, 任务清单跟踪, 一次性完成评估, 前端细粒度任务拆分, 前后端分开迁移, subagent 分工迁移, 功能点拆分, 方案审批后迁移, 功能迁移, 旧系统升级到 2.0, 功能优化, or reconstructing a feature end to end.
 ---
 
 # Migrate Feature To V2
@@ -87,6 +87,7 @@ Update `README.md`, `migration-status.md`, `artifact-index.md`, `timeline.md`, a
 - Persist source exploration results before implementation so another agent or engineer can trace every recovered behavior back to source evidence.
 - Split recovered feature points into small Markdown files and use those files, not raw sprawling exploration context, as the basis for target design.
 - For large migrations, split work into bounded task packages and use subagents when available. Each subagent must receive only the minimal inputs for its package and must write a durable report or artifact.
+- For frontend work, do not spend a task package on understanding the whole frontend project. First create a thin frontend surface index, then split into route, page/container, component, state/API, form/validation, visible-state, accessibility/analytics, and frontend-test packages as applicable.
 - Before executing any task package, assess whether it can be completed in one pass with the available context, tools, permissions, and dependencies. If not, split it before work starts.
 - Maintain a durable task checklist and update it after every package, context handoff, approval change, implementation slice, and verification run.
 - Record feature surface coverage. If a frontend, UI route, page, component, state transition, validation message, permission display, API call, generated client, or end-to-end flow exists, it must be represented in feature points, task packages, design, implementation, and verification.
@@ -136,6 +137,10 @@ Recommended subagent roles:
 
 - `source-entrypoint-explorer`: explore one source entry point, workflow, or domain slice; write feature-point Markdown and evidence.
 - `frontend-surface-explorer`: explore UI routes, pages, components, forms, state management, client-side validation, generated clients, permission display, analytics, and browser-visible behavior.
+- `frontend-route-indexer`: build a thin route/menu/feature-flag/auth/i18n index without reading the whole frontend project.
+- `frontend-page-explorer`: inspect one page or route container and its direct imports only.
+- `frontend-state-api-explorer`: inspect one store/query/mutation/API-client/generated-type path for the feature.
+- `frontend-form-visibility-explorer`: inspect one form, validation path, visible message set, loading/empty/error/permission state, accessibility hook, or analytics hook.
 - `backend-surface-explorer`: explore API handlers, domain services, persistence, jobs, events, integrations, auth, transactions, idempotency, and server-side observability.
 - `design-intent-extractor`: read only design artifacts; write target intent, acceptance criteria, explicit changes, and questions.
 - `legacy-smell-auditor`: inspect feature-point artifacts and source evidence; write smell classifications and remediation recommendations.
@@ -145,7 +150,7 @@ Recommended subagent roles:
 - `implementation-slice-agent`: after approval, implement one approved slice with a disjoint write set and minimal source/design context.
 - `verification-agent`: verify implementation, design approval, migration record, and test coverage against persisted artifacts.
 
-Read `references/subagent-coordination.md` before delegating a broad migration.
+Read `references/subagent-coordination.md` before delegating a broad migration. Read `references/frontend-task-slicing.md` before exploring or implementing a frontend surface that is larger than one route, page, or component.
 
 ## Workflow
 
@@ -164,7 +169,7 @@ Read `references/subagent-coordination.md` before delegating a broad migration.
 
 Use the profile as orientation only. Read actual source files before making decisions.
 
-Identify the feature surfaces before deep exploration. Check whether the capability includes frontend routes, pages, components, forms, state, client APIs, generated clients, backend APIs, domain services, persistence, jobs, events, external integrations, data migrations, configuration, or observability. If both frontend and backend exist, create separate feature-point files and task packages for each layer plus an end-to-end coordination package.
+Identify the feature surfaces before deep exploration. Check whether the capability includes frontend routes, pages, components, forms, state, client APIs, generated clients, backend APIs, domain services, persistence, jobs, events, external integrations, data migrations, configuration, or observability. If a frontend exists, create a thin frontend surface index before reading page/component internals. If both frontend and backend exist, create separate feature-point files and task packages for each layer plus an end-to-end coordination package.
 
 Before starting any exploration package, create or update `task-checklist.md`. Mark packages as `ready`, `needs-split`, `blocked`, `in-progress`, `done`, `verified`, or `deferred`. If a task is `needs-split`, split it and update the checklist before assigning it to a subagent or executing it serially.
 
@@ -207,6 +212,8 @@ Persist the exploration as you go. Before implementation, create or update:
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/source-evidence.json`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/feature-point-index.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/feature-points/<feature-point-slug>.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/frontend/frontend-surface-index.md` when frontend is present or unknown
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/frontend/frontend-task-map.md` when frontend work needs multiple packages
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/legacy-smells.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-package-index.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-checklist.md`
@@ -219,6 +226,7 @@ Keep context bounded:
 
 - Assign source exploration by entry point, workflow, domain concept, or integration boundary to `source-entrypoint-explorer` packages when one pass would overload context.
 - For full-stack features, assign frontend and backend exploration separately. Do not let a backend package claim the feature is migrated until the frontend surface has been checked or explicitly recorded as not applicable.
+- For frontend features, first write `source-exploration/frontend/frontend-surface-index.md` from route tables, menu config, labels, feature flags, test names, and targeted `rg` results. Do not read entire `src/pages`, `src/components`, `src/store`, or generated client trees in a single package.
 - After exploration, summarize each coherent feature point into its own Markdown file.
 - Keep one feature point per file: entry points, behavior, data/integration evidence, essence/dross, smells, open questions, and verification ideas.
 - Use `feature-point-index.md` as the navigation map. Load only the index and the feature-point files needed for the current design decision.
@@ -317,6 +325,7 @@ The design must include:
 - surface coverage for frontend, backend/API, jobs/events, integrations, data, configuration, observability, and end-to-end flows
 - target architecture mapping
 - behavior compatibility and intentional differences
+- frontend thin index and micro-package map when frontend is present or unknown
 - simple/severe legacy smell remediation decisions
 - legacy dross firewall decisions: copied-looking paths, fully qualified names, source package prefixes, hard-coded endpoints, and their target replacements
 - data, API, event, integration, rollout, and observability changes
@@ -363,7 +372,7 @@ Before starting each implementation package, re-check one-pass feasibility again
 
 For full-stack features, implement coordinated but separate slices:
 
-- frontend slice: routes, pages, components, forms, client state, API client usage, generated types, validation presentation, loading/empty/error states, permissions display, accessibility, and frontend tests
+- frontend slices: route/menu wiring, page/container, leaf components, form/validation, state/query/mutation/API client, generated type usage, loading/empty/error states, permissions display, accessibility, analytics, and frontend tests. Keep each slice small enough to understand and edit in one pass.
 - backend slice: API contracts, handlers, domain behavior, persistence, jobs/events, integrations, authorization, validation, transactions, idempotency, observability, and backend tests
 - end-to-end slice: contract alignment, user workflow, request/response compatibility, error display, rollout flags, and end-to-end or integration verification
 
@@ -436,6 +445,7 @@ Do not declare the migration complete while required target wiring, tests, or ve
 - When a design document is older than current target code or conflicts with target architecture, verify the current code path before implementing the document literally.
 - When source behavior and design intent agree, migrate the complete feature contract before calling the work done.
 - When a feature has both frontend and backend surfaces, split them into separate coordinated slices and verify the end-to-end user workflow.
+- When frontend project understanding alone would consume the context, stop broad reading, write or refresh the thin frontend surface index, and split into micro-packages before continuing.
 - Preserve the source's business essence, not its accidental implementation shape.
 - Reject source dross even when it is easy to copy.
 - Treat copied legacy full paths, hard-coded endpoints, source package prefixes, and source repo-specific identifiers as defects in the migration unless the migration design explicitly approves them as compatibility.
