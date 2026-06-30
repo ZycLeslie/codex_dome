@@ -223,6 +223,34 @@ Required sections:
 |---|---|---|---|
 ```
 
+### orchestration/subagent-assignment-queue.md
+
+Required for every broad migration and every resumed migration. Use it to prevent the main agent from silently continuing mandatory-subagent work after interruption.
+
+Required sections:
+
+```markdown
+# <Feature> Subagent Assignment Queue
+
+## Resume Gate
+- Last resume check:
+- Subagent capability: available | unavailable | unknown
+- Main-agent implementation allowed? no for frontend/broad/resumed work
+- Current dispatch:
+
+## Queue
+| Package | Role | Surface | Mandatory subagent? | Allowed inputs | Write set | Status | Report path |
+|---|---|---|---|---|---|---|---|
+
+## Blocked Subagent Work
+| Package | Reason | Needed capability | Next action |
+|---|---|---|---|
+
+## Dispatch Log
+| Time | Package | Agent/role | Result | Report |
+|---|---|---|---|---|
+```
+
 ### orchestration/task-packages/TP-###-<name>.md
 
 Required for every delegated or serial bounded task.
@@ -666,7 +694,9 @@ When the source repository is a CodeHub URL or the user identifies it as CodeHub
 - `resume.md` should identify the canonical reload set and next action so another agent can continue without relying on chat history.
 - Every recovered behavior in the migration record should point to at least one evidence item.
 - Every broad migration should have task packages, package reports, and a context recovery file before implementation starts.
+- Every resumed migration should update `subagent-assignment-queue.md` before implementation continues.
 - Every task package should have a one-pass feasibility decision before execution.
+- Mandatory-subagent packages, especially frontend exploration/implementation/verification, should not be owned by `main-agent` after resume.
 - Every multi-package migration should maintain `task-checklist.md` and finish with `completion-check.md`.
 - Tasks marked `no-needs-split` should be split before assignment or execution.
 - Surface coverage should explicitly mark frontend, backend/API, jobs/events, integrations, data, config, observability, and end-to-end flow as present, absent, or unknown.

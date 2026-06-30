@@ -6,6 +6,7 @@ Use this guide when a migration is too large for one active context. The goal is
 
 - Artifact Layout
 - Visual Workspace Updates
+- Resume Gate
 - When To Split
 - Main-Agent Responsibilities
 - Task Sizing And Checklist
@@ -30,6 +31,7 @@ Use the target repository's existing agent artifact convention when one exists. 
   orchestration/
     task-package-index.md
     task-checklist.md
+    subagent-assignment-queue.md
     context-recovery.md
     completion-check.md
     task-packages/
@@ -60,6 +62,48 @@ After every package assignment, package result, split, stale decision, approval 
 
 Subagents write package outputs and reports; the main agent reflects their results into the visual workspace.
 
+## Resume Gate
+
+When a migration resumes after interruption, context compression, a new chat, a tool crash, or visible context pressure, run this gate before any implementation edits:
+
+1. Load only `resume.md`, `migration-status.md`, `artifact-index.md`, `orchestration/task-checklist.md`, `orchestration/subagent-assignment-queue.md`, and the active package named by the checklist.
+2. Re-evaluate packages that are `ready`, `in-progress`, `stale`, `risky`, or frontend-related.
+3. Split any package that is no longer one-pass-feasible.
+4. Assign executable packages to subagents in `subagent-assignment-queue.md`.
+5. Dispatch one bounded package at a time; after each report, update the queue, checklist, status board, timeline, and resume file.
+
+Do not continue frontend implementation directly in the main agent after resume. The main agent owns orchestration, package splitting, report review, record updates, and final integration decisions. Frontend exploration, frontend implementation, frontend verification, broad implementation, and any package that previously caused context pressure must be assigned to a subagent.
+
+If subagent tools are unavailable for mandatory-subagent work, mark the package `blocked-subagent-unavailable`, record the blocker in `subagent-assignment-queue.md` and `resume.md`, and ask for subagent capability instead of silently switching to main-agent serial execution.
+
+### orchestration/subagent-assignment-queue.md
+
+Keep this file as the dispatch queue.
+
+Required sections:
+
+```markdown
+# <Feature> Subagent Assignment Queue
+
+## Resume Gate
+- Last resume check:
+- Subagent capability: available | unavailable | unknown
+- Main-agent implementation allowed? no for frontend/broad/resumed work
+- Current dispatch:
+
+## Queue
+| Package | Role | Surface | Mandatory subagent? | Allowed inputs | Write set | Status | Report path |
+|---|---|---|---|---|---|---|---|
+
+## Blocked Subagent Work
+| Package | Reason | Needed capability | Next action |
+|---|---|---|---|
+
+## Dispatch Log
+| Time | Package | Agent/role | Result | Report |
+|---|---|---|---|---|
+```
+
 ## When To Split
 
 Create task packages when any of these are true:
@@ -69,6 +113,7 @@ Create task packages when any of these are true:
 - The target implementation crosses multiple owners such as API, domain, persistence, UI, jobs, or integrations.
 - The feature has both frontend and backend/API surfaces that need separate owners, tests, and approval.
 - Frontend discovery would require reading broad route/page/component/store/API trees before producing an artifact.
+- Work is being resumed after interruption and the package is frontend, implementation, verification, broad, or previously context-heavy.
 - Source exploration finds full paths, source package prefixes, hard-coded endpoints, generated paths, or other source-specific implementation tokens.
 - Design documents are large, contradictory, or contain multiple alternatives.
 - Implementation can be split into disjoint approved slices.
@@ -87,6 +132,7 @@ For small migrations, a single agent may execute the same package protocol seria
 - Retire raw context after artifacts are written.
 - Mark stale packages when design, source evidence, or target ownership changes.
 - Keep the workspace dashboard, status, artifact index, timeline, and resume file current enough that a restarted agent can continue without chat history.
+- After resume, use `subagent-assignment-queue.md` as the execution source of truth. Do not self-assign mandatory-subagent packages to `main-agent`.
 
 ## Task Sizing And Checklist
 
@@ -96,6 +142,8 @@ Before executing any package, classify one-pass feasibility:
 - `no-needs-split`: split the package before execution.
 - `blocked`: required approval, input, tool, permission, or dependency is missing.
 - `risky`: can start only if the package has narrow stop conditions and a rollback or handoff plan.
+
+After resume, any `risky` frontend or implementation package should normally become `no-needs-split` or be assigned to a subagent with tight stop conditions. Do not let it become a long main-agent coding session.
 
 Maintain `task-checklist.md` with:
 
@@ -124,6 +172,8 @@ Maintain `task-checklist.md` with:
 Update the checklist after every package result, approval change, split, stale decision, implementation slice, verification run, or context handoff.
 
 Mirror the checklist summary into `migration-status.md` and append the material event to `timeline.md`.
+
+Mirror dispatch status into `subagent-assignment-queue.md`; completion is blocked while a mandatory-subagent package is owned by `main-agent`.
 
 ## Package Template
 
@@ -245,6 +295,7 @@ Mirror the checklist summary into `migration-status.md` and append the material 
 - Do not ask one subagent to ingest the complete source, complete target, and complete design corpus unless the package explicitly justifies it.
 - Do not ask a frontend subagent to understand the whole frontend project. Require a `frontend-route-indexer` or existing `frontend-surface-index.md` before page/component/state/API exploration.
 - Split frontend work by route, page/container, component cluster, state/API path, form/validation path, visible states, and tests when any one package would read broad directories or more than a small direct file set.
+- After resume, assign frontend exploration, frontend implementation, frontend verification, and broad implementation packages to subagents. Main-agent ownership is allowed only for orchestration and tiny non-frontend mechanical edits.
 - Do not assign a package marked `no-needs-split` or `blocked`; split it or unblock it first.
 - For code-edit packages, assign a disjoint write set and remind the subagent not to revert unrelated changes.
 - Split frontend and backend implementation into separate packages when both surfaces exist, then add a coordination or verification package for the end-to-end workflow.
@@ -254,6 +305,7 @@ Mirror the checklist summary into `migration-status.md` and append the material 
 - Subagents may recommend behavior changes, smell remediation, or drops, but the main agent owns reconciliation and approval gates.
 - If a package discovers evidence that changes design scope, mark dependent packages `stale`, update `context-recovery.md`, and return to design approval before implementation continues.
 - After a subagent report is accepted, update `artifact-index.md`, `migration-status.md`, `timeline.md`, and `resume.md` before assigning the next package.
+- If the main agent starts editing a mandatory-subagent package directly, stop, record the process defect, retire the partial context into a package note, and re-dispatch the package or a smaller replacement package.
 
 ## Context Recovery
 
@@ -320,4 +372,4 @@ Write `completion-check.md` before declaring the migration done:
 - Deferred items:
 ```
 
-The final decision can be `yes` only when every required checklist item is `verified` or explicitly `deferred` with approval or a recorded reason.
+The final decision can be `yes` only when every required checklist item is `verified` or explicitly `deferred` with approval or a recorded reason. It must be `no` when mandatory-subagent work was performed only by the main agent after resume without a recorded exception.

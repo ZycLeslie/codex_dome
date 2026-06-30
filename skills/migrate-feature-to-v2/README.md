@@ -20,9 +20,10 @@
 - 源仓探索结果必须落盘，保证迁移过程可追溯。
 - 源仓探索出的功能点必须拆成独立 Markdown，避免上下文过大。
 - 迁移过程必须在目标项目内建立可视化工作区，记录当前阶段、任务状态、证据、审批、下一步和恢复入口。
-- 大迁移必须先拆成有边界的任务包，再用 subagent 或串行任务执行，避免一个上下文吞掉全部源仓、目标仓和设计文档。
+- 大迁移必须先拆成有边界的任务包，再用 subagent 执行；只有小型、非前端、非恢复场景的一次性任务才允许串行执行。
 - 每个任务包开始前都要评估一次性能否完成；不能一次完成的，先拆分再执行。
 - 全程维护 `task-checklist.md`，防止上下文压缩或交接时丢功能、丢任务、丢验证。
+- 中断、重开或上下文压缩后，必须先跑恢复门，重建 `subagent-assignment-queue.md`，再派工；不能让主 agent 直接接着写前端或大实现。
 - 如果功能同时包含前端和后端，必须分开探索、分开设计、分开实现、分开验证，并增加端到端闭环；不能只迁后端。
 - 前端任务必须比“前端整体迁移”更细：先做薄索引，再按路由、页面/容器、组件、状态/API、表单校验、可见状态和测试拆微任务。
 - 源代码里的丑陋全路径、硬编码环境路径、源仓包名前缀、全限定类名、旧域名和生成代码路径默认都是糟粕；除非是外部契约，否则不能照搬到 2.0。
@@ -83,12 +84,23 @@ python3 ~/.codex/skills/migrate-feature-to-v2/scripts/init_migration_workspace.p
 
 subagent 的结果必须落盘到 `orchestration/subagent-reports/` 或对应迁移 artifact。主 agent 最终只基于持久化 artifact、证据 ID 和简短报告继续设计和实现，不基于散落的聊天上下文。
 
+中断后恢复时，主 agent 不能直接继续实现。恢复步骤必须是：
+
+1. 读取 `resume.md`、`migration-status.md`、`artifact-index.md`、`orchestration/task-checklist.md` 和 `orchestration/subagent-assignment-queue.md`。
+2. 重新评估 `ready`、`in-progress`、`stale`、`risky`、frontend、implementation 和 verification 任务。
+3. 对过大的任务继续拆分。
+4. 把可执行任务写入 `subagent-assignment-queue.md` 并派给 subagent。
+5. 每个 subagent 完成后先读取报告、更新 checklist/status/timeline/resume，再派下一个包。
+
+前端探索、前端实现、前端验证、宽泛实现和曾经导致上下文爆炸的任务，都属于 mandatory-subagent work。如果当前环境没有 subagent 能力，标记 `blocked-subagent-unavailable`，不要静默切回主 agent 串行执行。
+
 ## 任务清单和完成检查
 
 迁移必须维护可恢复、可审计的任务清单：
 
 - `task-package-index.md`：任务包索引和依赖。
 - `task-checklist.md`：每个任务的一次性完成评估、状态、负责人、产物、验证和最终 check 状态。
+- `subagent-assignment-queue.md`：中断恢复后的 subagent 派工队列。
 - `completion-check.md`：收尾时的最终核对结果。
 
 任务状态至少包含：`ready`、`needs-split`、`blocked`、`in-progress`、`done`、`verified`、`deferred`、`stale`。
@@ -270,6 +282,7 @@ python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
 ```text
 .ai-migrations/feature-migrations/<feature-slug>/orchestration/task-package-index.md
 .ai-migrations/feature-migrations/<feature-slug>/orchestration/task-checklist.md
+.ai-migrations/feature-migrations/<feature-slug>/orchestration/subagent-assignment-queue.md
 .ai-migrations/feature-migrations/<feature-slug>/orchestration/task-packages/TP-###-<name>.md
 .ai-migrations/feature-migrations/<feature-slug>/orchestration/subagent-reports/TP-###-<name>.md
 .ai-migrations/feature-migrations/<feature-slug>/orchestration/context-recovery.md
@@ -289,6 +302,7 @@ python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
 .ai-migrations/feature-migrations/<feature-slug>/migration-status.md
 .ai-migrations/feature-migrations/<feature-slug>/artifact-index.md
 .ai-migrations/feature-migrations/<feature-slug>/orchestration/task-checklist.md
+.ai-migrations/feature-migrations/<feature-slug>/orchestration/subagent-assignment-queue.md
 ```
 
 如果目标仓已有自己的 agent、migration 或 design artifact 目录约定，则优先遵循目标仓约定。

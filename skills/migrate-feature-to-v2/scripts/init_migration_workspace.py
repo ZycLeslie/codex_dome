@@ -157,6 +157,7 @@ def build_templates(args: argparse.Namespace, root: Path, slug: str) -> Dict[Pat
         ("source-exploration/legacy-smells.md", "Legacy smell and dross inventory", "pending"),
         ("orchestration/task-package-index.md", "Task package ledger", "pending"),
         ("orchestration/task-checklist.md", "Package status and lost-function guard", "pending"),
+        ("orchestration/subagent-assignment-queue.md", "Subagent dispatch queue after resume", "pending"),
         ("orchestration/context-recovery.md", "Context recovery ledger", "pending"),
         ("orchestration/completion-check.md", "Final completion gate", "pending"),
     ]
@@ -254,7 +255,8 @@ This folder is the source of truth for migration progress. After interruption or
 2. `migration-status.md`
 3. `artifact-index.md`
 4. `orchestration/task-checklist.md`
-5. Current package from the checklist, if any
+5. `orchestration/subagent-assignment-queue.md`
+6. Current package from the checklist, if any
 
 ## Latest Checkpoint
 - Last updated: {timestamp}
@@ -270,6 +272,7 @@ This folder is the source of truth for migration progress. After interruption or
 | `migration-status.md` | Visual progress status |
 | `artifact-index.md` | Artifact locations and staleness |
 | `orchestration/task-checklist.md` | Package state and lost-function guard |
+| `orchestration/subagent-assignment-queue.md` | Resume-time subagent dispatch queue |
 | `source-exploration/feature-point-index.md` | Feature point navigation after exploration |
 | `migration-design.md` | Approved or pending target design |
 | `design-approval.md` | Approval status before implementation |
@@ -278,6 +281,7 @@ This folder is the source of truth for migration progress. After interruption or
 ## Do Not Reload Broad Context Until
 - The current task package names the required source, target, and design artifacts.
 - The package one-pass feasibility is `yes` or explicitly accepted as `risky`.
+- Mandatory-subagent packages are assigned in `orchestration/subagent-assignment-queue.md`.
 """,
         root / "migration-record.md": empty_record_template(feature, source, target),
         root / "migration-design.md": empty_design_template(feature),
@@ -456,6 +460,26 @@ This folder is the source of truth for migration progress. After interruption or
 | Task | Reason | Approval/evidence | Follow-up |
 |---|---|---|---|
 """,
+        root / "orchestration" / "subagent-assignment-queue.md": f"""# {feature} Subagent Assignment Queue
+
+## Resume Gate
+- Last resume check: {timestamp}
+- Subagent capability: unknown
+- Main-agent implementation allowed? no for frontend/broad/resumed work
+- Current dispatch: none
+
+## Queue
+| Package | Role | Surface | Mandatory subagent? | Allowed inputs | Write set | Status | Report path |
+|---|---|---|---|---|---|---|---|
+
+## Blocked Subagent Work
+| Package | Reason | Needed capability | Next action |
+|---|---|---|---|
+
+## Dispatch Log
+| Time | Package | Agent/role | Result | Report |
+|---|---|---|---|---|
+""",
         root / "orchestration" / "context-recovery.md": f"""# {feature} Context Recovery
 
 ## Canonical Reload Set
@@ -465,6 +489,7 @@ This folder is the source of truth for migration progress. After interruption or
 | `../migration-status.md` | Visual progress status |
 | `../resume.md` | Restart instructions |
 | `task-checklist.md` | Package state and lost-function guard |
+| `subagent-assignment-queue.md` | Resume-time dispatch queue |
 
 ## Active Package
 - Package: none

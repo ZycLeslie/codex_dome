@@ -7,6 +7,7 @@ Use this guide when a migration has a frontend surface and ordinary project disc
 - Frontend Rule
 - Required Artifacts
 - Thin Index First
+- Resume And Subagent Gate
 - Micro-Package Types
 - One-Pass Feasibility Thresholds
 - Allowed And Forbidden Inputs
@@ -89,6 +90,20 @@ The indexer should write:
 |---|---|
 ```
 
+## Resume And Subagent Gate
+
+After interruption, context compression, a fresh session, or a failed long frontend attempt, frontend work must return to orchestration before more code edits:
+
+1. Reload `resume.md`, `migration-status.md`, `orchestration/task-checklist.md`, `orchestration/subagent-assignment-queue.md`, and `frontend-surface-index.md`.
+2. Mark any active frontend package `stale` if its allowed inputs, write set, or design approval are unclear.
+3. Split stale or broad packages into micro-packages.
+4. Add every frontend micro-package to `subagent-assignment-queue.md`.
+5. Dispatch one frontend subagent package at a time and require a persisted report before the next package starts.
+
+The main agent must not continue frontend implementation directly after resume. It may only update artifacts, split packages, review reports, and make a tiny non-behavioral edit when the checklist explicitly marks that edit as non-frontend and one-pass-feasible.
+
+If subagent capability is unavailable, mark frontend packages `blocked-subagent-unavailable`; do not silently continue in main-agent serial mode.
+
 ## Micro-Package Types
 
 Prefer these frontend packages over one broad `frontend-surface-explorer` package:
@@ -111,10 +126,12 @@ A frontend package is `no-needs-split` when it requires any of these:
 - reading more than one route workflow
 - reading more than one page/container cluster
 - reading more than one store/query/API-client path
+- editing more than one page/container, more than one component cluster, or a page plus state/API plus tests together
 - reading broad directories such as all of `src/pages`, `src/components`, `src/store`, `src/api`, or generated clients
 - inspecting more than about 8 source files before writing a useful artifact
 - tracing both UI behavior and backend/domain behavior in the same package
 - modifying route wiring, state/API, page UI, and tests together
+- continuing after the package already consumed too much context in a previous session
 
 Mark the package `risky` only when the file count is slightly high but the stop conditions and output artifact are narrow. Otherwise split before execution.
 
@@ -192,6 +209,8 @@ After design approval, split frontend implementation by write set:
 - browser/E2E or integration tests
 
 Do not combine all of these in one implementation package unless the feature is trivially small and the one-pass feasibility check says `yes`.
+
+After resume, even a small frontend implementation slice should be dispatched as `frontend-implementation-slice-agent` unless it is a one-line mechanical fix with no behavior impact and no frontend context needed.
 
 ## Verification Slices
 

@@ -1,6 +1,6 @@
 ---
 name: migrate-feature-to-v2
-description: Discover a named legacy feature, create a project-local visual migration workspace, split large work into bounded subagent task packages, assess whether each task can finish in one pass, track task checklists, separate frontend/backend surfaces when present, split frontend work into route/page/component/state/API/form/visible-state micro-packages, persist source evidence, split feature points into Markdown, reconcile with 2.0 design docs, reject legacy dross and smells, write an approvable migration design, then implement only after approval. Use for cross-repository feature migration, full-stack frontend/backend migration, restart-safe migration records, context-bounded subagent delegation, non-one-to-one modernization, CodeHub-backed migration through the matching MCP, legacy smell remediation, 取其精华去其糟粕, 任务清单跟踪, 一次性完成评估, 前端细粒度任务拆分, 前后端分开迁移, subagent 分工迁移, 功能点拆分, 方案审批后迁移, 功能迁移, 旧系统升级到 2.0, 功能优化, or reconstructing a feature end to end.
+description: Discover a named legacy feature, create a project-local visual migration workspace, split large work into bounded subagent task packages, force subagent delegation after resume/interruption, assess whether each task can finish in one pass, track task checklists, separate frontend/backend surfaces when present, split frontend work into route/page/component/state/API/form/visible-state micro-packages, persist source evidence, split feature points into Markdown, reconcile with 2.0 design docs, reject legacy dross and smells, write an approvable migration design, then implement only after approval. Use for cross-repository feature migration, full-stack frontend/backend migration, restart-safe migration records, context-bounded subagent delegation, non-one-to-one modernization, CodeHub-backed migration through the matching MCP, legacy smell remediation, 取其精华去其糟粕, 任务清单跟踪, 一次性完成评估, 中断恢复后强制 subagent 派工, 前端细粒度任务拆分, 前后端分开迁移, subagent 分工迁移, 功能点拆分, 方案审批后迁移, 功能迁移, 旧系统升级到 2.0, 功能优化, or reconstructing a feature end to end.
 ---
 
 # Migrate Feature To V2
@@ -84,9 +84,11 @@ Update `README.md`, `migration-status.md`, `artifact-index.md`, `timeline.md`, a
 - Add tests that prove the recovered contract and requested 2.0 behavior.
 - Make intentional behavior differences explicit in the migration record and final report.
 - Keep the migration process visible in a project-local workspace. Do not rely on chat history, private subagent context, or memory as the only record of current status, next action, approvals, or recovered behavior.
+- After interruption, context compression, or a fresh session, do not continue implementation directly in the main agent. First run the resume gate, rebuild the subagent assignment queue, and delegate executable packages.
 - Persist source exploration results before implementation so another agent or engineer can trace every recovered behavior back to source evidence.
 - Split recovered feature points into small Markdown files and use those files, not raw sprawling exploration context, as the basis for target design.
 - For large migrations, split work into bounded task packages and use subagents when available. Each subagent must receive only the minimal inputs for its package and must write a durable report or artifact.
+- When a task is frontend, broad, post-resume, or already caused context pressure, subagent use is mandatory. Do not silently downgrade to main-agent serial execution; if subagents are unavailable, record `blocked-subagent-unavailable` and ask for the tool/capability to be enabled.
 - For frontend work, do not spend a task package on understanding the whole frontend project. First create a thin frontend surface index, then split into route, page/container, component, state/API, form/validation, visible-state, accessibility/analytics, and frontend-test packages as applicable.
 - Before executing any task package, assess whether it can be completed in one pass with the available context, tools, permissions, and dependencies. If not, split it before work starts.
 - Maintain a durable task checklist and update it after every package, context handoff, approval change, implementation slice, and verification run.
@@ -97,7 +99,7 @@ Update `README.md`, `migration-status.md`, `artifact-index.md`, `timeline.md`, a
 
 ## Context-Bounded Subagent Orchestration
 
-Use subagents when the migration has multiple entry points, many candidate files, multiple target owners, large design documents, source/target repositories that cannot fit comfortably in one context, or repeated signs of context pressure. If subagents are not available, still use the same task packages and run them serially.
+Use subagents when the migration has multiple entry points, many candidate files, multiple target owners, large design documents, source/target repositories that cannot fit comfortably in one context, or repeated signs of context pressure. Serial execution is allowed only for small, non-frontend, non-resume packages that are explicitly one-pass-feasible. If subagents are unavailable for mandatory-subagent work, mark the package blocked instead of continuing in the main context.
 
 The main agent is the orchestrator:
 
@@ -115,6 +117,7 @@ Before broad exploration or implementation, create or update:
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/resume.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-package-index.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-checklist.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/subagent-assignment-queue.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-packages/TP-###-<name>.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/subagent-reports/TP-###-<name>.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/context-recovery.md`
@@ -133,6 +136,14 @@ Keep `task-checklist.md` as the source of truth for package status. The checklis
 
 Mirror checklist progress into the workspace dashboard files so a human can see the migration state without reading every package file. `resume.md` must always identify the next artifact to load and the next package or gate to work on.
 
+Resume gate:
+
+- Load `resume.md`, `migration-status.md`, `artifact-index.md`, `orchestration/task-checklist.md`, `orchestration/subagent-assignment-queue.md`, and only the current package artifacts.
+- Re-evaluate one-pass feasibility and mark stale or oversized packages before any code edits.
+- Assign every frontend package, every implementation package, every verification package, and every package with context pressure to a subagent owner.
+- Update `subagent-assignment-queue.md` with package, role, allowed inputs, write set, status, and expected report path.
+- Main agent may only orchestrate, split, review reports, update records, and perform tiny non-frontend mechanical edits that are explicitly one-pass-feasible. It must not implement frontend slices after resume.
+
 Recommended subagent roles:
 
 - `source-entrypoint-explorer`: explore one source entry point, workflow, or domain slice; write feature-point Markdown and evidence.
@@ -150,7 +161,7 @@ Recommended subagent roles:
 - `implementation-slice-agent`: after approval, implement one approved slice with a disjoint write set and minimal source/design context.
 - `verification-agent`: verify implementation, design approval, migration record, and test coverage against persisted artifacts.
 
-Read `references/subagent-coordination.md` before delegating a broad migration. Read `references/frontend-task-slicing.md` before exploring or implementing a frontend surface that is larger than one route, page, or component.
+Read `references/subagent-coordination.md` before delegating a broad migration or resuming interrupted work. Read `references/frontend-task-slicing.md` before exploring or implementing a frontend surface that is larger than one route, page, or component.
 
 ## Workflow
 
@@ -217,6 +228,7 @@ Persist the exploration as you go. Before implementation, create or update:
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/legacy-smells.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-package-index.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-checklist.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/subagent-assignment-queue.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/context-recovery.md`
 - supporting artifacts such as `search-log.md`, `candidate-files.txt`, `call-trace.md`, or `codehub-mcp-evidence.md` when useful
 
@@ -370,6 +382,8 @@ After design approval, implement the smallest complete approved slice that deliv
 
 Before starting each implementation package, re-check one-pass feasibility against current code, approvals, dependencies, and worktree state. If the package no longer fits in one pass, split it, mark the old package `stale` or `needs-split`, and update `task-checklist.md`.
 
+After resume or previous context pressure, implementation packages must be executed by subagents. The main agent should not keep writing implementation code package after package; it should dispatch one bounded package, read the persisted report, update the checklist, then dispatch the next package.
+
 For full-stack features, implement coordinated but separate slices:
 
 - frontend slices: route/menu wiring, page/container, leaf components, form/validation, state/query/mutation/API client, generated type usage, loading/empty/error states, permissions display, accessibility, analytics, and frontend tests. Keep each slice small enough to understand and edit in one pass.
@@ -422,6 +436,7 @@ Report:
 - visual migration workspace dashboard, status, artifact index, timeline, and resume paths
 - persisted source exploration artifact paths
 - subagent task packages, reports, and context-recovery artifact paths
+- subagent assignment queue status, including any `blocked-subagent-unavailable` packages
 - task checklist and completion-check artifact paths
 - feature point Markdown files used for design
 - design approval source and approved implementation slices
@@ -446,11 +461,13 @@ Do not declare the migration complete while required target wiring, tests, or ve
 - When source behavior and design intent agree, migrate the complete feature contract before calling the work done.
 - When a feature has both frontend and backend surfaces, split them into separate coordinated slices and verify the end-to-end user workflow.
 - When frontend project understanding alone would consume the context, stop broad reading, write or refresh the thin frontend surface index, and split into micro-packages before continuing.
+- When resuming after interruption, force subagent assignment before implementation. A frontend package owned by `main-agent` after resume is a process defect and blocks completion.
 - Preserve the source's business essence, not its accidental implementation shape.
 - Reject source dross even when it is easy to copy.
 - Treat copied legacy full paths, hard-coded endpoints, source package prefixes, and source repo-specific identifiers as defects in the migration unless the migration design explicitly approves them as compatibility.
 - Design from the persisted feature point Markdown files, not from an overloaded in-memory exploration context.
-- Use bounded task packages and subagents for broad migrations; if subagents are unavailable, run the same packages serially and keep the same artifacts.
+- Use bounded task packages and subagents for broad migrations. Serial execution is allowed only for small, non-frontend, non-resume packages that are explicitly one-pass-feasible.
+- Do not use main-agent serial execution as a fallback for resumed frontend or broad implementation work. Block and request subagent capability instead.
 - Split any task that is not feasible to finish in one pass before assigning or executing it.
 - Keep the task checklist current; when context is compressed or work is handed off, reload from the checklist and current package instead of reconstructing from memory.
 - Keep the visual workspace current; when context is compressed, interrupted, or handed off, reload from `resume.md` and `migration-status.md` before opening broad source or target context again.

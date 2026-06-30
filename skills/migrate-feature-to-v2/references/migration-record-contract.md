@@ -44,6 +44,10 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 | Package ID | Role | Scope | One-pass feasibility | Inputs | Outputs | Status | Decision impact |
 |---|---|---|---|---|---|---|---|
 
+## Subagent Assignment Queue
+| Package | Role | Mandatory subagent? | Owner | Status | Report path |
+|---|---|---|---|---|---|
+
 ## Task Checklist
 | Package | Surface | Objective | Status | Verification | Final check |
 |---|---|---|---|---|---|
@@ -116,6 +120,7 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - [ ] Contract and schema
 - [ ] Visual workspace initialized and current
 - [ ] Subagent task packages prepared
+- [ ] Subagent assignment queue current after resume
 - [ ] One-pass feasibility assessed for every package
 - [ ] Oversized packages split before execution
 - [ ] Task checklist current
@@ -127,6 +132,7 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - [ ] Migration design approved
 - [ ] Frontend thin surface index written when frontend is present or unknown
 - [ ] Frontend route/page/component/state/API/form/visible-state tasks split when applicable
+- [ ] Frontend/resumed/broad implementation packages executed by subagents or blocked with reason
 - [ ] Frontend slice complete or documented not applicable
 - [ ] Backend/API slice complete or documented not applicable
 - [ ] End-to-end flow verified when frontend and backend both exist
@@ -172,6 +178,7 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - For aligned behavior, record how complete migration coverage was verified.
 - Do not mark the migration complete when a present frontend or backend surface is unimplemented or unverified.
 - Do not mark the migration complete while a required package is `ready`, `needs-split`, `blocked`, `in-progress`, or unverified.
+- Do not mark the migration complete when mandatory-subagent frontend, resumed, or broad work was executed only by the main agent without a recorded exception.
 - Do not mark the migration complete while legacy dross scan findings are unexplained.
 - Record the canonical reload set and stale package status before pausing or handing work off.
 - Keep `resume.md` and `orchestration/context-recovery.md` aligned before pausing, handing off, or responding after an interruption.
