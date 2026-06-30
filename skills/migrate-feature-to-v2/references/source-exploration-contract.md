@@ -30,10 +30,11 @@ The feature migration root is the visible, project-local control panel. Initiali
 
 ```bash
 python3 <skill-dir>/scripts/init_migration_workspace.py \
-  --target <target-root> \
   --feature "<feature name>" \
   --source <source-root-or-url>
 ```
+
+Run it from the target repository root, or add `--target <target-root>` when running from another directory.
 
 Default layout:
 

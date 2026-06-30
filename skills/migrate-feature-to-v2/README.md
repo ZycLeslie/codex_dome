@@ -44,11 +44,12 @@
 可用脚本初始化骨架：
 
 ```bash
-python3 skills/migrate-feature-to-v2/scripts/init_migration_workspace.py \
-  --target <target-root> \
+python3 ~/.codex/skills/migrate-feature-to-v2/scripts/init_migration_workspace.py \
   --feature "<feature name>" \
   --source <source-root-or-url>
 ```
+
+如果不在目标仓根目录执行，再加 `--target <target-root>`。在维护本仓 skill 时，也可以使用仓库内路径 `python3 skills/migrate-feature-to-v2/scripts/init_migration_workspace.py ...`。
 
 工作区核心文件：
 

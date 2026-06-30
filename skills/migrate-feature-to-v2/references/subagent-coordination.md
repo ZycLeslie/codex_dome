@@ -44,10 +44,11 @@ The migration workspace root is the visible control panel for the main agent, su
 
 ```bash
 python3 <skill-dir>/scripts/init_migration_workspace.py \
-  --target <target-root> \
   --feature "<feature name>" \
   --source <source-root-or-url>
 ```
+
+Run it from the target repository root, or add `--target <target-root>` when running from another directory.
 
 After every package assignment, package result, split, stale decision, approval change, implementation slice, verification run, pause, or resume, the main agent should update:
 

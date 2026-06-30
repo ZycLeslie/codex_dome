@@ -48,10 +48,11 @@ Initialize or refresh the workspace before broad exploration, preferably with:
 
 ```bash
 python3 <skill-dir>/scripts/init_migration_workspace.py \
-  --target <target-root> \
   --feature "<feature name>" \
   --source <source-root-or-url>
 ```
+
+When running outside the target repository root, add `--target <target-root>`. The script defaults `--target` to the current directory.
 
 The workspace is the visible control panel and the restart anchor:
 

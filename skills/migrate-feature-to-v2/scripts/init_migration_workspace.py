@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """Initialize a project-local migration workspace for migrate-feature-to-v2."""
 
-from __future__ import annotations
-
 import argparse
 import datetime as dt
 import hashlib
 import json
 import re
+import sys
 from pathlib import Path
+from typing import Dict, List
 
 
 PHASES = [
@@ -53,15 +53,88 @@ def write_if_needed(path: Path, content: str, force: bool) -> bool:
     return True
 
 
-def markdown_list(items: list[str]) -> str:
+def markdown_list(items: List[str]) -> str:
     if not items:
         return "- none\n"
     return "".join(f"- {item}\n" for item in items)
 
 
-def build_templates(args: argparse.Namespace, root: Path, slug: str) -> dict[Path, str]:
+def empty_record_template(feature: str, source: str, target: str) -> str:
+    return f"""# {feature} Migration Record
+
+## Scope
+- Source repository: {source}
+- Target repository: {target}
+- Design documents:
+- Requested behavior: {feature}
+- Migration mode: unknown
+- Repository access method: unknown
+- Explicit non-goals:
+
+## Visual Workspace
+| Artifact | Purpose | Current status | Last updated |
+|---|---|---|---|
+
+## Source Exploration Artifacts
+| Artifact | Purpose | Status |
+|---|---|---|
+
+## Completion Check
+| Item | Status | Evidence |
+|---|---|---|
+"""
+
+
+def empty_design_template(feature: str) -> str:
+    return f"""# {feature} Migration Design
+
+## Approval Status
+- Status: not submitted
+- Approver:
+- Approval evidence:
+
+## Scope And Non-Goals
+
+## Feature Point Summary
+| Feature point | Source artifact | Target decision |
+|---|---|---|
+
+## Surface Coverage
+| Surface | Present? | Target action | Verification |
+|---|---|---|---|
+
+## Baseline Vs Target Matrix
+| Legacy behavior | Source evidence | 2.0 design requirement | Alignment | Decision | Confirmation | Verification |
+|---|---|---|---|---|---|---|
+
+## Implementation Slices
+| Slice | Surface | Approved? | Write set | Verification |
+|---|---|---|---|---|
+"""
+
+
+def empty_approval_template(feature: str) -> str:
+    return f"""# {feature} Design Approval
+
+## Approval
+- Status: pending
+- Approver:
+- Approved at:
+- Approval source:
+
+## Approved Slices
+| Slice | Scope | Conditions |
+|---|---|---|
+
+## Unapproved Or Deferred Items
+| Item | Reason | Next action |
+|---|---|---|
+"""
+
+
+def build_templates(args: argparse.Namespace, root: Path, slug: str) -> Dict[Path, str]:
     timestamp = now()
-    feature = args.feature
+    feature = " ".join(args.feature).strip()
     source = args.source or "unknown"
     target = str(args.target)
     design_docs = args.design_doc or []
@@ -203,6 +276,9 @@ This folder is the source of truth for migration progress. After interruption or
 - The current task package names the required source, target, and design artifacts.
 - The package one-pass feasibility is `yes` or explicitly accepted as `risky`.
 """,
+        root / "migration-record.md": empty_record_template(feature, source, target),
+        root / "migration-design.md": empty_design_template(feature),
+        root / "design-approval.md": empty_approval_template(feature),
         root / "source-exploration" / "source-exploration.md": f"""# {feature} Source Exploration
 
 ## Source Access
@@ -392,8 +468,18 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Create restart-safe migration workspace artifacts in the target repo."
     )
-    parser.add_argument("--target", required=True, type=Path, help="Target repository root")
-    parser.add_argument("--feature", required=True, help="Feature name or request")
+    parser.add_argument(
+        "--target",
+        default=Path("."),
+        type=Path,
+        help="Target repository root. Defaults to the current directory.",
+    )
+    parser.add_argument(
+        "--feature",
+        required=True,
+        nargs="+",
+        help="Feature name or request. Quote names with spaces when possible.",
+    )
     parser.add_argument("--source", help="Source repository path or URL")
     parser.add_argument("--design-doc", action="append", help="Design document path or URL")
     parser.add_argument("--slug", help="Override generated feature slug")
@@ -412,10 +498,11 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
-    target = args.target.resolve()
-    slug = args.slug or slugify(args.feature)
+    args.target = args.target.resolve()
+    feature = " ".join(args.feature).strip()
+    slug = args.slug or slugify(feature)
     workspace_root = Path(args.workspace_root)
-    root = workspace_root if workspace_root.is_absolute() else target / workspace_root
+    root = workspace_root if workspace_root.is_absolute() else args.target / workspace_root
     root = root / slug
 
     for directory in [
@@ -446,4 +533,8 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    try:
+        raise SystemExit(main())
+    except OSError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        raise SystemExit(1)
