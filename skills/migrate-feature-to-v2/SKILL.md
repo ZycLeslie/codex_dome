@@ -1,6 +1,6 @@
 ---
 name: migrate-feature-to-v2
-description: Move a legacy feature into an AI-friendly 2.0 repo. Use for 功能迁移, 旧系统升级到 2.0, full-stack migration, frontend micro-slicing, resume-safe subagent dispatch, CodeHub MCP access, config-center inventory, evidence records, design approval, and legacy dross cleanup.
+description: Move a legacy feature into an AI-friendly 2.0 repo. Use for 功能迁移, 旧系统升级到 2.0, cross-language or cross-framework migration, Java-to-Airflow style paradigm changes, full-stack migration, frontend micro-slicing, resume-safe subagent dispatch, CodeHub MCP access, config-center inventory, feature coverage checks, evidence records, design approval, and legacy dross cleanup.
 ---
 
 # Migrate Feature To V2
@@ -17,6 +17,7 @@ Resolve these inputs before editing:
 - **Design documents**: optional PRD, technical design, API spec, OpenSpec change, ADR, issue, ticket, or acceptance document that defines the 2.0 target behavior.
 - **Change intent**: whether the work is compatible migration, optimized behavior, redesigned workflow, API replacement, feature split/merge, deprecation, or greenfield implementation informed by legacy evidence.
 - **Feature surfaces**: frontend, backend/API, jobs, events, integrations, data, configuration, and observability surfaces involved in the capability.
+- **Source and target paradigm**: source language/framework/runtime and target language/framework/runtime, especially when they differ.
 - **Bad smell policy**: optional user guidance for which legacy smells, defects, or technical debt must be fixed during migration.
 - **Approval requirement**: who or what can approve the migration design before implementation. Default to the current user when no other approval source is provided.
 - **Subagent strategy**: whether to delegate exploration, design extraction, implementation slices, or verification to subagents. Default to subagents for broad migrations and to the same task-package protocol run serially when subagents are unavailable.
@@ -75,6 +76,7 @@ Update `README.md`, `migration-status.md`, `artifact-index.md`, `timeline.md`, a
 - Do not assume a one-to-one migration. Explicitly decide whether each legacy behavior is preserved, changed, replaced, deprecated, split, merged, or dropped.
 - Do not collapse full-stack work into backend-only migration. If the feature has frontend and backend behavior, explore, design, implement, and verify them as separate coordinated slices.
 - Adapt the implementation to target conventions, ownership boundaries, frameworks, and existing abstractions.
+- When source and target differ by language, framework, runtime, or architecture, treat source code as behavior evidence only. Do not port source-language classes, methods, package layout, or framework scaffolding line by line.
 - Take the essence and reject the dross: preserve domain rules, invariants, public contracts, proven edge cases, tests, and operational lessons; reject accidental architecture, copy-paste structure, obsolete dependencies, unsafe shortcuts, and brittle implementation mechanisms.
 - Do not blindly copy source files, legacy architecture, generated code, obsolete dependencies, or known defects.
 - Do not copy legacy implementation identifiers into 2.0 by default. Absolute filesystem paths, Windows paths, `file://` URLs, source repository paths, source package prefixes, fully qualified class names used as shortcuts, legacy hostnames, and hard-coded environment paths are dross unless explicitly proven to be an external contract.
@@ -93,6 +95,7 @@ Update `README.md`, `migration-status.md`, `artifact-index.md`, `timeline.md`, a
 - For frontend work, do not spend a task package on understanding the whole frontend project. First create a thin frontend surface index, then split into route, page/container, component, state/API, form/validation, visible-state, accessibility/analytics, and frontend-test packages as applicable.
 - Before executing any task package, assess whether it can be completed in one pass with the available context, tools, permissions, and dependencies. If not, split it before work starts.
 - Maintain a durable task checklist and update it after every package, context handoff, approval change, implementation slice, and verification run.
+- Maintain a feature coverage matrix for entry points, parameters, defaults, validation, branches, errors, side effects, config, schedules, and runtime controls. Missing or unverified rows block completion.
 - Record feature surface coverage. If a frontend, UI route, page, component, state transition, validation message, permission display, API call, generated client, or end-to-end flow exists, it must be represented in feature points, task packages, design, implementation, and verification.
 - Do not declare completion until a final completion check proves that all required tasks, feature points, surfaces, approved slices, and verification items are complete or explicitly deferred with reasons.
 - Do not modify target implementation code before the migration design is approved. Exploration artifacts and design documents may be written before approval.
@@ -155,6 +158,8 @@ Recommended subagent roles:
 - `frontend-form-visibility-explorer`: inspect one form, validation path, visible message set, loading/empty/error/permission state, accessibility hook, or analytics hook.
 - `backend-surface-explorer`: explore API handlers, domain services, persistence, jobs, events, integrations, auth, transactions, idempotency, and server-side observability.
 - `config-center-explorer`: list third-party config center providers, keys, namespaces/groups, profiles/envs, defaults, target mappings, owners, sensitivity, dynamic refresh, and missing config blockers.
+- `target-paradigm-mapper`: map source responsibilities to target-native framework primitives when language, framework, runtime, or architecture differs.
+- `coverage-matrix-verifier`: verify entry points, parameters, branches, errors, side effects, config, schedules, and runtime controls against the target design and patch.
 - `design-intent-extractor`: read only design artifacts; write target intent, acceptance criteria, explicit changes, and questions.
 - `legacy-smell-auditor`: inspect feature-point artifacts and source evidence; write smell classifications and remediation recommendations.
 - `legacy-dross-auditor`: inspect source feature points and target changes for copied implementation details such as full paths, source package prefixes, hard-coded endpoints, and obsolete wiring.
@@ -163,7 +168,7 @@ Recommended subagent roles:
 - `implementation-slice-agent`: after approval, implement one approved slice with a disjoint write set and minimal source/design context.
 - `verification-agent`: verify implementation, design approval, migration record, and test coverage against persisted artifacts.
 
-Read `references/subagent-coordination.md` before delegating a broad migration or resuming interrupted work. Read `references/frontend-task-slicing.md` before exploring or implementing a frontend surface that is larger than one route, page, or component. Read `references/config-center-inventory.md` when a config surface is present or unknown.
+Read `references/subagent-coordination.md` before delegating a broad migration or resuming interrupted work. Read `references/frontend-task-slicing.md` before exploring or implementing a frontend surface that is larger than one route, page, or component. Read `references/paradigm-migration.md` when source and target language, framework, runtime, or architecture differ. Read `references/feature-coverage-matrix.md` when the feature has multiple inputs, branches, side effects, or previous coverage risk. Read `references/config-center-inventory.md` when a config surface is present or unknown.
 
 ## Workflow
 
@@ -172,10 +177,11 @@ Read `references/subagent-coordination.md` before delegating a broad migration o
 1. Resolve local source and target roots or remote repository identities and confirm their roles.
 2. Locate and read user-provided design documents or discover likely design artifacts in the target repo when the request references them.
 3. If the source or target is a CodeHub address, access it through the matching CodeHub MCP before attempting any generic Git operation.
-4. Read repository instructions, manifests, architecture docs, and recent relevant changes in both repositories.
-5. Inspect target worktree changes before editing. Never overwrite unrelated changes.
-6. Create or update the project-local migration workspace and dashboard. Use `scripts/init_migration_workspace.py` unless the target repository already has a stronger artifact convention.
-7. Profile both repositories when they are unfamiliar:
+4. Identify source and target language, framework, runtime, and architecture. If they differ, mark the migration as `cross-language`, `cross-framework`, or `paradigm rewrite`.
+5. Read repository instructions, manifests, architecture docs, and recent relevant changes in both repositories.
+6. Inspect target worktree changes before editing. Never overwrite unrelated changes.
+7. Create or update the project-local migration workspace and dashboard. Use `scripts/init_migration_workspace.py` unless the target repository already has a stronger artifact convention.
+8. Profile both repositories when they are unfamiliar:
 
    `python3 <skill-dir>/scripts/profile_repositories.py --source <source-root> --target <target-root> --output-dir <target-root>/.ai-migrations/feature-migrations/<feature-slug>`
 8. If the migration is broad, create the orchestration task-package index before expanding exploration.
@@ -225,6 +231,8 @@ Persist the exploration as you go. Before implementation, create or update:
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/source-evidence.json`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/feature-point-index.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/feature-points/<feature-point-slug>.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/coverage/feature-coverage-matrix.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/target-paradigm-map.md` when source and target paradigm differ
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/frontend/frontend-surface-index.md` when frontend is present or unknown
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/frontend/frontend-task-map.md` when frontend work needs multiple packages
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/config/config-center-inventory.md` when any config surface or third-party config center exists or is unknown
@@ -259,6 +267,7 @@ Recover at least:
 - integration contracts, timeouts, retries, and fallback behavior
 - configuration, flags, limits, and compatibility expectations
 - third-party config center entries such as Nacos, Apollo, Spring Cloud Config, Consul, etcd, Vault, Kubernetes ConfigMap/Secret, or platform config: key, namespace/group, profile/env, default, target value, owner, sensitivity, rollout, and verification
+- every externally meaningful parameter, field, default, validation rule, branch, error, side effect, schedule, retry, and runtime control
 - observable logs, metrics, traces, and audit events
 
 Separate **essence** from **dross**:
@@ -268,6 +277,8 @@ Separate **essence** from **dross**:
 - Implementation-detail dross includes absolute paths, source repository paths, source package/class prefixes, file URLs, hard-coded local endpoints, environment-specific directories, generated-code paths, and all source naming that has no business meaning.
 
 Do not preserve incidental class layouts, duplicated logic, or framework workarounds unless they are required for compatibility. Record each important take/drop decision in the exploration and migration records.
+
+For cross-language or cross-framework migration, build `target-paradigm-map.md` before design approval. A Java-to-Airflow migration, for example, should map source responsibilities to DAGs, tasks/operators, sensors, hooks/connections, Variables, params, XCom, datasets, retries, backfill, idempotency, data checks, and alerts instead of recreating Java service layers in Python. Read `references/paradigm-migration.md` for the required mapping.
 
 ### 4. Classify And Remediate Legacy Smells
 
@@ -340,7 +351,9 @@ The design must include:
 - feature point summary with links to `feature-points/*.md`
 - surface coverage for frontend, backend/API, jobs/events, integrations, data, configuration, observability, and end-to-end flows
 - target architecture mapping
+- target paradigm mapping when language, framework, runtime, or architecture differs
 - behavior compatibility and intentional differences
+- feature coverage matrix status for parameters, branches, side effects, schedules, and runtime controls
 - frontend thin index and micro-package map when frontend is present or unknown
 - third-party config center inventory and target environment mapping
 - simple/severe legacy smell remediation decisions
@@ -402,7 +415,8 @@ For full-stack features, implement coordinated but separate slices:
 5. Add logs, metrics, traces, or audit events consistent with target conventions.
 6. Remediate classified `simple-fix` and `severe-fix` smells in the target implementation.
 7. Replace copied legacy paths, package prefixes, fully qualified names, and environment-specific constants with target-owned abstractions or configuration.
-8. Remove temporary duplication or compatibility scaffolding that is not needed after the slice works.
+8. For cross-language or cross-framework migration, implement target-native primitives from `target-paradigm-map.md`; expect smaller target code when the target framework owns orchestration, lifecycle, retries, scheduling, or observability.
+9. Remove temporary duplication or compatibility scaffolding that is not needed after the slice works.
 
 For detailed 2.0 design guidance, read `references/ai-friendly-v2.md` when choosing between multiple viable target designs.
 
@@ -417,6 +431,8 @@ Derive verification scenarios from both the target design and the recovered sour
 - Use differential, golden, or fixture-based comparison against the source for preserved behavior, and explicit new expectations for redesigned behavior.
 - Run target formatting, static checks, build, and relevant tests; broaden checks when shared behavior changed.
 - Verify required third-party config exists or is explicitly deferred: config center namespace/group/profile, keys, secrets, feature flags, dynamic refresh behavior, target values, and owner approvals.
+- Verify `source-exploration/coverage/feature-coverage-matrix.md`: every entry point, parameter, default, validation rule, branch, error, side effect, schedule, retry, and runtime control must be implemented, intentionally changed, approved for defer/drop, and tested.
+- For cross-language or cross-framework migration, verify the target patch against `target-paradigm-map.md` and reject source-language structure copied without approval.
 - Search for missing registrations, routes, dependency injection wiring, schemas, migrations, flags, and documentation.
 - Verify failure paths, authorization, idempotency, and side effects, not only the happy path.
 - Verify compatibility adapters, deprecation paths, data migrations, rollout flags, and backfill behavior when the 2.0 design changes external contracts.
@@ -456,17 +472,13 @@ Report:
 - verification commands and outcomes
 - remaining assumptions, risks, and follow-up work
 
-Do not declare the migration complete while required target wiring, tests, or verification remain unfinished.
-
 ## Decision Rules
 
-- When source behavior conflicts with target conventions, preserve the business contract and express it through target conventions.
-- When source behavior conflicts with explicit user requirements or design documents, follow the target requirement for the intended scope and document the compatibility impact.
 - Do not treat a design/source conflict as approved just because it appears in a document. Ask for confirmation unless the current user request explicitly authorizes that specific behavior change.
-- When a design document is vague, use the source baseline to fill business-rule gaps but do not invent 2.0 changes beyond the documented intent.
-- When a design document is older than current target code or conflicts with target architecture, verify the current code path before implementing the document literally.
 - When source behavior and design intent agree, migrate the complete feature contract before calling the work done.
+- When source and target language/framework/runtime differ, design from target primitives first. Source implementation shape is dross unless approved as an external contract.
 - When the feature depends on a third-party config center, list and map the external config before implementation; missing config is a runtime blocker, not documentation follow-up.
+- When parameters, branches, or side effects are numerous, a completed coverage matrix is mandatory before implementation and before final completion.
 - When a feature has both frontend and backend surfaces, split them into separate coordinated slices and verify the end-to-end user workflow.
 - When frontend project understanding alone would consume the context, stop broad reading, write or refresh the thin frontend surface index, and split into micro-packages before continuing.
 - When resuming after interruption, force subagent assignment before implementation. A frontend package owned by `main-agent` after resume is a process defect and blocks completion.
@@ -483,6 +495,5 @@ Do not declare the migration complete while required target wiring, tests, or ve
 - Do not implement until the migration design is approved or an explicit approval source is recorded.
 - When source code contains simple low-risk smells, fix them in the target implementation as part of migration.
 - When source code contains severe security, correctness, reliability, performance, or data-integrity problems, remediate them in the target design and record the decision.
-- When a target abstraction almost fits but would distort the contract, add a narrow adapter or extend the abstraction with tests.
 - When evidence is contradictory, prefer externally observable behavior and executable tests over comments or names.
 - When the source contains an apparent defect, do not silently reproduce or silently fix it. Record the finding and choose based on compatibility requirements.

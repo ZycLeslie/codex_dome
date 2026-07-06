@@ -16,6 +16,8 @@ Use the target repository's existing artifact convention when one exists. Otherw
 ```text
 .ai-migrations/feature-migrations/<feature-slug>/migration-design.md
 .ai-migrations/feature-migrations/<feature-slug>/design-approval.md
+.ai-migrations/feature-migrations/<feature-slug>/target-paradigm-map.md when source and target paradigm differ
+.ai-migrations/feature-migrations/<feature-slug>/source-exploration/coverage/feature-coverage-matrix.md
 .ai-migrations/feature-migrations/<feature-slug>/orchestration/task-package-index.md
 .ai-migrations/feature-migrations/<feature-slug>/orchestration/task-checklist.md
 .ai-migrations/feature-migrations/<feature-slug>/orchestration/task-packages/TP-###-<name>.md
@@ -43,6 +45,14 @@ Required before implementation.
 ## Surface Coverage
 | Surface | Source evidence | Target owner | Decision | Verification |
 |---|---|---|---|---|
+
+## Feature Coverage Matrix
+| Coverage area | Source rows | Target mapped? | Verification | Gap |
+|---|---|---|---|---|
+
+## Target Paradigm Mapping
+| Source responsibility | Target primitive/artifact | Source shape rejected | Verification |
+|---|---|---|---|
 
 ## Target Architecture
 | Target owner/module | Surface | Responsibility | Source/design basis |
@@ -128,6 +138,8 @@ Required before implementation starts.
 - If frontend and backend surfaces both exist, approval should identify which frontend slices, backend/API slices, and end-to-end checks are approved.
 - Do not approve an implementation package that is `no-needs-split` or missing one-pass feasibility.
 - Do not approve a design that copies legacy full paths, source package prefixes, file URLs, hard-coded endpoints, or environment-specific directories without an explicit compatibility reason and verification plan.
+- Do not approve a cross-language or cross-framework design that lacks `target-paradigm-map.md` or recreates source-language layers without an approved external contract.
+- Do not approve a design when required feature coverage matrix rows are blank, unknown, unmapped, or missing verification/defer approval.
 - If a package is not approved, do not hand it to an implementation-slice agent.
 - If design changes affect package inputs, mark the old package `stale`, update the package plan, and get approval for the changed package before implementation.
 - If the implementation discovers a design-changing fact, update `migration-design.md` and get approval again before continuing.

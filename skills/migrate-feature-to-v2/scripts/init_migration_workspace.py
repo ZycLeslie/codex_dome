@@ -79,6 +79,14 @@ def empty_record_template(feature: str, source: str, target: str) -> str:
 | Artifact | Purpose | Status |
 |---|---|---|
 
+## Feature Coverage Matrix
+| Coverage item | Source evidence | Target mapping | Status | Verification | Gap |
+|---|---|---|---|---|---|
+
+## Target Paradigm Mapping
+| Source language/framework/runtime | Target language/framework/runtime | Migration mode | Map artifact | Status |
+|---|---|---|---|---|
+
 ## Config Center Inventory
 | Key | Provider | Namespace/group/app | Profile/env | Target mapping | Required? | Sensitive? | Owner | Status | Verification |
 |---|---|---|---|---|---|---|---|---|---|
@@ -109,6 +117,14 @@ def empty_design_template(feature: str) -> str:
 
 ## Surface Coverage
 | Surface | Present? | Target action | Verification |
+|---|---|---|---|
+
+## Feature Coverage Matrix
+| Coverage area | Source rows | Target mapped? | Verification | Gap |
+|---|---|---|---|---|
+
+## Target Paradigm Mapping
+| Source responsibility | Target primitive/artifact | Source shape rejected | Verification |
 |---|---|---|---|
 
 ## Config Center Target Mapping
@@ -163,6 +179,8 @@ def build_templates(args: argparse.Namespace, root: Path, slug: str) -> Dict[Pat
         ("source-exploration/source-exploration.md", "Source behavior baseline", "pending"),
         ("source-exploration/source-evidence.json", "Machine-readable evidence index", "pending"),
         ("source-exploration/feature-point-index.md", "Feature point navigation map", "pending"),
+        ("source-exploration/coverage/feature-coverage-matrix.md", "Entry point, parameter, branch, and side-effect coverage", "pending"),
+        ("target-paradigm-map.md", "Source responsibility to target-native primitive mapping", "pending"),
         ("source-exploration/frontend/frontend-surface-index.md", "Thin frontend surface index", "pending"),
         ("source-exploration/frontend/frontend-task-map.md", "Frontend micro-package map", "pending"),
         ("source-exploration/frontend/frontend-open-questions.md", "Frontend open questions", "pending"),
@@ -287,6 +305,8 @@ This folder is the source of truth for migration progress. After interruption or
 | `orchestration/task-checklist.md` | Package state and lost-function guard |
 | `orchestration/subagent-assignment-queue.md` | Resume-time subagent dispatch queue |
 | `source-exploration/feature-point-index.md` | Feature point navigation after exploration |
+| `source-exploration/coverage/feature-coverage-matrix.md` | Entry point, parameter, branch, side-effect, schedule, and runtime-control coverage |
+| `target-paradigm-map.md` | Cross-language or cross-framework target primitive mapping |
 | `source-exploration/config/config-center-inventory.md` | Third-party config center blockers and mappings |
 | `migration-design.md` | Approved or pending target design |
 | `design-approval.md` | Approval status before implementation |
@@ -366,6 +386,56 @@ This folder is the source of truth for migration progress. After interruption or
 ## Open Questions
 | Question | Related feature points | Decision needed |
 |---|---|---|
+""",
+        root / "source-exploration" / "coverage" / "feature-coverage-matrix.md": f"""# {feature} Feature Coverage Matrix
+
+## Summary
+- Coverage status: incomplete
+- Source artifacts checked:
+- Target artifacts checked:
+- Remaining gaps:
+
+## Entry Points
+| Entry point | Surface | Source evidence | Target artifact | Decision | Verification |
+|---|---|---|---|---|---|
+
+## Parameters And Fields
+| Name | Surface | Type/format | Required/default | Validation/range | Source evidence | Target mapping | Verification |
+|---|---|---|---|---|---|---|---|
+
+## Branches And Errors
+| Condition/error | Source behavior | Target behavior | Decision | Verification |
+|---|---|---|---|---|
+
+## Side Effects And State
+| Effect/state change | Source evidence | Target mapping | Idempotency/transaction rule | Verification |
+|---|---|---|---|---|
+
+## Config, Schedule, And Runtime Controls
+| Control | Source evidence | Target mapping | Owner | Verification |
+|---|---|---|---|---|
+
+## Coverage Gaps
+| Gap | Risk | Blocks completion? | Owner | Next action |
+|---|---|---|---|---|
+""",
+        root / "target-paradigm-map.md": f"""# {feature} Target Paradigm Map
+
+## Runtime Delta
+| Source language/framework/runtime | Target language/framework/runtime | Migration mode | Consequence |
+|---|---|---|---|
+
+## Responsibility Mapping
+| Source responsibility | Source evidence | Keep as behavior? | Target primitive | Target artifact | Drop/rewrite rationale | Verification |
+|---|---|---|---|---|---|---|
+
+## Source Shape Rejection
+| Source shape/token | Why not target-native | Target replacement | Approval if preserved |
+|---|---|---|---|
+
+## Framework Semantics
+| Concern | Source behavior | Target-native expression | Verification |
+|---|---|---|---|
 """,
         root / "source-exploration" / "frontend" / "frontend-surface-index.md": f"""# {feature} Frontend Surface Index
 
@@ -575,6 +645,14 @@ This folder is the source of truth for migration progress. After interruption or
 | Finding | Decision | Evidence |
 |---|---|---|
 
+## Feature Coverage Check
+| Coverage item | Implemented or deferred? | Verified? | Evidence |
+|---|---|---|---|
+
+## Target Paradigm Check
+| Source shape copied? | Approved? | Target-native replacement | Verification |
+|---|---|---|---|
+
 ## Config Center Check
 | Config/key | Required? | Target provisioned or deferred? | Owner | Verification |
 |---|---|---|---|---|
@@ -631,6 +709,7 @@ def main() -> int:
     for directory in [
         root,
         root / "source-exploration" / "feature-points",
+        root / "source-exploration" / "coverage",
         root / "source-exploration" / "frontend",
         root / "source-exploration" / "config",
         root / "orchestration" / "task-packages",

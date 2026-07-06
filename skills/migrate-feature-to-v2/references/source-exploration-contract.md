@@ -675,6 +675,46 @@ Required sections:
 |---|---|---|
 ```
 
+### coverage/feature-coverage-matrix.md
+
+Required for every migration. Use it to prevent missed parameters, branches, side effects, schedules, and runtime controls.
+
+Required sections:
+
+```markdown
+# <Feature> Feature Coverage Matrix
+
+## Summary
+- Coverage status: incomplete | complete | blocked
+- Source artifacts checked:
+- Target artifacts checked:
+- Remaining gaps:
+
+## Entry Points
+| Entry point | Surface | Source evidence | Target artifact | Decision | Verification |
+|---|---|---|---|---|---|
+
+## Parameters And Fields
+| Name | Surface | Type/format | Required/default | Validation/range | Source evidence | Target mapping | Verification |
+|---|---|---|---|---|---|---|---|
+
+## Branches And Errors
+| Condition/error | Source behavior | Target behavior | Decision | Verification |
+|---|---|---|---|---|
+
+## Side Effects And State
+| Effect/state change | Source evidence | Target mapping | Idempotency/transaction rule | Verification |
+|---|---|---|---|---|
+
+## Config, Schedule, And Runtime Controls
+| Control | Source evidence | Target mapping | Owner | Verification |
+|---|---|---|---|---|
+
+## Coverage Gaps
+| Gap | Risk | Blocks completion? | Owner | Next action |
+|---|---|---|---|---|
+```
+
 ### legacy-smells.md
 
 Required smell inventory. If no relevant smells are found, write `none found` with the evidence scope checked.
@@ -737,6 +777,9 @@ When the source repository is a CodeHub URL or the user identifies it as CodeHub
 - Every multi-package migration should maintain `task-checklist.md` and finish with `completion-check.md`.
 - Tasks marked `no-needs-split` should be split before assignment or execution.
 - Surface coverage should explicitly mark frontend, backend/API, jobs/events, integrations, data, config, observability, and end-to-end flow as present, absent, or unknown.
+- `coverage/feature-coverage-matrix.md` should exist and should include every known entry point, parameter, default, validation rule, branch, error, side effect, config, schedule, and runtime control.
+- Unknown, unmapped, or unverified coverage rows should block completion until mapped, approved for defer/drop, or explicitly marked not applicable.
+- Cross-language or cross-framework migration should produce `target-paradigm-map.md`; source classes, methods, package layout, framework scaffolding, or service layers should not be treated as target design.
 - If frontend is present or unknown, create a thin frontend surface index before deep frontend exploration.
 - If a frontend route, page, component, form, client API call, generated client, UI validation, visible permission state, or user workflow exists, it should have a frontend feature-point file and a verification plan.
 - No frontend package should require understanding the whole frontend project, broad `src/pages`, broad `src/components`, broad store trees, or broad generated clients. Split first.

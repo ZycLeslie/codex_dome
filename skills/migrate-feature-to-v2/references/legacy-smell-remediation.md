@@ -109,6 +109,7 @@ Examples:
 - absolute filesystem paths such as `/Users/...`, `/home/...`, `/opt/...`, `/var/...`, or Windows drive paths
 - `file://` URLs and generated source paths
 - source repository paths, source package prefixes, and fully qualified class/module names copied as shortcuts
+- source-language class/service/repository/DTO hierarchy copied into a different target framework
 - old hostnames, hard-coded localhost endpoints, and environment-specific directory names
 - obsolete dependencies
 - framework workarounds no longer needed
@@ -202,6 +203,7 @@ Each `severe-fix` recommendation must include source evidence, compatibility imp
 
 - Never copy severe problems merely to match old code.
 - Never copy legacy full paths, source package prefixes, or environment-specific identifiers merely because the source code used them.
+- Never copy source-language layers into a different target paradigm, such as recreating Java service classes inside Airflow DAG code.
 - Never use "AI-friendly" as an excuse to rewrite business behavior without confirmation.
 - Prefer target-native ownership over source class/module shape.
 - Preserve source business rules and edge cases, but replace unsafe or brittle implementation mechanisms.

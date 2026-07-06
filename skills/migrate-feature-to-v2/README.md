@@ -26,6 +26,8 @@
 - 中断、重开或上下文压缩后，必须先跑恢复门，重建 `subagent-assignment-queue.md`，再派工；不能让主 agent 直接接着写前端或大实现。
 - 如果功能同时包含前端和后端，必须分开探索、分开设计、分开实现、分开验证，并增加端到端闭环；不能只迁后端。
 - 前端任务必须比“前端整体迁移”更细：先做薄索引，再按路由、页面/容器、组件、状态/API、表单校验、可见状态和测试拆微任务。
+- 跨语言/跨框架迁移时，源代码只作为行为证据；不能把 Java 类、方法、包结构、服务层和工具类形状照搬到 Airflow、Python 或其他 2.0 框架。
+- 必须维护功能覆盖矩阵：入口、参数、默认值、校验、分支、异常、副作用、配置、调度和运行时控制项缺一项都不能算完成。
 - 第三方配置中心必须列清楚：key、namespace/group/app、环境、默认值、目标映射、owner、敏感性和验证方式；缺配置就是运行阻塞。
 - 源代码里的丑陋全路径、硬编码环境路径、源仓包名前缀、全限定类名、旧域名和生成代码路径默认都是糟粕；除非是外部契约，否则不能照搬到 2.0。
 - 取其精华，去其糟粕：保留业务规则和生产经验，丢掉偶然架构、坏味道和不安全实现。
@@ -160,6 +162,41 @@ subagent 的结果必须落盘到 `orchestration/subagent-reports/` 或对应迁
 
 代码迁过去但配置中心没建好，不能算完成。
 
+## 跨语言/跨框架迁移
+
+当 1.0 是 Java，2.0 是 Airflow、Python、Flink、Spark、Node、Go 或其他框架时，先写：
+
+```text
+.ai-migrations/feature-migrations/<feature-slug>/target-paradigm-map.md
+```
+
+要求：
+
+- 先识别源/目标语言、框架、运行时和架构差异。
+- 把源仓类、方法、SQL、配置、任务、事件拆成“业务责任”，再映射到目标框架原语。
+- Airflow 场景优先映射 DAG、task/operator、sensor、hook/connection、Variable、params、XCom、dataset、retry、backfill、告警和数据质量检查。
+- 允许目标代码变少；平台已经提供的调度、重试、生命周期和观测能力，不要用 Java 式服务层重写一遍。
+- 如果保留源语言形状，必须说明外部契约和审批依据。
+
+## 防功能遗漏矩阵
+
+源仓探索后必须写：
+
+```text
+.ai-migrations/feature-migrations/<feature-slug>/source-exploration/coverage/feature-coverage-matrix.md
+```
+
+矩阵至少覆盖：
+
+- 入口、API、UI 字段、任务触发、事件。
+- 参数、字段、类型、默认值、必填性、校验范围。
+- 分支、异常、错误码、降级和兼容行为。
+- 数据读写、副作用、事务/幂等、外部调用。
+- 配置、调度、retry、timeout、feature flag、运行时控制项。
+- 每一项的目标映射和验证方式。
+
+有空行、`unknown`、未验证、未审批 defer/drop 的行，不能进入完成状态。
+
 ## 防止照搬遗留全路径
 
 迁移时要特别拦截这些“看起来能跑，但其实把旧系统污染带进 2.0”的内容：
@@ -200,16 +237,18 @@ python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
 7. 将源仓探索结果写入 `.ai-migrations/feature-migrations/<feature-slug>/source-exploration/`。
 8. 将功能点拆成 `feature-points/<feature-point-slug>.md`，并维护 `feature-point-index.md`。
 9. 提炼源仓精华，识别糟粕和老代码坏味道。
-10. 读取 2.0 设计文档，提取目标行为和验收要求。
-11. 列出第三方配置中心配置项，确认目标环境映射、owner 和缺失配置阻塞。
-12. 探索目标仓架构，确认前端 owner、后端/API owner、数据、集成、测试和观测模式。
-13. 基于功能点 Markdown、subagent 报告和目标仓架构写 `migration-design.md`，并列出 surface coverage。
-14. 方案审批通过后，记录 `design-approval.md`。
-15. 在目标仓按已批准方案和任务包实现前端、后端和端到端切片，并修复应处理的坏味道。
-16. 跑 `scan_legacy_dross.py`，清理或记录所有遗留全路径、硬编码端点和源仓特定 token。
-17. 补齐前端测试、后端测试、集成测试、契约测试、配置中心验证或差异对比测试。
-18. 写入 `completion-check.md`，核对任务清单、功能点、surface、审批、配置中心清单、遗留污染扫描和验证。
-19. 输出迁移记录、任务包结果、可视化工作区路径和验证结果。
+10. 生成 `feature-coverage-matrix.md`，逐项覆盖入口、参数、分支、副作用、配置和运行时控制。
+11. 如果源/目标语言、框架或运行时不同，生成 `target-paradigm-map.md`，先确认目标框架原语。
+12. 读取 2.0 设计文档，提取目标行为和验收要求。
+13. 列出第三方配置中心配置项，确认目标环境映射、owner 和缺失配置阻塞。
+14. 探索目标仓架构，确认前端 owner、后端/API owner、数据、集成、测试和观测模式。
+15. 基于功能点 Markdown、覆盖矩阵、范式映射、subagent 报告和目标仓架构写 `migration-design.md`。
+16. 方案审批通过后，记录 `design-approval.md`。
+17. 在目标仓按已批准方案和任务包实现前端、后端和端到端切片，并修复应处理的坏味道。
+18. 跑 `scan_legacy_dross.py`，清理或记录所有遗留全路径、硬编码端点和源仓特定 token。
+19. 补齐前端测试、后端测试、集成测试、契约测试、配置中心验证、覆盖矩阵核对或差异对比测试。
+20. 写入 `completion-check.md`，核对任务清单、功能点、覆盖矩阵、范式映射、surface、审批、配置中心清单、遗留污染扫描和验证。
+21. 输出迁移记录、任务包结果、可视化工作区路径和验证结果。
 
 ## CodeHub 源仓
 
@@ -226,6 +265,7 @@ python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
 
 - 前端路由、页面、组件、表单、状态、客户端 API 调用、展示文案、错误态和权限展示
 - 输入、输出、默认值和错误语义
+- 每个参数/字段的类型、必填性、默认值、校验规则、转换规则和目标映射
 - 权限、校验、安全约束
 - 状态流转、事务和幂等
 - 持久化读写和数据结构
@@ -289,12 +329,14 @@ python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
 ```text
 .ai-migrations/feature-migrations/<feature-slug>/source-exploration/feature-point-index.md
 .ai-migrations/feature-migrations/<feature-slug>/source-exploration/feature-points/<feature-point-slug>.md
+.ai-migrations/feature-migrations/<feature-slug>/source-exploration/coverage/feature-coverage-matrix.md
 .ai-migrations/feature-migrations/<feature-slug>/source-exploration/config/config-center-inventory.md
 ```
 
 迁移设计和审批记录默认写入：
 
 ```text
+.ai-migrations/feature-migrations/<feature-slug>/target-paradigm-map.md
 .ai-migrations/feature-migrations/<feature-slug>/migration-design.md
 .ai-migrations/feature-migrations/<feature-slug>/design-approval.md
 ```
@@ -342,6 +384,8 @@ python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
 - [SKILL.md](./SKILL.md)：agent 执行迁移时使用的核心流程。
 - [references/subagent-coordination.md](./references/subagent-coordination.md)：大迁移的 subagent 分工、任务包和上下文回收规则。
 - [references/frontend-task-slicing.md](./references/frontend-task-slicing.md)：前端薄索引、微任务拆分和上下文预算规则。
+- [references/paradigm-migration.md](./references/paradigm-migration.md)：跨语言、跨框架、Java 到 Airflow 等范式迁移规则。
+- [references/feature-coverage-matrix.md](./references/feature-coverage-matrix.md)：入口、参数、分支和副作用覆盖矩阵。
 - [references/config-center-inventory.md](./references/config-center-inventory.md)：第三方配置中心配置项清单和迁移阻塞规则。
 - [references/design-driven-modernization.md](./references/design-driven-modernization.md)：设计文档驱动的现代化规则。
 - [references/migration-design-approval.md](./references/migration-design-approval.md)：迁移设计方案和审批门。
@@ -360,4 +404,5 @@ python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
 每个任务包先评估一次性能否完成，维护 task-checklist，最终输出 completion-check。
 先把源仓探索出的功能点拆成 Markdown，再基于这些 Markdown 给出迁移设计方案。
 如果设计文档和旧仓行为不一致，先列出差异并等待确认；方案审批通过后再开始实现。
+如果 1.0 是 Java、2.0 是 Airflow 或其他框架，先写 target-paradigm-map，不要照搬 Java 代码形状；再用 feature-coverage-matrix 检查参数、分支和副作用不能漏。
 ```

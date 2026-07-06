@@ -60,6 +60,18 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 | Surface | Present? | Source evidence | Target owner | Implementation status | Verification |
 |---|---|---|---|---|---|
 
+## Feature Coverage Matrix
+| Coverage item | Source evidence | Target mapping | Status | Verification | Gap |
+|---|---|---|---|---|---|
+
+## Target Paradigm Mapping
+| Source language/framework/runtime | Target language/framework/runtime | Migration mode | Map artifact | Status |
+|---|---|---|---|---|
+
+## Source Shape Rejection
+| Source shape/token | Target-native replacement | Approved if preserved? | Verification |
+|---|---|---|---|
+
 ## Config Center Inventory
 | Key | Provider | Namespace/group/app | Profile/env | Target mapping | Required? | Sensitive? | Owner | Status | Verification |
 |---|---|---|---|---|---|---|---|---|---|
@@ -137,6 +149,10 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - [ ] Resume file current for restart after interruption
 - [ ] Feature point Markdown split
 - [ ] Surface coverage recorded
+- [ ] Feature coverage matrix complete for entry points, parameters, defaults, validation, branches, errors, side effects, config, schedules, and runtime controls
+- [ ] Source and target language/framework/runtime identified
+- [ ] Target paradigm map complete when source and target differ
+- [ ] Source-language or source-framework structure rejected or explicitly approved as compatibility
 - [ ] Third-party config center inventory complete or documented not applicable
 - [ ] Required target config mapped, provisioned, or blocked with owner
 - [ ] Migration design approved
@@ -162,6 +178,8 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - [ ] Config center keys, profiles, feature flags, secrets, and dynamic refresh behavior verified
 - [ ] Observability
 - [ ] Tests and verification
+- [ ] Coverage matrix rechecked after implementation
+- [ ] Target paradigm map rechecked against final patch
 - [ ] Completion check passed or gaps recorded
 
 ## Verification
@@ -178,6 +196,8 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - Link delegated work to task-package files and subagent reports; do not cite unpersisted chat-only handoffs.
 - Link task status to `task-checklist.md` and final decision to `completion-check.md`.
 - Link frontend, backend/API, and end-to-end coverage to feature-point files, target files, and verification evidence.
+- Link coverage matrix rows to source evidence, target mapping, and verification; do not rely on generic "covered by implementation" claims.
+- Link cross-language/cross-framework decisions to `target-paradigm-map.md` and prove source-language structure was not copied without approval.
 - Link config center entries to source evidence, target mappings, owners, and verification; do not expose secret values.
 - Link design decisions to feature point Markdown files and approval evidence.
 - Link essence/dross decisions to source evidence, target decisions, and verification.
@@ -189,6 +209,8 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - Mark design/source divergences as unconfirmed until the current user request or another explicit approval confirms them.
 - For aligned behavior, record how complete migration coverage was verified.
 - Do not mark the migration complete when a present frontend or backend surface is unimplemented or unverified.
+- Do not mark the migration complete while required coverage matrix rows are blank, unknown, unmapped, or unverified.
+- Do not mark cross-language/cross-framework migration complete while target code preserves source-language layers or framework scaffolding without explicit approval.
 - Do not mark the migration complete while a required package is `ready`, `needs-split`, `blocked`, `in-progress`, or unverified.
 - Do not mark the migration complete when mandatory-subagent frontend, resumed, or broad work was executed only by the main agent without a recorded exception.
 - Do not mark the migration complete while required third-party config center entries are missing, unmapped, ownerless, or unverified.
