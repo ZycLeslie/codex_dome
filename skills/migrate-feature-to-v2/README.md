@@ -21,6 +21,7 @@
 - 源仓探索出的功能点必须拆成独立 Markdown，避免上下文过大。
 - 迁移过程必须在目标项目内建立可视化工作区，记录当前阶段、任务状态、证据、审批、下一步和恢复入口。
 - 大迁移必须先拆成有边界的任务包，再用 subagent 执行；只有小型、非前端、非恢复场景的一次性任务才允许串行执行。
+- 如果可用或用户要求，可以用 `multica` 并行打开多个 agent 作业，但只能派发已拆好的独立任务包，并记录 job、报告和合并决策。
 - 每个任务包开始前都要评估一次性能否完成；不能一次完成的，先拆分再执行。
 - 全程维护 `task-checklist.md`，防止上下文压缩或交接时丢功能、丢任务、丢验证。
 - 中断、重开或上下文压缩后，必须先跑恢复门，重建 `subagent-assignment-queue.md`，再派工；不能让主 agent 直接接着写前端或大实现。
@@ -87,6 +88,14 @@ python3 ~/.codex/skills/migrate-feature-to-v2/scripts/init_migration_workspace.p
 
 subagent 的结果必须落盘到 `orchestration/subagent-reports/` 或对应迁移 artifact。主 agent 最终只基于持久化 artifact、证据 ID 和简短报告继续设计和实现，不基于散落的聊天上下文。
 
+`multica` 是可选调度器，不是新的事实来源。启用时需要维护：
+
+- `orchestration/subagent-assignment-queue.md`：任务包、runner、输入、写入范围和报告路径。
+- `orchestration/multica-jobs.md`：multica job ID、状态、报告路径、batch barrier 和合并决策。
+- `orchestration/subagent-reports/TP-###-<name>.md`：每个 job 的落盘报告。
+
+只能并行派发互不依赖、写入范围不重叠、审批状态明确的任务包。共享 API/schema/契约、同一写集、上下游依赖、或审批未完成的任务不能放进同一批。
+
 中断后恢复时，主 agent 不能直接继续实现。恢复步骤必须是：
 
 1. 读取 `resume.md`、`migration-status.md`、`artifact-index.md`、`orchestration/task-checklist.md` 和 `orchestration/subagent-assignment-queue.md`。
@@ -104,6 +113,7 @@ subagent 的结果必须落盘到 `orchestration/subagent-reports/` 或对应迁
 - `task-package-index.md`：任务包索引和依赖。
 - `task-checklist.md`：每个任务的一次性完成评估、状态、负责人、产物、验证和最终 check 状态。
 - `subagent-assignment-queue.md`：中断恢复后的 subagent 派工队列。
+- `multica-jobs.md`：可选 multica 多 agent 作业账本。
 - `completion-check.md`：收尾时的最终核对结果。
 
 任务状态至少包含：`ready`、`needs-split`、`blocked`、`in-progress`、`done`、`verified`、`deferred`、`stale`。
@@ -347,6 +357,7 @@ python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
 .ai-migrations/feature-migrations/<feature-slug>/orchestration/task-package-index.md
 .ai-migrations/feature-migrations/<feature-slug>/orchestration/task-checklist.md
 .ai-migrations/feature-migrations/<feature-slug>/orchestration/subagent-assignment-queue.md
+.ai-migrations/feature-migrations/<feature-slug>/orchestration/multica-jobs.md
 .ai-migrations/feature-migrations/<feature-slug>/orchestration/task-packages/TP-###-<name>.md
 .ai-migrations/feature-migrations/<feature-slug>/orchestration/subagent-reports/TP-###-<name>.md
 .ai-migrations/feature-migrations/<feature-slug>/orchestration/context-recovery.md
@@ -367,6 +378,7 @@ python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
 .ai-migrations/feature-migrations/<feature-slug>/artifact-index.md
 .ai-migrations/feature-migrations/<feature-slug>/orchestration/task-checklist.md
 .ai-migrations/feature-migrations/<feature-slug>/orchestration/subagent-assignment-queue.md
+.ai-migrations/feature-migrations/<feature-slug>/orchestration/multica-jobs.md
 ```
 
 如果目标仓已有自己的 agent、migration 或 design artifact 目录约定，则优先遵循目标仓约定。
@@ -383,6 +395,7 @@ python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
 
 - [SKILL.md](./SKILL.md)：agent 执行迁移时使用的核心流程。
 - [references/subagent-coordination.md](./references/subagent-coordination.md)：大迁移的 subagent 分工、任务包和上下文回收规则。
+- [references/multica-orchestration.md](./references/multica-orchestration.md)：可选 multica 多 agent 作业调度和恢复规则。
 - [references/frontend-task-slicing.md](./references/frontend-task-slicing.md)：前端薄索引、微任务拆分和上下文预算规则。
 - [references/paradigm-migration.md](./references/paradigm-migration.md)：跨语言、跨框架、Java 到 Airflow 等范式迁移规则。
 - [references/feature-coverage-matrix.md](./references/feature-coverage-matrix.md)：入口、参数、分支和副作用覆盖矩阵。
@@ -401,6 +414,7 @@ python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
 使用 migrate-feature-to-v2，把旧仓的“订单退款”功能迁移到当前 2.0 仓。
 参考 docs/refund-v2-design.md。
 如果源仓或目标仓上下文太大，先拆任务包并使用 subagent 探索入口、提取设计、映射目标架构和验证。
+如果 multica 可用，可以并行开多个独立 agent 作业，但每个作业必须来自 task package，并写回 subagent report 和 multica-jobs。
 每个任务包先评估一次性能否完成，维护 task-checklist，最终输出 completion-check。
 先把源仓探索出的功能点拆成 Markdown，再基于这些 Markdown 给出迁移设计方案。
 如果设计文档和旧仓行为不一致，先列出差异并等待确认；方案审批通过后再开始实现。

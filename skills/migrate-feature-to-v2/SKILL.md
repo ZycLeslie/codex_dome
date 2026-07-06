@@ -1,6 +1,6 @@
 ---
 name: migrate-feature-to-v2
-description: Move a legacy feature into an AI-friendly 2.0 repo. Use for 功能迁移, 旧系统升级到 2.0, cross-language or cross-framework migration, Java-to-Airflow style paradigm changes, full-stack migration, frontend micro-slicing, resume-safe subagent dispatch, CodeHub MCP access, config-center inventory, feature coverage checks, evidence records, design approval, and legacy dross cleanup.
+description: Move a legacy feature into an AI-friendly 2.0 repo. Use for 功能迁移, 旧系统升级到 2.0, cross-language or cross-framework migration, Java-to-Airflow style paradigm changes, full-stack migration, frontend micro-slicing, resume-safe subagent dispatch, optional multica multi-agent jobs, CodeHub MCP access, config-center inventory, feature coverage checks, evidence records, design approval, and legacy dross cleanup.
 ---
 
 # Migrate Feature To V2
@@ -20,7 +20,7 @@ Resolve these inputs before editing:
 - **Source and target paradigm**: source language/framework/runtime and target language/framework/runtime, especially when they differ.
 - **Bad smell policy**: optional user guidance for which legacy smells, defects, or technical debt must be fixed during migration.
 - **Approval requirement**: who or what can approve the migration design before implementation. Default to the current user when no other approval source is provided.
-- **Subagent strategy**: whether to delegate exploration, design extraction, implementation slices, or verification to subagents. Default to subagents for broad migrations and to the same task-package protocol run serially when subagents are unavailable.
+- **Agent dispatch strategy**: whether to delegate exploration, design extraction, implementation slices, or verification through subagents, optional `multica` multi-agent jobs, or serial task packages. Default to subagents for broad migrations; use `multica` only when available/requested and package boundaries are independent.
 - **Migration workspace**: project-local artifact directory used as the visual dashboard and restart point. Default to `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/` unless the target repo already has an established artifact convention.
 - **Task tracking strategy**: where to maintain task checklist, one-pass feasibility decisions, and final completion check. Default to the migration orchestration artifacts.
 - **Acceptance criteria**: explicit requirements when provided; otherwise recover them from source behavior and tests.
@@ -91,6 +91,7 @@ Update `README.md`, `migration-status.md`, `artifact-index.md`, `timeline.md`, a
 - Persist source exploration results before implementation so another agent or engineer can trace every recovered behavior back to source evidence.
 - Split recovered feature points into small Markdown files and use those files, not raw sprawling exploration context, as the basis for target design.
 - For large migrations, split work into bounded task packages and use subagents when available. Each subagent must receive only the minimal inputs for its package and must write a durable report or artifact.
+- When `multica` is available or requested, use it only as an optional batch dispatcher for independent task packages; keep `subagent-assignment-queue.md`, `multica-jobs.md`, reports, checklist, and resume state authoritative.
 - When a task is frontend, broad, post-resume, or already caused context pressure, subagent use is mandatory. Do not silently downgrade to main-agent serial execution; if subagents are unavailable, record `blocked-subagent-unavailable` and ask for the tool/capability to be enabled.
 - For frontend work, do not spend a task package on understanding the whole frontend project. First create a thin frontend surface index, then split into route, page/container, component, state/API, form/validation, visible-state, accessibility/analytics, and frontend-test packages as applicable.
 - Before executing any task package, assess whether it can be completed in one pass with the available context, tools, permissions, and dependencies. If not, split it before work starts.
@@ -99,7 +100,6 @@ Update `README.md`, `migration-status.md`, `artifact-index.md`, `timeline.md`, a
 - Record feature surface coverage. If a frontend, UI route, page, component, state transition, validation message, permission display, API call, generated client, or end-to-end flow exists, it must be represented in feature points, task packages, design, implementation, and verification.
 - Do not declare completion until a final completion check proves that all required tasks, feature points, surfaces, approved slices, and verification items are complete or explicitly deferred with reasons.
 - Do not modify target implementation code before the migration design is approved. Exploration artifacts and design documents may be written before approval.
-- Interpret "AI-friendly" as discoverable, explicit, composable, testable, and observable. Do not add an LLM, agent endpoint, or weaken security merely to claim AI readiness.
 
 ## Context-Bounded Subagent Orchestration
 
@@ -122,6 +122,7 @@ Before broad exploration or implementation, create or update:
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-package-index.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-checklist.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/subagent-assignment-queue.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/multica-jobs.md` when `multica` is used
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-packages/TP-###-<name>.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/subagent-reports/TP-###-<name>.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/context-recovery.md`
@@ -145,7 +146,7 @@ Resume gate:
 - Load `resume.md`, `migration-status.md`, `artifact-index.md`, `orchestration/task-checklist.md`, `orchestration/subagent-assignment-queue.md`, and only the current package artifacts.
 - Re-evaluate one-pass feasibility and mark stale or oversized packages before any code edits.
 - Assign every frontend package, every implementation package, every verification package, and every package with context pressure to a subagent owner.
-- Update `subagent-assignment-queue.md` with package, role, allowed inputs, write set, status, and expected report path.
+- Update `subagent-assignment-queue.md` with package, role, runner, allowed inputs, write set, status, and expected report path; if using `multica`, reconcile `orchestration/multica-jobs.md` before opening new jobs.
 - Main agent may only orchestrate, split, review reports, update records, and perform tiny non-frontend mechanical edits that are explicitly one-pass-feasible. It must not implement frontend slices after resume.
 
 Recommended subagent roles:
@@ -168,7 +169,7 @@ Recommended subagent roles:
 - `implementation-slice-agent`: after approval, implement one approved slice with a disjoint write set and minimal source/design context.
 - `verification-agent`: verify implementation, design approval, migration record, and test coverage against persisted artifacts.
 
-Read `references/subagent-coordination.md` before delegating a broad migration or resuming interrupted work. Read `references/frontend-task-slicing.md` before exploring or implementing a frontend surface that is larger than one route, page, or component. Read `references/paradigm-migration.md` when source and target language, framework, runtime, or architecture differ. Read `references/feature-coverage-matrix.md` when the feature has multiple inputs, branches, side effects, or previous coverage risk. Read `references/config-center-inventory.md` when a config surface is present or unknown.
+Read `references/subagent-coordination.md` before delegating a broad migration or resuming interrupted work. Read `references/multica-orchestration.md` when `multica` is available or requested. Read `references/frontend-task-slicing.md` before exploring or implementing a frontend surface that is larger than one route, page, or component. Read `references/paradigm-migration.md` when source and target language, framework, runtime, or architecture differ. Read `references/feature-coverage-matrix.md` when the feature has multiple inputs, branches, side effects, or previous coverage risk. Read `references/config-center-inventory.md` when a config surface is present or unknown.
 
 ## Workflow
 
@@ -184,7 +185,7 @@ Read `references/subagent-coordination.md` before delegating a broad migration o
 8. Profile both repositories when they are unfamiliar:
 
    `python3 <skill-dir>/scripts/profile_repositories.py --source <source-root> --target <target-root> --output-dir <target-root>/.ai-migrations/feature-migrations/<feature-slug>`
-8. If the migration is broad, create the orchestration task-package index before expanding exploration.
+9. If the migration is broad, create the orchestration task-package index before expanding exploration.
 
 Use the profile as orientation only. Read actual source files before making decisions.
 

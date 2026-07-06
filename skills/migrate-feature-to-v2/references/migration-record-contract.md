@@ -45,7 +45,11 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 |---|---|---|---|---|---|---|---|
 
 ## Subagent Assignment Queue
-| Package | Role | Mandatory subagent? | Owner | Status | Report path |
+| Package | Role | Runner | Mandatory subagent? | Owner/job ID | Status | Report path |
+|---|---|---|---|---|---|---|
+
+## Multica Jobs
+| Package | Role | Multica job ID | Status | Report path | Merge decision |
 |---|---|---|---|---|---|
 
 ## Task Checklist
@@ -141,6 +145,7 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - [ ] Visual workspace initialized and current
 - [ ] Subagent task packages prepared
 - [ ] Subagent assignment queue current after resume
+- [ ] Multica job ledger current when multica is used
 - [ ] One-pass feasibility assessed for every package
 - [ ] Oversized packages split before execution
 - [ ] Task checklist current
@@ -194,6 +199,7 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - Link source behavior claims to persisted source exploration artifacts where possible.
 - Link the current migration state to the root visual workspace files, especially `migration-status.md`, `artifact-index.md`, `timeline.md`, and `resume.md`.
 - Link delegated work to task-package files and subagent reports; do not cite unpersisted chat-only handoffs.
+- Link multica job IDs to package files, approved write sets, reports, and merge decisions when multica is used.
 - Link task status to `task-checklist.md` and final decision to `completion-check.md`.
 - Link frontend, backend/API, and end-to-end coverage to feature-point files, target files, and verification evidence.
 - Link coverage matrix rows to source evidence, target mapping, and verification; do not rely on generic "covered by implementation" claims.
@@ -209,6 +215,7 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - Mark design/source divergences as unconfirmed until the current user request or another explicit approval confirms them.
 - For aligned behavior, record how complete migration coverage was verified.
 - Do not mark the migration complete when a present frontend or backend surface is unimplemented or unverified.
+- Do not mark the migration complete while any multica job is running, missing a report, stale, outside its write set, or inconsistent with the checklist.
 - Do not mark the migration complete while required coverage matrix rows are blank, unknown, unmapped, or unverified.
 - Do not mark cross-language/cross-framework migration complete while target code preserves source-language layers or framework scaffolding without explicit approval.
 - Do not mark the migration complete while a required package is `ready`, `needs-split`, `blocked`, `in-progress`, or unverified.

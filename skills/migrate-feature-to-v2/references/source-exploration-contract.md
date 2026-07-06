@@ -235,12 +235,17 @@ Required sections:
 ## Resume Gate
 - Last resume check:
 - Subagent capability: available | unavailable | unknown
+- Dispatch runner: subagent | multica | serial | unknown
 - Main-agent implementation allowed? no for frontend/broad/resumed work
 - Current dispatch:
 
 ## Queue
-| Package | Role | Surface | Mandatory subagent? | Allowed inputs | Write set | Status | Report path |
-|---|---|---|---|---|---|---|---|
+| Package | Role | Surface | Runner | Mandatory subagent? | Allowed inputs | Write set | Status | Report path |
+|---|---|---|---|---|---|---|---|---|
+
+## Multica Jobs
+| Package | Multica job ID | Status | Report path | Merge decision |
+|---|---|---|---|---|
 
 ## Blocked Subagent Work
 | Package | Reason | Needed capability | Next action |
@@ -350,6 +355,29 @@ Required sections:
 - Raw files searched:
 - Search logs:
 - Long excerpts:
+```
+
+### orchestration/multica-jobs.md
+
+Required when `multica` launches multiple agent jobs.
+
+Required sections:
+
+```markdown
+# <Feature> Multica Jobs
+
+## Dispatch Policy
+- Enabled? yes | no | unavailable
+- Max parallel jobs:
+- Current batch:
+
+## Jobs
+| Package | Role | Multica job ID | Allowed inputs | Write set | Status | Report path | Merge decision |
+|---|---|---|---|---|---|---|---|
+
+## Batch Barriers
+| Barrier | Reason | Blocks packages |
+|---|---|---|
 ```
 
 ### orchestration/context-recovery.md
@@ -772,6 +800,7 @@ When the source repository is a CodeHub URL or the user identifies it as CodeHub
 - Every recovered behavior in the migration record should point to at least one evidence item.
 - Every broad migration should have task packages, package reports, and a context recovery file before implementation starts.
 - Every resumed migration should update `subagent-assignment-queue.md` before implementation continues.
+- If `multica` is used, `multica-jobs.md` should agree with `subagent-assignment-queue.md`, `task-checklist.md`, and subagent reports.
 - Every task package should have a one-pass feasibility decision before execution.
 - Mandatory-subagent packages, especially frontend exploration/implementation/verification, should not be owned by `main-agent` after resume.
 - Every multi-package migration should maintain `task-checklist.md` and finish with `completion-check.md`.

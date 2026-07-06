@@ -32,6 +32,7 @@ Use the target repository's existing agent artifact convention when one exists. 
     task-package-index.md
     task-checklist.md
     subagent-assignment-queue.md
+    multica-jobs.md
     context-recovery.md
     completion-check.md
     task-packages/
@@ -70,7 +71,8 @@ When a migration resumes after interruption, context compression, a new chat, a 
 2. Re-evaluate packages that are `ready`, `in-progress`, `stale`, `risky`, or frontend-related.
 3. Split any package that is no longer one-pass-feasible.
 4. Assign executable packages to subagents in `subagent-assignment-queue.md`.
-5. Dispatch one bounded package at a time; after each report, update the queue, checklist, status board, timeline, and resume file.
+5. Dispatch bounded packages; when `multica` is available/requested, batch only independent packages and track them in `multica-jobs.md`.
+6. After each report, update the queue, checklist, status board, timeline, and resume file.
 
 Do not continue frontend implementation directly in the main agent after resume. The main agent owns orchestration, package splitting, report review, record updates, and final integration decisions. Frontend exploration, frontend implementation, frontend verification, broad implementation, and any package that previously caused context pressure must be assigned to a subagent.
 
@@ -88,12 +90,17 @@ Required sections:
 ## Resume Gate
 - Last resume check:
 - Subagent capability: available | unavailable | unknown
+- Dispatch runner: subagent | multica | serial | unknown
 - Main-agent implementation allowed? no for frontend/broad/resumed work
 - Current dispatch:
 
 ## Queue
-| Package | Role | Surface | Mandatory subagent? | Allowed inputs | Write set | Status | Report path |
-|---|---|---|---|---|---|---|---|
+| Package | Role | Surface | Runner | Mandatory subagent? | Allowed inputs | Write set | Status | Report path |
+|---|---|---|---|---|---|---|---|---|
+
+## Multica Jobs
+| Package | Multica job ID | Status | Report path | Merge decision |
+|---|---|---|---|---|
 
 ## Blocked Subagent Work
 | Package | Reason | Needed capability | Next action |
@@ -175,6 +182,8 @@ Update the checklist after every package result, approval change, split, stale d
 Mirror the checklist summary into `migration-status.md` and append the material event to `timeline.md`.
 
 Mirror dispatch status into `subagent-assignment-queue.md`; completion is blocked while a mandatory-subagent package is owned by `main-agent`.
+
+When `multica` is used, also maintain `multica-jobs.md`; completion is blocked while any multica job is running, missing a report, stale, or inconsistent with the checklist.
 
 ## Package Template
 
@@ -296,6 +305,9 @@ Mirror dispatch status into `subagent-assignment-queue.md`; completion is blocke
 ## Delegation Rules
 
 - Give each subagent only the package file and the minimal referenced artifacts.
+- Use `multica` only as an optional batch runner for already-defined packages; it does not replace task-package files, reports, checklist updates, or approval gates.
+- Do not batch packages that share a write set, change the same contract/schema/API, depend on each other, or need unresolved approval.
+- Record every multica job ID, status, report path, and merge decision in `orchestration/multica-jobs.md`.
 - Do not ask one subagent to ingest the complete source, complete target, and complete design corpus unless the package explicitly justifies it.
 - Do not ask a frontend subagent to understand the whole frontend project. Require a `frontend-route-indexer` or existing `frontend-surface-index.md` before page/component/state/API exploration.
 - Split frontend work by route, page/container, component cluster, state/API path, form/validation path, visible states, and tests when any one package would read broad directories or more than a small direct file set.

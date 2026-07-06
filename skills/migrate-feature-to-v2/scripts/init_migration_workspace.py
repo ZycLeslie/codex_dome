@@ -91,6 +91,10 @@ def empty_record_template(feature: str, source: str, target: str) -> str:
 | Key | Provider | Namespace/group/app | Profile/env | Target mapping | Required? | Sensitive? | Owner | Status | Verification |
 |---|---|---|---|---|---|---|---|---|---|
 
+## Multica Jobs
+| Package | Role | Multica job ID | Status | Report path | Merge decision |
+|---|---|---|---|---|---|
+
 ## Missing Or Blocked Config
 | Config | Why needed | Blocks | Owner | Decision |
 |---|---|---|---|---|
@@ -189,6 +193,7 @@ def build_templates(args: argparse.Namespace, root: Path, slug: str) -> Dict[Pat
         ("orchestration/task-package-index.md", "Task package ledger", "pending"),
         ("orchestration/task-checklist.md", "Package status and lost-function guard", "pending"),
         ("orchestration/subagent-assignment-queue.md", "Subagent dispatch queue after resume", "pending"),
+        ("orchestration/multica-jobs.md", "Optional multica multi-agent job ledger", "pending"),
         ("orchestration/context-recovery.md", "Context recovery ledger", "pending"),
         ("orchestration/completion-check.md", "Final completion gate", "pending"),
     ]
@@ -287,7 +292,8 @@ This folder is the source of truth for migration progress. After interruption or
 3. `artifact-index.md`
 4. `orchestration/task-checklist.md`
 5. `orchestration/subagent-assignment-queue.md`
-6. Current package from the checklist, if any
+6. `orchestration/multica-jobs.md` when multica is used
+7. Current package from the checklist, if any
 
 ## Latest Checkpoint
 - Last updated: {timestamp}
@@ -304,6 +310,7 @@ This folder is the source of truth for migration progress. After interruption or
 | `artifact-index.md` | Artifact locations and staleness |
 | `orchestration/task-checklist.md` | Package state and lost-function guard |
 | `orchestration/subagent-assignment-queue.md` | Resume-time subagent dispatch queue |
+| `orchestration/multica-jobs.md` | Optional multica multi-agent job ledger |
 | `source-exploration/feature-point-index.md` | Feature point navigation after exploration |
 | `source-exploration/coverage/feature-coverage-matrix.md` | Entry point, parameter, branch, side-effect, schedule, and runtime-control coverage |
 | `target-paradigm-map.md` | Cross-language or cross-framework target primitive mapping |
@@ -577,12 +584,17 @@ This folder is the source of truth for migration progress. After interruption or
 ## Resume Gate
 - Last resume check: {timestamp}
 - Subagent capability: unknown
+- Dispatch runner: unknown
 - Main-agent implementation allowed? no for frontend/broad/resumed work
 - Current dispatch: none
 
 ## Queue
-| Package | Role | Surface | Mandatory subagent? | Allowed inputs | Write set | Status | Report path |
-|---|---|---|---|---|---|---|---|
+| Package | Role | Surface | Runner | Mandatory subagent? | Allowed inputs | Write set | Status | Report path |
+|---|---|---|---|---|---|---|---|---|
+
+## Multica Jobs
+| Package | Multica job ID | Status | Report path | Merge decision |
+|---|---|---|---|---|
 
 ## Blocked Subagent Work
 | Package | Reason | Needed capability | Next action |
@@ -591,6 +603,21 @@ This folder is the source of truth for migration progress. After interruption or
 ## Dispatch Log
 | Time | Package | Agent/role | Result | Report |
 |---|---|---|---|---|
+""",
+        root / "orchestration" / "multica-jobs.md": f"""# {feature} Multica Jobs
+
+## Dispatch Policy
+- Enabled? no
+- Max parallel jobs:
+- Current batch:
+
+## Jobs
+| Package | Role | Multica job ID | Allowed inputs | Write set | Status | Report path | Merge decision |
+|---|---|---|---|---|---|---|---|
+
+## Batch Barriers
+| Barrier | Reason | Blocks packages |
+|---|---|---|
 """,
         root / "orchestration" / "context-recovery.md": f"""# {feature} Context Recovery
 
@@ -602,6 +629,7 @@ This folder is the source of truth for migration progress. After interruption or
 | `../resume.md` | Restart instructions |
 | `task-checklist.md` | Package state and lost-function guard |
 | `subagent-assignment-queue.md` | Resume-time dispatch queue |
+| `multica-jobs.md` | Optional multica job reconciliation |
 
 ## Active Package
 - Package: none
