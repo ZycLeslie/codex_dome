@@ -225,7 +225,7 @@ Required sections:
 
 ### orchestration/subagent-assignment-queue.md
 
-Required for every broad migration and every resumed migration. Use it to prevent the main agent from silently continuing mandatory-subagent work after interruption.
+Required for every broad migration and every resumed migration. Use it to prevent the main agent from silently continuing mandatory delegated work after interruption.
 
 Required sections:
 
@@ -234,8 +234,9 @@ Required sections:
 
 ## Resume Gate
 - Last resume check:
-- Subagent capability: available | unavailable | unknown
-- Dispatch runner: subagent | multica | serial | unknown
+- Multica availability: available | unavailable | unknown
+- Fallback subagent capability: available | unavailable | unknown
+- Dispatch runner: multica-preferred | multica | subagent | serial | unknown
 - Main-agent implementation allowed? no for frontend/broad/resumed work
 - Current dispatch:
 
@@ -320,7 +321,7 @@ Required sections:
 
 ### orchestration/subagent-reports/TP-###-<name>.md
 
-Required after every subagent package or serial package completes. The report is the handoff artifact; do not depend on chat-only summaries.
+Required after every multica job, subagent package, or serial package completes. The report is the handoff artifact; do not depend on chat-only summaries.
 
 Required sections:
 
@@ -367,7 +368,7 @@ Required sections:
 # <Feature> Multica Jobs
 
 ## Dispatch Policy
-- Enabled? yes | no | unavailable
+- Availability: available | unavailable | unknown
 - Max parallel jobs:
 - Current batch:
 
@@ -800,9 +801,10 @@ When the source repository is a CodeHub URL or the user identifies it as CodeHub
 - Every recovered behavior in the migration record should point to at least one evidence item.
 - Every broad migration should have task packages, package reports, and a context recovery file before implementation starts.
 - Every resumed migration should update `subagent-assignment-queue.md` before implementation continues.
+- Every broad or resumed migration should probe `multica` before assigning subagents; if unavailable, record fallback to subagents.
 - If `multica` is used, `multica-jobs.md` should agree with `subagent-assignment-queue.md`, `task-checklist.md`, and subagent reports.
 - Every task package should have a one-pass feasibility decision before execution.
-- Mandatory-subagent packages, especially frontend exploration/implementation/verification, should not be owned by `main-agent` after resume.
+- Mandatory delegated packages, especially frontend exploration/implementation/verification, should not be owned by `main-agent` after resume.
 - Every multi-package migration should maintain `task-checklist.md` and finish with `completion-check.md`.
 - Tasks marked `no-needs-split` should be split before assignment or execution.
 - Surface coverage should explicitly mark frontend, backend/API, jobs/events, integrations, data, config, observability, and end-to-end flow as present, absent, or unknown.

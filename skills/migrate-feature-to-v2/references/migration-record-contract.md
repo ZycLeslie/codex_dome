@@ -163,7 +163,7 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - [ ] Migration design approved
 - [ ] Frontend thin surface index written when frontend is present or unknown
 - [ ] Frontend route/page/component/state/API/form/visible-state tasks split when applicable
-- [ ] Frontend/resumed/broad implementation packages executed by subagents or blocked with reason
+- [ ] Frontend/resumed/broad implementation packages executed by multica/subagents or blocked with reason
 - [ ] Frontend slice complete or documented not applicable
 - [ ] Backend/API slice complete or documented not applicable
 - [ ] End-to-end flow verified when frontend and backend both exist
@@ -219,7 +219,7 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - Do not mark the migration complete while required coverage matrix rows are blank, unknown, unmapped, or unverified.
 - Do not mark cross-language/cross-framework migration complete while target code preserves source-language layers or framework scaffolding without explicit approval.
 - Do not mark the migration complete while a required package is `ready`, `needs-split`, `blocked`, `in-progress`, or unverified.
-- Do not mark the migration complete when mandatory-subagent frontend, resumed, or broad work was executed only by the main agent without a recorded exception.
+- Do not mark the migration complete when mandatory delegated frontend, resumed, or broad work was executed only by the main agent without a recorded exception.
 - Do not mark the migration complete while required third-party config center entries are missing, unmapped, ownerless, or unverified.
 - Do not mark the migration complete while legacy dross scan findings are unexplained.
 - Record the canonical reload set and stale package status before pausing or handing work off.

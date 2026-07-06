@@ -193,7 +193,7 @@ def build_templates(args: argparse.Namespace, root: Path, slug: str) -> Dict[Pat
         ("orchestration/task-package-index.md", "Task package ledger", "pending"),
         ("orchestration/task-checklist.md", "Package status and lost-function guard", "pending"),
         ("orchestration/subagent-assignment-queue.md", "Subagent dispatch queue after resume", "pending"),
-        ("orchestration/multica-jobs.md", "Optional multica multi-agent job ledger", "pending"),
+        ("orchestration/multica-jobs.md", "Multica-first multi-agent job ledger", "pending"),
         ("orchestration/context-recovery.md", "Context recovery ledger", "pending"),
         ("orchestration/completion-check.md", "Final completion gate", "pending"),
     ]
@@ -292,7 +292,7 @@ This folder is the source of truth for migration progress. After interruption or
 3. `artifact-index.md`
 4. `orchestration/task-checklist.md`
 5. `orchestration/subagent-assignment-queue.md`
-6. `orchestration/multica-jobs.md` when multica is used
+6. `orchestration/multica-jobs.md`
 7. Current package from the checklist, if any
 
 ## Latest Checkpoint
@@ -310,7 +310,7 @@ This folder is the source of truth for migration progress. After interruption or
 | `artifact-index.md` | Artifact locations and staleness |
 | `orchestration/task-checklist.md` | Package state and lost-function guard |
 | `orchestration/subagent-assignment-queue.md` | Resume-time subagent dispatch queue |
-| `orchestration/multica-jobs.md` | Optional multica multi-agent job ledger |
+| `orchestration/multica-jobs.md` | Multica-first multi-agent job ledger |
 | `source-exploration/feature-point-index.md` | Feature point navigation after exploration |
 | `source-exploration/coverage/feature-coverage-matrix.md` | Entry point, parameter, branch, side-effect, schedule, and runtime-control coverage |
 | `target-paradigm-map.md` | Cross-language or cross-framework target primitive mapping |
@@ -322,7 +322,7 @@ This folder is the source of truth for migration progress. After interruption or
 ## Do Not Reload Broad Context Until
 - The current task package names the required source, target, and design artifacts.
 - The package one-pass feasibility is `yes` or explicitly accepted as `risky`.
-- Mandatory-subagent packages are assigned in `orchestration/subagent-assignment-queue.md`.
+- Mandatory delegated packages are assigned in `orchestration/subagent-assignment-queue.md`.
 """,
         root / "migration-record.md": empty_record_template(feature, source, target),
         root / "migration-design.md": empty_design_template(feature),
@@ -583,8 +583,9 @@ This folder is the source of truth for migration progress. After interruption or
 
 ## Resume Gate
 - Last resume check: {timestamp}
-- Subagent capability: unknown
-- Dispatch runner: unknown
+- Multica availability: unknown
+- Fallback subagent capability: unknown
+- Dispatch runner: multica-preferred
 - Main-agent implementation allowed? no for frontend/broad/resumed work
 - Current dispatch: none
 
@@ -607,7 +608,7 @@ This folder is the source of truth for migration progress. After interruption or
         root / "orchestration" / "multica-jobs.md": f"""# {feature} Multica Jobs
 
 ## Dispatch Policy
-- Enabled? no
+- Availability: unknown
 - Max parallel jobs:
 - Current batch:
 
@@ -629,7 +630,7 @@ This folder is the source of truth for migration progress. After interruption or
 | `../resume.md` | Restart instructions |
 | `task-checklist.md` | Package state and lost-function guard |
 | `subagent-assignment-queue.md` | Resume-time dispatch queue |
-| `multica-jobs.md` | Optional multica job reconciliation |
+| `multica-jobs.md` | Multica job reconciliation before subagent fallback |
 
 ## Active Package
 - Package: none

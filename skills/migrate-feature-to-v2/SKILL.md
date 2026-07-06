@@ -1,6 +1,6 @@
 ---
 name: migrate-feature-to-v2
-description: Move a legacy feature into an AI-friendly 2.0 repo. Use for 功能迁移, 旧系统升级到 2.0, cross-language or cross-framework migration, Java-to-Airflow style paradigm changes, full-stack migration, frontend micro-slicing, resume-safe subagent dispatch, optional multica multi-agent jobs, CodeHub MCP access, config-center inventory, feature coverage checks, evidence records, design approval, and legacy dross cleanup.
+description: Move a legacy feature into an AI-friendly 2.0 repo. Use for 功能迁移, 旧系统升级到 2.0, cross-language or cross-framework migration, Java-to-Airflow style paradigm changes, full-stack migration, frontend micro-slicing, multica-first multi-agent dispatch with subagent fallback, CodeHub MCP access, config-center inventory, feature coverage checks, evidence records, design approval, and legacy dross cleanup.
 ---
 
 # Migrate Feature To V2
@@ -20,7 +20,7 @@ Resolve these inputs before editing:
 - **Source and target paradigm**: source language/framework/runtime and target language/framework/runtime, especially when they differ.
 - **Bad smell policy**: optional user guidance for which legacy smells, defects, or technical debt must be fixed during migration.
 - **Approval requirement**: who or what can approve the migration design before implementation. Default to the current user when no other approval source is provided.
-- **Agent dispatch strategy**: whether to delegate exploration, design extraction, implementation slices, or verification through subagents, optional `multica` multi-agent jobs, or serial task packages. Default to subagents for broad migrations; use `multica` only when available/requested and package boundaries are independent.
+- **Agent dispatch strategy**: whether to delegate exploration, design extraction, implementation slices, or verification through `multica`, subagents, or serial task packages. Default to `multica` when available; fall back to subagents when `multica` is unavailable; use serial execution only for small non-mandatory packages.
 - **Migration workspace**: project-local artifact directory used as the visual dashboard and restart point. Default to `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/` unless the target repo already has an established artifact convention.
 - **Task tracking strategy**: where to maintain task checklist, one-pass feasibility decisions, and final completion check. Default to the migration orchestration artifacts.
 - **Acceptance criteria**: explicit requirements when provided; otherwise recover them from source behavior and tests.
@@ -90,9 +90,9 @@ Update `README.md`, `migration-status.md`, `artifact-index.md`, `timeline.md`, a
 - After interruption, context compression, or a fresh session, do not continue implementation directly in the main agent. First run the resume gate, rebuild the subagent assignment queue, and delegate executable packages.
 - Persist source exploration results before implementation so another agent or engineer can trace every recovered behavior back to source evidence.
 - Split recovered feature points into small Markdown files and use those files, not raw sprawling exploration context, as the basis for target design.
-- For large migrations, split work into bounded task packages and use subagents when available. Each subagent must receive only the minimal inputs for its package and must write a durable report or artifact.
-- When `multica` is available or requested, use it only as an optional batch dispatcher for independent task packages; keep `subagent-assignment-queue.md`, `multica-jobs.md`, reports, checklist, and resume state authoritative.
-- When a task is frontend, broad, post-resume, or already caused context pressure, subagent use is mandatory. Do not silently downgrade to main-agent serial execution; if subagents are unavailable, record `blocked-subagent-unavailable` and ask for the tool/capability to be enabled.
+- For large migrations, split work into bounded task packages and delegate them through `multica` when available, otherwise through subagents. Each job/subagent must receive only the minimal inputs for its package and must write a durable report or artifact.
+- Probe `multica` before assigning subagents. When `multica` is available, use it as the preferred batch dispatcher for independent task packages; keep `subagent-assignment-queue.md`, `multica-jobs.md`, reports, checklist, and resume state authoritative.
+- When a task is frontend, broad, post-resume, or already caused context pressure, delegated execution is mandatory. Use `multica` first, fall back to subagents, and do not silently downgrade to main-agent serial execution; if neither runner is available, record the blocker and ask for the capability to be enabled.
 - For frontend work, do not spend a task package on understanding the whole frontend project. First create a thin frontend surface index, then split into route, page/container, component, state/API, form/validation, visible-state, accessibility/analytics, and frontend-test packages as applicable.
 - Before executing any task package, assess whether it can be completed in one pass with the available context, tools, permissions, and dependencies. If not, split it before work starts.
 - Maintain a durable task checklist and update it after every package, context handoff, approval change, implementation slice, and verification run.
@@ -103,7 +103,7 @@ Update `README.md`, `migration-status.md`, `artifact-index.md`, `timeline.md`, a
 
 ## Context-Bounded Subagent Orchestration
 
-Use subagents when the migration has multiple entry points, many candidate files, multiple target owners, large design documents, source/target repositories that cannot fit comfortably in one context, or repeated signs of context pressure. Serial execution is allowed only for small, non-frontend, non-resume packages that are explicitly one-pass-feasible. If subagents are unavailable for mandatory-subagent work, mark the package blocked instead of continuing in the main context.
+Use `multica` or subagents when the migration has multiple entry points, many candidate files, multiple target owners, large design documents, source/target repositories that cannot fit comfortably in one context, or repeated signs of context pressure. Prefer `multica` when available; otherwise use subagents. Serial execution is allowed only for small, non-frontend, non-resume packages that are explicitly one-pass-feasible. If neither `multica` nor subagents are available for mandatory delegated work, mark the package blocked instead of continuing in the main context.
 
 The main agent is the orchestrator:
 
@@ -143,10 +143,10 @@ Mirror checklist progress into the workspace dashboard files so a human can see 
 
 Resume gate:
 
-- Load `resume.md`, `migration-status.md`, `artifact-index.md`, `orchestration/task-checklist.md`, `orchestration/subagent-assignment-queue.md`, and only the current package artifacts.
+- Load `resume.md`, `migration-status.md`, `artifact-index.md`, `orchestration/task-checklist.md`, `orchestration/subagent-assignment-queue.md`, `orchestration/multica-jobs.md`, and only the current package artifacts.
 - Re-evaluate one-pass feasibility and mark stale or oversized packages before any code edits.
-- Assign every frontend package, every implementation package, every verification package, and every package with context pressure to a subagent owner.
-- Update `subagent-assignment-queue.md` with package, role, runner, allowed inputs, write set, status, and expected report path; if using `multica`, reconcile `orchestration/multica-jobs.md` before opening new jobs.
+- Assign every frontend package, every implementation package, every verification package, and every package with context pressure to runner `multica` when available; otherwise assign a subagent owner.
+- Update `subagent-assignment-queue.md` with package, role, runner, allowed inputs, write set, status, and expected report path; reconcile `orchestration/multica-jobs.md` before opening new multica jobs.
 - Main agent may only orchestrate, split, review reports, update records, and perform tiny non-frontend mechanical edits that are explicitly one-pass-feasible. It must not implement frontend slices after resume.
 
 Recommended subagent roles:
@@ -169,7 +169,7 @@ Recommended subagent roles:
 - `implementation-slice-agent`: after approval, implement one approved slice with a disjoint write set and minimal source/design context.
 - `verification-agent`: verify implementation, design approval, migration record, and test coverage against persisted artifacts.
 
-Read `references/subagent-coordination.md` before delegating a broad migration or resuming interrupted work. Read `references/multica-orchestration.md` when `multica` is available or requested. Read `references/frontend-task-slicing.md` before exploring or implementing a frontend surface that is larger than one route, page, or component. Read `references/paradigm-migration.md` when source and target language, framework, runtime, or architecture differ. Read `references/feature-coverage-matrix.md` when the feature has multiple inputs, branches, side effects, or previous coverage risk. Read `references/config-center-inventory.md` when a config surface is present or unknown.
+Read `references/subagent-coordination.md` before delegating a broad migration or resuming interrupted work. Read `references/multica-orchestration.md` before choosing a runner for broad or resumed work. Read `references/frontend-task-slicing.md` before exploring or implementing a frontend surface that is larger than one route, page, or component. Read `references/paradigm-migration.md` when source and target language, framework, runtime, or architecture differ. Read `references/feature-coverage-matrix.md` when the feature has multiple inputs, branches, side effects, or previous coverage risk. Read `references/config-center-inventory.md` when a config surface is present or unknown.
 
 ## Workflow
 
@@ -361,7 +361,7 @@ The design must include:
 - legacy dross firewall decisions: copied-looking paths, fully qualified names, source package prefixes, hard-coded endpoints, and their target replacements
 - data, API, event, integration, rollout, and observability changes
 - implementation slices split by surface when applicable, especially frontend and backend/API
-- task package plan that maps slices to subagent packages, allowed write sets, outputs, and verification
+- task package plan that maps slices to multica/subagent packages, allowed write sets, outputs, and verification
 - one-pass feasibility and split decision for every package
 - task checklist coverage for every feature point, surface, and approved slice
 - verification plan
@@ -401,7 +401,7 @@ After design approval, implement the smallest complete approved slice that deliv
 
 Before starting each implementation package, re-check one-pass feasibility against current code, approvals, dependencies, and worktree state. If the package no longer fits in one pass, split it, mark the old package `stale` or `needs-split`, and update `task-checklist.md`.
 
-After resume or previous context pressure, implementation packages must be executed by subagents. The main agent should not keep writing implementation code package after package; it should dispatch one bounded package, read the persisted report, update the checklist, then dispatch the next package.
+After resume or previous context pressure, implementation packages must be executed by `multica` when available or subagents otherwise. The main agent should not keep writing implementation code package after package; it should dispatch bounded packages, read persisted reports, update the checklist, then dispatch the next package or batch.
 
 For full-stack features, implement coordinated but separate slices:
 
@@ -458,8 +458,8 @@ Report:
 - source entry points and strongest implementation evidence
 - visual migration workspace dashboard, status, artifact index, timeline, and resume paths
 - persisted source exploration artifact paths
-- subagent task packages, reports, and context-recovery artifact paths
-- subagent assignment queue status, including any `blocked-subagent-unavailable` packages
+- multica/subagent task packages, reports, and context-recovery artifact paths
+- runner assignment queue status, including any blocked delegated packages
 - third-party config center inventory, target mappings, and any missing config blockers
 - task checklist and completion-check artifact paths
 - feature point Markdown files used for design
@@ -482,13 +482,13 @@ Report:
 - When parameters, branches, or side effects are numerous, a completed coverage matrix is mandatory before implementation and before final completion.
 - When a feature has both frontend and backend surfaces, split them into separate coordinated slices and verify the end-to-end user workflow.
 - When frontend project understanding alone would consume the context, stop broad reading, write or refresh the thin frontend surface index, and split into micro-packages before continuing.
-- When resuming after interruption, force subagent assignment before implementation. A frontend package owned by `main-agent` after resume is a process defect and blocks completion.
+- When resuming after interruption, force runner assignment before implementation. A frontend package owned by `main-agent` after resume is a process defect and blocks completion.
 - Preserve the source's business essence, not its accidental implementation shape.
 - Reject source dross even when it is easy to copy.
 - Treat copied legacy full paths, hard-coded endpoints, source package prefixes, and source repo-specific identifiers as defects in the migration unless the migration design explicitly approves them as compatibility.
 - Design from the persisted feature point Markdown files, not from an overloaded in-memory exploration context.
-- Use bounded task packages and subagents for broad migrations. Serial execution is allowed only for small, non-frontend, non-resume packages that are explicitly one-pass-feasible.
-- Do not use main-agent serial execution as a fallback for resumed frontend or broad implementation work. Block and request subagent capability instead.
+- Use bounded task packages with `multica` first and subagents as fallback for broad migrations. Serial execution is allowed only for small, non-frontend, non-resume packages that are explicitly one-pass-feasible.
+- Do not use main-agent serial execution as a fallback for resumed frontend or broad implementation work. Block and request `multica` or subagent capability instead.
 - Split any task that is not feasible to finish in one pass before assigning or executing it.
 - Keep the task checklist current; when context is compressed or work is handed off, reload from the checklist and current package instead of reconstructing from memory.
 - Keep the visual workspace current; when context is compressed, interrupted, or handed off, reload from `resume.md` and `migration-status.md` before opening broad source or target context again.

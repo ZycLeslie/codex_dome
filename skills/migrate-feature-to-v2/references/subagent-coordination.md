@@ -70,13 +70,13 @@ When a migration resumes after interruption, context compression, a new chat, a 
 1. Load only `resume.md`, `migration-status.md`, `artifact-index.md`, `orchestration/task-checklist.md`, `orchestration/subagent-assignment-queue.md`, and the active package named by the checklist.
 2. Re-evaluate packages that are `ready`, `in-progress`, `stale`, `risky`, or frontend-related.
 3. Split any package that is no longer one-pass-feasible.
-4. Assign executable packages to subagents in `subagent-assignment-queue.md`.
-5. Dispatch bounded packages; when `multica` is available/requested, batch only independent packages and track them in `multica-jobs.md`.
+4. Assign executable packages in `subagent-assignment-queue.md` with runner `multica` when available, otherwise `subagent`.
+5. Probe `multica`; when available, batch independent packages and track them in `multica-jobs.md`; otherwise assign subagents.
 6. After each report, update the queue, checklist, status board, timeline, and resume file.
 
-Do not continue frontend implementation directly in the main agent after resume. The main agent owns orchestration, package splitting, report review, record updates, and final integration decisions. Frontend exploration, frontend implementation, frontend verification, broad implementation, and any package that previously caused context pressure must be assigned to a subagent.
+Do not continue frontend implementation directly in the main agent after resume. The main agent owns orchestration, package splitting, report review, record updates, and final integration decisions. Frontend exploration, frontend implementation, frontend verification, broad implementation, and any package that previously caused context pressure must be assigned to `multica` when available, otherwise to a subagent.
 
-If subagent tools are unavailable for mandatory-subagent work, mark the package `blocked-subagent-unavailable`, record the blocker in `subagent-assignment-queue.md` and `resume.md`, and ask for subagent capability instead of silently switching to main-agent serial execution.
+If neither `multica` nor subagent tools are available for mandatory delegated work, mark the package blocked, record the blocker in `subagent-assignment-queue.md` and `resume.md`, and ask for runner capability instead of silently switching to main-agent serial execution.
 
 ### orchestration/subagent-assignment-queue.md
 
@@ -89,8 +89,9 @@ Required sections:
 
 ## Resume Gate
 - Last resume check:
-- Subagent capability: available | unavailable | unknown
-- Dispatch runner: subagent | multica | serial | unknown
+- Multica availability: available | unavailable | unknown
+- Fallback subagent capability: available | unavailable | unknown
+- Dispatch runner: multica-preferred | multica | subagent | serial | unknown
 - Main-agent implementation allowed? no for frontend/broad/resumed work
 - Current dispatch:
 
@@ -140,7 +141,7 @@ For small migrations, a single agent may execute the same package protocol seria
 - Retire raw context after artifacts are written.
 - Mark stale packages when design, source evidence, or target ownership changes.
 - Keep the workspace dashboard, status, artifact index, timeline, and resume file current enough that a restarted agent can continue without chat history.
-- After resume, use `subagent-assignment-queue.md` as the execution source of truth. Do not self-assign mandatory-subagent packages to `main-agent`.
+- After resume, use `subagent-assignment-queue.md` as the execution source of truth. Do not self-assign mandatory delegated packages to `main-agent`.
 
 ## Task Sizing And Checklist
 
@@ -151,7 +152,7 @@ Before executing any package, classify one-pass feasibility:
 - `blocked`: required approval, input, tool, permission, or dependency is missing.
 - `risky`: can start only if the package has narrow stop conditions and a rollback or handoff plan.
 
-After resume, any `risky` frontend or implementation package should normally become `no-needs-split` or be assigned to a subagent with tight stop conditions. Do not let it become a long main-agent coding session.
+After resume, any `risky` frontend or implementation package should normally become `no-needs-split` or be assigned to `multica`/subagent with tight stop conditions. Do not let it become a long main-agent coding session.
 
 Maintain `task-checklist.md` with:
 
@@ -181,9 +182,9 @@ Update the checklist after every package result, approval change, split, stale d
 
 Mirror the checklist summary into `migration-status.md` and append the material event to `timeline.md`.
 
-Mirror dispatch status into `subagent-assignment-queue.md`; completion is blocked while a mandatory-subagent package is owned by `main-agent`.
+Mirror dispatch status into `subagent-assignment-queue.md`; completion is blocked while a mandatory delegated package is owned by `main-agent`.
 
-When `multica` is used, also maintain `multica-jobs.md`; completion is blocked while any multica job is running, missing a report, stale, or inconsistent with the checklist.
+Probe `multica` before subagent assignment. When `multica` is available, use it for independent packages and maintain `multica-jobs.md`; completion is blocked while any multica job is running, missing a report, stale, or inconsistent with the checklist.
 
 ## Package Template
 
@@ -305,7 +306,7 @@ When `multica` is used, also maintain `multica-jobs.md`; completion is blocked w
 ## Delegation Rules
 
 - Give each subagent only the package file and the minimal referenced artifacts.
-- Use `multica` only as an optional batch runner for already-defined packages; it does not replace task-package files, reports, checklist updates, or approval gates.
+- Use `multica` as the preferred batch runner for already-defined independent packages; it does not replace task-package files, reports, checklist updates, or approval gates.
 - Do not batch packages that share a write set, change the same contract/schema/API, depend on each other, or need unresolved approval.
 - Record every multica job ID, status, report path, and merge decision in `orchestration/multica-jobs.md`.
 - Do not ask one subagent to ingest the complete source, complete target, and complete design corpus unless the package explicitly justifies it.
@@ -314,7 +315,7 @@ When `multica` is used, also maintain `multica-jobs.md`; completion is blocked w
 - Assign a `target-paradigm-mapper` before implementation when source and target language, framework, runtime, or architecture differ. Do not let implementation packages decide the target shape from source code.
 - Assign a `coverage-matrix-verifier` before implementation and before completion when parameters, branches, side effects, or runtime controls are numerous or were previously missed.
 - Assign third-party config center discovery to a bounded `config-center-explorer` package when config usage is present or unknown. Do not hide missing external config inside backend implementation notes.
-- After resume, assign frontend exploration, frontend implementation, frontend verification, and broad implementation packages to subagents. Main-agent ownership is allowed only for orchestration and tiny non-frontend mechanical edits.
+- After resume, assign frontend exploration, frontend implementation, frontend verification, and broad implementation packages to `multica` when available, otherwise to subagents. Main-agent ownership is allowed only for orchestration and tiny non-frontend mechanical edits.
 - Do not assign a package marked `no-needs-split` or `blocked`; split it or unblock it first.
 - For code-edit packages, assign a disjoint write set and remind the subagent not to revert unrelated changes.
 - Split frontend and backend implementation into separate packages when both surfaces exist, then add a coordination or verification package for the end-to-end workflow.
@@ -324,7 +325,7 @@ When `multica` is used, also maintain `multica-jobs.md`; completion is blocked w
 - Subagents may recommend behavior changes, smell remediation, or drops, but the main agent owns reconciliation and approval gates.
 - If a package discovers evidence that changes design scope, mark dependent packages `stale`, update `context-recovery.md`, and return to design approval before implementation continues.
 - After a subagent report is accepted, update `artifact-index.md`, `migration-status.md`, `timeline.md`, and `resume.md` before assigning the next package.
-- If the main agent starts editing a mandatory-subagent package directly, stop, record the process defect, retire the partial context into a package note, and re-dispatch the package or a smaller replacement package.
+- If the main agent starts editing a mandatory delegated package directly, stop, record the process defect, retire the partial context into a package note, and re-dispatch the package or a smaller replacement package.
 
 ## Context Recovery
 
@@ -391,4 +392,4 @@ Write `completion-check.md` before declaring the migration done:
 - Deferred items:
 ```
 
-The final decision can be `yes` only when every required checklist item is `verified` or explicitly `deferred` with approval or a recorded reason. It must be `no` when mandatory-subagent work was performed only by the main agent after resume without a recorded exception.
+The final decision can be `yes` only when every required checklist item is `verified` or explicitly `deferred` with approval or a recorded reason. It must be `no` when mandatory delegated work was performed only by the main agent after resume without a recorded exception.

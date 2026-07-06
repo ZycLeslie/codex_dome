@@ -90,19 +90,19 @@ The indexer should write:
 |---|---|
 ```
 
-## Resume And Subagent Gate
+## Resume And Runner Gate
 
 After interruption, context compression, a fresh session, or a failed long frontend attempt, frontend work must return to orchestration before more code edits:
 
 1. Reload `resume.md`, `migration-status.md`, `orchestration/task-checklist.md`, `orchestration/subagent-assignment-queue.md`, and `frontend-surface-index.md`.
 2. Mark any active frontend package `stale` if its allowed inputs, write set, or design approval are unclear.
 3. Split stale or broad packages into micro-packages.
-4. Add every frontend micro-package to `subagent-assignment-queue.md`.
-5. Dispatch one frontend subagent package at a time and require a persisted report before the next package starts.
+4. Add every frontend micro-package to `subagent-assignment-queue.md` with runner `multica` when available, otherwise `subagent`.
+5. Dispatch frontend packages through `multica` when available, otherwise one subagent package at a time; require persisted reports before the next package or batch starts.
 
 The main agent must not continue frontend implementation directly after resume. It may only update artifacts, split packages, review reports, and make a tiny non-behavioral edit when the checklist explicitly marks that edit as non-frontend and one-pass-feasible.
 
-If subagent capability is unavailable, mark frontend packages `blocked-subagent-unavailable`; do not silently continue in main-agent serial mode.
+If neither `multica` nor subagent capability is available, mark frontend packages blocked; do not silently continue in main-agent serial mode.
 
 ## Micro-Package Types
 
@@ -210,7 +210,7 @@ After design approval, split frontend implementation by write set:
 
 Do not combine all of these in one implementation package unless the feature is trivially small and the one-pass feasibility check says `yes`.
 
-After resume, even a small frontend implementation slice should be dispatched as `frontend-implementation-slice-agent` unless it is a one-line mechanical fix with no behavior impact and no frontend context needed.
+After resume, even a small frontend implementation slice should be dispatched through `multica` when available or as `frontend-implementation-slice-agent` otherwise, unless it is a one-line mechanical fix with no behavior impact and no frontend context needed.
 
 ## Verification Slices
 
