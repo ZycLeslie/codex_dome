@@ -12,7 +12,9 @@
 
 ## 核心原则
 
-- 先从源仓恢复旧功能完整行为基线。
+- 优先使用源仓现成的 spec、设计文档、API 契约、ADR、测试计划和运行手册。
+- 源仓文档缺失、过期或覆盖不足时，再开 2-3 个有边界的详细探索任务。
+- 再从源仓恢复旧功能完整行为基线。
 - 再读取 2.0 设计文档、需求、API 规格或验收标准。
 - 对每个行为标记 `aligned`、`source-only`、`design-only` 或 `divergent`。
 - 设计文档与源代码偏离时，需要用户确认后才能改变旧行为。
@@ -68,6 +70,23 @@ python3 ~/.codex/skills/migrate-feature-to-v2/scripts/init_migration_workspace.p
 - `orchestration/`：任务包、task checklist、subagent 报告、context recovery 和 completion check。
 
 只写代码不更新工作区，不算完成迁移步骤。每次任务包完成、方案审批变化、实现切片、验证结果、上下文压缩或交接，都要更新 `migration-status.md`、`artifact-index.md`、`timeline.md` 和 `resume.md`。
+
+## 源仓文档优先
+
+大范围读代码前，先写入：
+
+```text
+.ai-migrations/feature-migrations/<feature-slug>/source-exploration/source-docs-index.md
+```
+
+这个文件记录源仓已有 spec、设计文档、API 契约、ADR、OpenSpec、测试计划、运行手册和 release note。它要说明：
+
+- 文档是否存在、是否可信、是否覆盖当前功能。
+- 从文档提取出的源仓行为契约。
+- 哪些功能点、参数、分支、副作用或配置仍然缺证据。
+- 缺证据时要开的 2-3 个探索任务包，以及 runner：有 `multica` 先用 `multica`，没有再用 subagent。
+
+只有当文档缺失、过期、互相矛盾或覆盖不足时，才进入详细源码探索。详细探索也不能是一包读完整项目，而是按入口/契约、领域/数据/副作用、前端/运行时控制等维度拆成 2-3 个任务。
 
 ## 上下文安全的多 agent 使用
 
@@ -243,22 +262,23 @@ python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
 3. 初始化项目内可视化迁移工作区，生成 `README.md`、`migration-status.md`、`artifact-index.md`、`timeline.md` 和 `resume.md`。
 4. 判断迁移规模，创建 `orchestration/task-package-index.md`、`task-checklist.md` 和具体任务包。
 5. 对每个任务包评估一次性能否完成；不能完成的先拆分。
-6. 用 multica 优先、subagent 兜底的方式从源仓恢复旧功能完整行为基线；前后端存在时分开探索。
-7. 将源仓探索结果写入 `.ai-migrations/feature-migrations/<feature-slug>/source-exploration/`。
-8. 将功能点拆成 `feature-points/<feature-point-slug>.md`，并维护 `feature-point-index.md`。
-9. 提炼源仓精华，识别糟粕和老代码坏味道。
-10. 生成 `feature-coverage-matrix.md`，逐项覆盖入口、参数、分支、副作用、配置和运行时控制。
-11. 如果源/目标语言、框架或运行时不同，生成 `target-paradigm-map.md`，先确认目标框架原语。
-12. 读取 2.0 设计文档，提取目标行为和验收要求。
-13. 列出第三方配置中心配置项，确认目标环境映射、owner 和缺失配置阻塞。
-14. 探索目标仓架构，确认前端 owner、后端/API owner、数据、集成、测试和观测模式。
-15. 基于功能点 Markdown、覆盖矩阵、范式映射、subagent 报告和目标仓架构写 `migration-design.md`。
-16. 方案审批通过后，记录 `design-approval.md`。
-17. 在目标仓按已批准方案和任务包实现前端、后端和端到端切片，并修复应处理的坏味道。
-18. 跑 `scan_legacy_dross.py`，清理或记录所有遗留全路径、硬编码端点和源仓特定 token。
-19. 补齐前端测试、后端测试、集成测试、契约测试、配置中心验证、覆盖矩阵核对或差异对比测试。
-20. 写入 `completion-check.md`，核对任务清单、功能点、覆盖矩阵、范式映射、surface、审批、配置中心清单、遗留污染扫描和验证。
-21. 输出迁移记录、任务包结果、可视化工作区路径和验证结果。
+6. 先索引源仓现成 spec/设计/API 契约到 `source-docs-index.md`。
+7. 如果文档缺失或不足，开 2-3 个详细探索任务包；用 multica 优先、subagent 兜底恢复旧功能行为基线。
+8. 将源仓探索结果写入 `.ai-migrations/feature-migrations/<feature-slug>/source-exploration/`。
+9. 将功能点拆成 `feature-points/<feature-point-slug>.md`，并维护 `feature-point-index.md`。
+10. 提炼源仓精华，识别糟粕和老代码坏味道。
+11. 生成 `feature-coverage-matrix.md`，逐项覆盖入口、参数、分支、副作用、配置和运行时控制。
+12. 如果源/目标语言、框架或运行时不同，生成 `target-paradigm-map.md`，先确认目标框架原语。
+13. 读取 2.0 设计文档，提取目标行为和验收要求。
+14. 列出第三方配置中心配置项，确认目标环境映射、owner 和缺失配置阻塞。
+15. 探索目标仓架构，确认前端 owner、后端/API owner、数据、集成、测试和观测模式。
+16. 基于功能点 Markdown、覆盖矩阵、范式映射、subagent 报告和目标仓架构写 `migration-design.md`。
+17. 方案审批通过后，记录 `design-approval.md`。
+18. 在目标仓按已批准方案和任务包实现前端、后端和端到端切片，并修复应处理的坏味道。
+19. 跑 `scan_legacy_dross.py`，清理或记录所有遗留全路径、硬编码端点和源仓特定 token。
+20. 补齐前端测试、后端测试、集成测试、契约测试、配置中心验证、覆盖矩阵核对或差异对比测试。
+21. 写入 `completion-check.md`，核对任务清单、功能点、覆盖矩阵、范式映射、surface、审批、配置中心清单、遗留污染扫描和验证。
+22. 输出迁移记录、任务包结果、可视化工作区路径和验证结果。
 
 ## CodeHub 源仓
 
@@ -334,9 +354,10 @@ python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
 .ai-migrations/feature-migrations/<feature-slug>/source-exploration/
 ```
 
-功能点拆分默认写入：
+源仓文档索引和功能点拆分默认写入：
 
 ```text
+.ai-migrations/feature-migrations/<feature-slug>/source-exploration/source-docs-index.md
 .ai-migrations/feature-migrations/<feature-slug>/source-exploration/feature-point-index.md
 .ai-migrations/feature-migrations/<feature-slug>/source-exploration/feature-points/<feature-point-slug>.md
 .ai-migrations/feature-migrations/<feature-slug>/source-exploration/coverage/feature-coverage-matrix.md
@@ -385,6 +406,7 @@ python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
 
 迁移记录模板见：
 
+- [references/source-doc-first.md](./references/source-doc-first.md)
 - [references/source-exploration-contract.md](./references/source-exploration-contract.md)
 - [references/subagent-coordination.md](./references/subagent-coordination.md)
 - [references/migration-design-approval.md](./references/migration-design-approval.md)
@@ -394,6 +416,7 @@ python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
 ## 相关文件
 
 - [SKILL.md](./SKILL.md)：agent 执行迁移时使用的核心流程。
+- [references/source-doc-first.md](./references/source-doc-first.md)：源仓现成 spec、设计和 API 契约优先索引；不足时拆 2-3 个探索任务。
 - [references/subagent-coordination.md](./references/subagent-coordination.md)：大迁移的 subagent 分工、任务包和上下文回收规则。
 - [references/multica-orchestration.md](./references/multica-orchestration.md)：multica 优先的多 agent 作业调度和恢复规则。
 - [references/frontend-task-slicing.md](./references/frontend-task-slicing.md)：前端薄索引、微任务拆分和上下文预算规则。
@@ -413,6 +436,7 @@ python3 skills/migrate-feature-to-v2/scripts/scan_legacy_dross.py \
 ```text
 使用 migrate-feature-to-v2，把旧仓的“订单退款”功能迁移到当前 2.0 仓。
 参考 docs/refund-v2-design.md。
+先查源仓是否已有退款 spec、设计文档、API 契约或测试计划；没有或覆盖不足时，开 2-3 个详细探索任务。
 如果源仓或目标仓上下文太大，先拆任务包；有 multica 就优先并行探索入口、提取设计、映射目标架构和验证，没有 multica 再使用 subagent。
 优先探测 multica；如果可用，并行开多个独立 agent 作业；如果不可用，再使用 subagent。每个作业必须来自 task package，并写回 subagent report 和 multica-jobs。
 每个任务包先评估一次性能否完成，维护 task-checklist，最终输出 completion-check。

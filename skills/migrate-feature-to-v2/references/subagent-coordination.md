@@ -125,6 +125,7 @@ Create task packages when any of these are true:
 - Work is being resumed after interruption and the package is frontend, implementation, verification, broad, or previously context-heavy.
 - Source exploration finds full paths, source package prefixes, hard-coded endpoints, generated paths, or other source-specific implementation tokens.
 - Design documents are large, contradictory, or contain multiple alternatives.
+- Source-repository specs, designs, API contracts, ADRs, runbooks, or test plans are missing, stale, or insufficient for the requested feature.
 - Implementation can be split into disjoint approved slices.
 - Verification needs independent coverage of compatibility, security, data, or integration behavior.
 
@@ -283,6 +284,7 @@ Probe `multica` before subagent assignment. When `multica` is available, use it 
 
 | Role | Use for | Must output |
 |---|---|---|
+| `source-doc-extractor` | Existing source-repository specs, design docs, API contracts, ADRs, runbooks, release notes, or test plans | `source-exploration/source-docs-index.md`, extracted source contract, doc gaps, fallback package plan |
 | `source-entrypoint-explorer` | One legacy entry point, workflow, domain slice, job, event, or UI path | `feature-points/<slug>.md`, evidence IDs, report |
 | `frontend-surface-explorer` | UI routes, pages, components, forms, client state, API clients, generated types, visible validation, permissions display, analytics, accessibility | frontend feature-point files, evidence IDs, report |
 | `frontend-route-indexer` | Thin route/menu/feature-flag/auth/i18n index before deep frontend reads | `source-exploration/frontend/frontend-surface-index.md`, candidate micro-packages |
@@ -308,6 +310,8 @@ Probe `multica` before subagent assignment. When `multica` is available, use it 
 - Give each subagent only the package file and the minimal referenced artifacts.
 - Use `multica` as the preferred batch runner for already-defined independent packages; it does not replace task-package files, reports, checklist updates, or approval gates.
 - Do not batch packages that share a write set, change the same contract/schema/API, depend on each other, or need unresolved approval.
+- Assign `source-doc-extractor` before broad source exploration. If source docs are absent, stale, or insufficient, create 2-3 targeted exploration packages and record them in `source-docs-index.md`, `task-package-index.md`, and `task-checklist.md`.
+- The default fallback split is entry point/public contract, domain-data-side effects, and frontend/config/runtime controls when applicable.
 - Record every multica job ID, status, report path, and merge decision in `orchestration/multica-jobs.md`.
 - Do not ask one subagent to ingest the complete source, complete target, and complete design corpus unless the package explicitly justifies it.
 - Do not ask a frontend subagent to understand the whole frontend project. Require a `frontend-route-indexer` or existing `frontend-surface-index.md` before page/component/state/API exploration.

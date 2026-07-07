@@ -79,6 +79,10 @@ def empty_record_template(feature: str, source: str, target: str) -> str:
 | Artifact | Purpose | Status |
 |---|---|---|
 
+## Source Docs Index
+| Doc/artifact | Type | Trust level | Contract extracted | Gaps | Fallback package |
+|---|---|---|---|---|---|
+
 ## Feature Coverage Matrix
 | Coverage item | Source evidence | Target mapping | Status | Verification | Gap |
 |---|---|---|---|---|---|
@@ -180,6 +184,7 @@ def build_templates(args: argparse.Namespace, root: Path, slug: str) -> Dict[Pat
         ("migration-record.md", "Evidence-backed migration record", "pending"),
         ("migration-design.md", "Approval-ready migration design", "pending"),
         ("design-approval.md", "Implementation approval record", "pending"),
+        ("source-exploration/source-docs-index.md", "Source specs, designs, API contracts, gaps, and fallback exploration packages", "pending"),
         ("source-exploration/source-exploration.md", "Source behavior baseline", "pending"),
         ("source-exploration/source-evidence.json", "Machine-readable evidence index", "pending"),
         ("source-exploration/feature-point-index.md", "Feature point navigation map", "pending"),
@@ -208,7 +213,7 @@ def build_templates(args: argparse.Namespace, root: Path, slug: str) -> Dict[Pat
         f"| `{path}` | {purpose} | {status} | unassigned | {timestamp} |"
         for path, purpose, status in artifact_rows
     )
-    quick_links = "\n".join(f"- [`{path}`](./{path})" for path, _, _ in artifact_rows[:8])
+    quick_links = "\n".join(f"- [`{path}`](./{path})" for path, _, _ in artifact_rows[:9])
 
     evidence_json = {
         "feature": slug,
@@ -232,7 +237,7 @@ def build_templates(args: argparse.Namespace, root: Path, slug: str) -> Dict[Pat
 | Target | {target} |
 | Current gate | repository-context |
 | Current active package | none |
-| Next action | Confirm repository roles, design inputs, feature surfaces, and task split. |
+| Next action | Confirm repository roles, design inputs, feature surfaces, source docs, and task split. |
 | Last updated | {timestamp} |
 
 ## Quick Links
@@ -240,6 +245,10 @@ def build_templates(args: argparse.Namespace, root: Path, slug: str) -> Dict[Pat
 
 ## Design Documents
 {markdown_list(design_docs)}
+
+## Source Docs First
+- Before broad source-code exploration, index existing source specs, design docs, API contracts, ADRs, runbooks, release notes, and test plans in `source-exploration/source-docs-index.md`.
+- If docs are missing, stale, or insufficient, create 2-3 bounded exploration packages and dispatch with `multica` first, otherwise subagents.
 
 ## Working Rule
 This folder is the source of truth for migration progress. After interruption or context compression, read `resume.md`, `migration-status.md`, `artifact-index.md`, `orchestration/task-checklist.md`, and the current task package before continuing.
@@ -299,7 +308,7 @@ This folder is the source of truth for migration progress. After interruption or
 - Last updated: {timestamp}
 - Current phase: repository-context
 - Current active package: none
-- Next action: confirm repository roles, design inputs, feature surfaces, and task split.
+- Next action: confirm repository roles, design inputs, feature surfaces, source docs, and task split.
 - Blockers: none recorded
 
 ## Canonical Reload Set
@@ -311,6 +320,7 @@ This folder is the source of truth for migration progress. After interruption or
 | `orchestration/task-checklist.md` | Package state and lost-function guard |
 | `orchestration/subagent-assignment-queue.md` | Resume-time subagent dispatch queue |
 | `orchestration/multica-jobs.md` | Multica-first multi-agent job ledger |
+| `source-exploration/source-docs-index.md` | Source specs/design/API contracts and fallback exploration plan |
 | `source-exploration/feature-point-index.md` | Feature point navigation after exploration |
 | `source-exploration/coverage/feature-coverage-matrix.md` | Entry point, parameter, branch, side-effect, schedule, and runtime-control coverage |
 | `target-paradigm-map.md` | Cross-language or cross-framework target primitive mapping |
@@ -327,6 +337,33 @@ This folder is the source of truth for migration progress. After interruption or
         root / "migration-record.md": empty_record_template(feature, source, target),
         root / "migration-design.md": empty_design_template(feature),
         root / "design-approval.md": empty_approval_template(feature),
+        root / "source-exploration" / "source-docs-index.md": f"""# {feature} Source Docs Index
+
+## Summary
+- Source docs present? unknown
+- Docs checked:
+- Coverage:
+- Exploration fallback needed? unknown
+
+## Candidate Docs
+| Artifact | Type | Location | Version/date | Scope | Feature relevance | Trust level | Gaps |
+|---|---|---|---|---|---|---|---|
+
+## Source Contract Extract
+| Requirement/behavior | Doc evidence | Applies to | Target use | Needs code verification? |
+|---|---|---|---|---|
+
+## Coverage Gaps
+| Gap | Why docs are insufficient | Exploration package |
+|---|---|---|
+
+## Exploration Fallback Plan
+| Package | Role | Scope | Runner | Output |
+|---|---|---|---|---|
+| TP-001 | source-entrypoint-explorer | Entry points and public contract, if docs are missing or weak | multica-preferred | feature-point files and coverage rows |
+| TP-002 | backend-surface-explorer | Domain, data, integrations, side effects, and config, if docs are missing or weak | multica-preferred | feature-point files and evidence |
+| TP-003 | frontend-surface-explorer | Frontend, runtime controls, tests, or observability when present or unknown | multica-preferred | frontend/config/test artifacts |
+""",
         root / "source-exploration" / "source-exploration.md": f"""# {feature} Source Exploration
 
 ## Source Access
@@ -334,6 +371,10 @@ This folder is the source of truth for migration progress. After interruption or
 - Access method: unknown
 - Branch/ref/commit: unknown
 - Exploration timestamp: {timestamp}
+
+## Source Docs Used
+| Doc | Trust level | Contract extracted | Gaps |
+|---|---|---|---|
 
 ## Entry Points
 | Entry point | Type | Evidence | Notes |

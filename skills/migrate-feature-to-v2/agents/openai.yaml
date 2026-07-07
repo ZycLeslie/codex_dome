@@ -1,4 +1,4 @@
 interface:
   display_name: "功能迁移到 AI 友好 2.0"
-  short_description: "跨仓/跨框架迁移：multica 优先、覆盖矩阵"
-  default_prompt: "Use $migrate-feature-to-v2 to migrate a legacy feature to a 2.0 repo: persist evidence, map target paradigm, build a coverage matrix, dispatch independent packages with multica when available and subagents otherwise, get design approval, implement, and verify."
+  short_description: "源仓文档优先，跨仓/跨框架迁移"
+  default_prompt: "Use $migrate-feature-to-v2 to migrate a legacy feature to a 2.0 repo: index source specs/design/API docs first, open 2-3 bounded exploration packages when docs are missing or insufficient, persist evidence, map target paradigm, build a coverage matrix, dispatch independent packages with multica first and subagents otherwise, get design approval, implement, and verify."

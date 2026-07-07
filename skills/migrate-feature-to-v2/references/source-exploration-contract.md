@@ -167,6 +167,40 @@ Required sections:
 
 ## Required Artifacts
 
+### source-exploration/source-docs-index.md
+
+Required before broad source-code exploration. Use existing source-repository specs and design artifacts first; code exploration verifies and fills gaps.
+
+Required sections:
+
+```markdown
+# <Feature> Source Docs Index
+
+## Summary
+- Source docs present? yes | no | insufficient | stale
+- Docs checked:
+- Coverage:
+- Exploration fallback needed? yes/no
+
+## Candidate Docs
+| Artifact | Type | Location | Version/date | Scope | Feature relevance | Trust level | Gaps |
+|---|---|---|---|---|---|---|---|
+
+## Source Contract Extract
+| Requirement/behavior | Doc evidence | Applies to | Target use | Needs code verification? |
+|---|---|---|---|---|
+
+## Coverage Gaps
+| Gap | Why docs are insufficient | Exploration package |
+|---|---|---|
+
+## Exploration Fallback Plan
+| Package | Role | Scope | Runner | Output |
+|---|---|---|---|---|
+```
+
+If useful source docs are absent or insufficient, create 2-3 detailed exploration packages instead of one broad repository scan. Prefer `multica` for independent packages when available, otherwise subagents.
+
 ### orchestration/task-package-index.md
 
 Required when the migration is broad enough to split across subagents or serial task packages. Use it as the work ledger so the main agent does not need to keep every exploration thread in active context.
@@ -464,6 +498,10 @@ Required sections:
 - Access method: local checkout | generic git | CodeHub MCP | other
 - Branch/ref/commit:
 - Exploration timestamp:
+
+## Source Docs Used
+| Doc | Trust level | Contract extracted | Gaps |
+|---|---|---|---|
 
 ## Entry Points
 | Entry point | Type | Evidence | Notes |
@@ -798,6 +836,7 @@ When the source repository is a CodeHub URL or the user identifies it as CodeHub
 - `artifact-index.md` should list every required artifact, whether it is pending/current/stale, and who or what last updated it.
 - `timeline.md` should record every material discovery, split, approval, implementation slice, verification run, pause, and resume.
 - `resume.md` should identify the canonical reload set and next action so another agent can continue without relying on chat history.
+- `source-docs-index.md` should exist before deep source-code exploration; if docs are absent, stale, or incomplete, it should name 2-3 fallback exploration packages and their expected outputs.
 - Every recovered behavior in the migration record should point to at least one evidence item.
 - Every broad migration should have task packages, package reports, and a context recovery file before implementation starts.
 - Every resumed migration should update `subagent-assignment-queue.md` before implementation continues.

@@ -1,6 +1,6 @@
 ---
 name: migrate-feature-to-v2
-description: Move a legacy feature into an AI-friendly 2.0 repo. Use for 功能迁移, 旧系统升级到 2.0, cross-language or cross-framework migration, Java-to-Airflow style paradigm changes, full-stack migration, frontend micro-slicing, multica-first multi-agent dispatch with subagent fallback, CodeHub MCP access, config-center inventory, feature coverage checks, evidence records, design approval, and legacy dross cleanup.
+description: Move a legacy feature into an AI-friendly 2.0 repo. Use for 功能迁移, 旧系统升级到 2.0, source spec/design first, cross-language or cross-framework migration, Java-to-Airflow style paradigm changes, full-stack migration, frontend micro-slicing, multica-first dispatch with subagent fallback, CodeHub MCP access, config inventory, coverage checks, design approval, and legacy dross cleanup.
 ---
 
 # Migrate Feature To V2
@@ -14,6 +14,7 @@ Resolve these inputs before editing:
 - **Source repository**: legacy repository path or URL used as read-only evidence.
 - **Target repository**: AI-friendly 2.0 repository where implementation belongs.
 - **Feature request**: user-visible capability, business rule, API, workflow, job, UI behavior, or named function to migrate.
+- **Source specs and design docs**: existing source-repository specs, API contracts, ADRs, PRDs, runbooks, or test plans that describe the legacy feature.
 - **Design documents**: optional PRD, technical design, API spec, OpenSpec change, ADR, issue, ticket, or acceptance document that defines the 2.0 target behavior.
 - **Change intent**: whether the work is compatible migration, optimized behavior, redesigned workflow, API replacement, feature split/merge, deprecation, or greenfield implementation informed by legacy evidence.
 - **Feature surfaces**: frontend, backend/API, jobs, events, integrations, data, configuration, and observability surfaces involved in the capability.
@@ -62,8 +63,7 @@ The workspace is the visible control panel and the restart anchor:
 - `artifact-index.md`: index of every migration artifact, purpose, status, owner, and update time.
 - `timeline.md`: append-only timeline of discoveries, decisions, approvals, splits, implementation slices, and verification runs.
 - `resume.md`: minimal restart instructions, canonical reload set, active package, next action, and blockers.
-- `source-exploration/`: source baseline, evidence, feature-point Markdown, smell and dross inventory.
-- `orchestration/`: task packages, task checklist, subagent reports, context recovery, and completion check.
+- `source-exploration/` and `orchestration/`: source baseline, evidence, feature points, smells, task packages, reports, recovery, and completion check.
 
 Update `README.md`, `migration-status.md`, `artifact-index.md`, `timeline.md`, and `resume.md` after every package result, approval change, implementation slice, verification run, context handoff, or pause. If the agent is interrupted, restarted, or context-compressed, reload `resume.md`, `migration-status.md`, `artifact-index.md`, `orchestration/task-checklist.md`, and the current package before continuing.
 
@@ -73,6 +73,7 @@ Update `README.md`, `migration-status.md`, `artifact-index.md`, `timeline.md`, a
 - When design documents exist, implement the intended 2.0 behavior they specify while using the source repository to recover compatibility obligations and hidden business rules.
 - When a design document or optimization request diverges from recovered source behavior, require explicit user confirmation unless the current task already clearly authorizes that exact divergence.
 - When design documents and recovered source behavior are consistent, perform a complete migration of the feature, including edge cases, validations, permissions, persistence, side effects, configuration, observability, and tests.
+- Before deep source-code exploration, index source-repository specs, designs, and API contracts. If none exist or coverage is insufficient, dispatch 2-3 detailed exploration packages through `multica` first, otherwise subagents.
 - Do not assume a one-to-one migration. Explicitly decide whether each legacy behavior is preserved, changed, replaced, deprecated, split, merged, or dropped.
 - Do not collapse full-stack work into backend-only migration. If the feature has frontend and backend behavior, explore, design, implement, and verify them as separate coordinated slices.
 - Adapt the implementation to target conventions, ownership boundaries, frameworks, and existing abstractions.
@@ -119,8 +120,7 @@ Before broad exploration or implementation, create or update:
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/artifact-index.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/timeline.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/resume.md`
-- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-package-index.md`
-- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-checklist.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-package-index.md` and `task-checklist.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/subagent-assignment-queue.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/multica-jobs.md` when `multica` is used
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/orchestration/task-packages/TP-###-<name>.md`
@@ -151,6 +151,7 @@ Resume gate:
 
 Recommended subagent roles:
 
+- `source-doc-extractor`: index existing source specs, design docs, API contracts, and gaps; write `source-docs-index.md` before broad code exploration.
 - `source-entrypoint-explorer`: explore one source entry point, workflow, or domain slice; write feature-point Markdown and evidence.
 - `frontend-surface-explorer`: explore UI routes, pages, components, forms, state management, client-side validation, generated clients, permission display, analytics, and browser-visible behavior.
 - `frontend-route-indexer`: build a thin route/menu/feature-flag/auth/i18n index without reading the whole frontend project.
@@ -169,7 +170,7 @@ Recommended subagent roles:
 - `implementation-slice-agent`: after approval, implement one approved slice with a disjoint write set and minimal source/design context.
 - `verification-agent`: verify implementation, design approval, migration record, and test coverage against persisted artifacts.
 
-Read `references/subagent-coordination.md` before delegating a broad migration or resuming interrupted work. Read `references/multica-orchestration.md` before choosing a runner for broad or resumed work. Read `references/frontend-task-slicing.md` before exploring or implementing a frontend surface that is larger than one route, page, or component. Read `references/paradigm-migration.md` when source and target language, framework, runtime, or architecture differ. Read `references/feature-coverage-matrix.md` when the feature has multiple inputs, branches, side effects, or previous coverage risk. Read `references/config-center-inventory.md` when a config surface is present or unknown.
+Read `references/source-doc-first.md` before broad source exploration. Read `references/subagent-coordination.md` before delegating or resuming. Read `references/multica-orchestration.md` before choosing a runner. Read `references/frontend-task-slicing.md` before frontend exploration or implementation larger than one route/page/component. Read `references/paradigm-migration.md` when source and target differ. Read `references/feature-coverage-matrix.md` for multi-input or branchy features. Read `references/config-center-inventory.md` when config is present or unknown.
 
 ## Workflow
 
@@ -182,10 +183,11 @@ Read `references/subagent-coordination.md` before delegating a broad migration o
 5. Read repository instructions, manifests, architecture docs, and recent relevant changes in both repositories.
 6. Inspect target worktree changes before editing. Never overwrite unrelated changes.
 7. Create or update the project-local migration workspace and dashboard. Use `scripts/init_migration_workspace.py` unless the target repository already has a stronger artifact convention.
-8. Profile both repositories when they are unfamiliar:
+8. Index source-repository specs, design docs, API contracts, ADRs, runbooks, and test plans into `source-exploration/source-docs-index.md`. If they are absent, stale, or insufficient, create 2-3 bounded exploration packages before broad code reading.
+9. Profile both repositories when they are unfamiliar:
 
    `python3 <skill-dir>/scripts/profile_repositories.py --source <source-root> --target <target-root> --output-dir <target-root>/.ai-migrations/feature-migrations/<feature-slug>`
-9. If the migration is broad, create the orchestration task-package index before expanding exploration.
+10. If the migration is broad, create the orchestration task-package index before expanding exploration.
 
 Use the profile as orientation only. Read actual source files before making decisions.
 
@@ -228,6 +230,7 @@ Persist the exploration as you go. Before implementation, create or update:
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/artifact-index.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/timeline.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/resume.md`
+- `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/source-docs-index.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/source-exploration.md`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/source-evidence.json`
 - `<target-root>/.ai-migrations/feature-migrations/<feature-slug>/source-exploration/feature-point-index.md`
@@ -248,6 +251,7 @@ Use the target repository's existing artifact directory if it has one. Read `ref
 
 Keep context bounded:
 
+- Use `source-docs-index.md` as the first reduced source context. When docs are missing or weak, assign 2-3 targeted exploration packages instead of scanning the whole repo in one context.
 - Assign source exploration by entry point, workflow, domain concept, or integration boundary to `source-entrypoint-explorer` packages when one pass would overload context.
 - For full-stack features, assign frontend and backend exploration separately. Do not let a backend package claim the feature is migrated until the frontend surface has been checked or explicitly recorded as not applicable.
 - For frontend features, first write `source-exploration/frontend/frontend-surface-index.md` from route tables, menu config, labels, feature flags, test names, and targeted `rg` results. Do not read entire `src/pages`, `src/components`, `src/store`, or generated client trees in a single package.
@@ -419,8 +423,6 @@ For full-stack features, implement coordinated but separate slices:
 8. For cross-language or cross-framework migration, implement target-native primitives from `target-paradigm-map.md`; expect smaller target code when the target framework owns orchestration, lifecycle, retries, scheduling, or observability.
 9. Remove temporary duplication or compatibility scaffolding that is not needed after the slice works.
 
-For detailed 2.0 design guidance, read `references/ai-friendly-v2.md` when choosing between multiple viable target designs.
-
 ### 11. Verify Behavior, Design, Smell Remediation, And Integration
 
 Derive verification scenarios from both the target design and the recovered source baseline, not merely from copied source tests.
@@ -456,16 +458,14 @@ Report:
 
 - design documents or optimization requirements used
 - source entry points and strongest implementation evidence
-- visual migration workspace dashboard, status, artifact index, timeline, and resume paths
-- persisted source exploration artifact paths
+- visual migration workspace, persisted source exploration, status, artifact index, timeline, and resume paths
 - multica/subagent task packages, reports, and context-recovery artifact paths
 - runner assignment queue status, including any blocked delegated packages
 - third-party config center inventory, target mappings, and any missing config blockers
 - task checklist and completion-check artifact paths
 - feature point Markdown files used for design
 - design approval source and approved implementation slices
-- legacy smells fixed, severe issues remediated, and any deferred smells with reasons
-- legacy dross scan results and every copied-looking path or source-specific token that was fixed, approved as compatibility, or deferred
+- legacy smells, severe issues, dross scan findings, copied-looking paths, and source-specific tokens that were fixed, approved, or deferred
 - essence kept and dross intentionally rejected
 - target files and architecture owners changed
 - frontend/backend surface coverage, or evidence that a surface is not applicable

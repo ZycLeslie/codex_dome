@@ -40,6 +40,10 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 | Artifact | Purpose | Status |
 |---|---|---|
 
+## Source Docs Index
+| Doc/artifact | Type | Trust level | Contract extracted | Gaps | Fallback package |
+|---|---|---|---|---|---|
+
 ## Subagent Task Ledger
 | Package ID | Role | Scope | One-pass feasibility | Inputs | Outputs | Status | Decision impact |
 |---|---|---|---|---|---|---|---|
@@ -152,6 +156,8 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - [ ] Subagent package reports integrated
 - [ ] Context recovery file current
 - [ ] Resume file current for restart after interruption
+- [ ] Source specs/design/API contracts indexed before broad code exploration
+- [ ] Missing or insufficient source docs produced 2-3 bounded exploration packages
 - [ ] Feature point Markdown split
 - [ ] Surface coverage recorded
 - [ ] Feature coverage matrix complete for entry points, parameters, defaults, validation, branches, errors, side effects, config, schedules, and runtime controls
@@ -197,6 +203,7 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - Use repository-relative file paths and line numbers where practical.
 - Link each important contract claim to code, test, schema, config, history, or runtime evidence.
 - Link source behavior claims to persisted source exploration artifacts where possible.
+- Link source docs, specs, API contracts, and doc gaps to `source-exploration/source-docs-index.md`.
 - Link the current migration state to the root visual workspace files, especially `migration-status.md`, `artifact-index.md`, `timeline.md`, and `resume.md`.
 - Link delegated work to task-package files and subagent reports; do not cite unpersisted chat-only handoffs.
 - Link multica job IDs to package files, approved write sets, reports, and merge decisions when multica is used.
@@ -219,6 +226,7 @@ Keep it concise but evidence-backed. Update it as discoveries invalidate earlier
 - Do not mark the migration complete while required coverage matrix rows are blank, unknown, unmapped, or unverified.
 - Do not mark cross-language/cross-framework migration complete while target code preserves source-language layers or framework scaffolding without explicit approval.
 - Do not mark the migration complete while a required package is `ready`, `needs-split`, `blocked`, `in-progress`, or unverified.
+- Do not mark the migration complete when source docs were skipped before broad exploration, or when missing/insufficient source docs did not produce bounded fallback exploration packages.
 - Do not mark the migration complete when mandatory delegated frontend, resumed, or broad work was executed only by the main agent without a recorded exception.
 - Do not mark the migration complete while required third-party config center entries are missing, unmapped, ownerless, or unverified.
 - Do not mark the migration complete while legacy dross scan findings are unexplained.

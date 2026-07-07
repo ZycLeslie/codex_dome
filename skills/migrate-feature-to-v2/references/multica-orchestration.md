@@ -35,6 +35,7 @@ orchestration/subagent-reports/TP-###-<name>.md
 
 - Probe `multica` before assigning broad or mandatory delegated packages to subagents.
 - Dispatch only packages that already have a task-package file, one-pass feasibility, allowed inputs, write set, output path, stop conditions, and acceptance checks.
+- When `source-docs-index.md` says source docs are absent, stale, or insufficient, the resulting 2-3 fallback source-exploration packages are good multica candidates if their scopes and outputs are independent.
 - Batch only independent packages. Do not run packages in parallel when they share a write set, depend on each other, need the same approval, or modify the same contract.
 - Do not dispatch implementation packages before `migration-design.md` and `design-approval.md` approve the slice.
 - Pass each job only the package file plus explicitly allowed artifacts.
