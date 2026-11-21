@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "mode": "daily-mr",
+  "timezone": "Asia/Shanghai",
+  "date": null,
+  "mr": null,
+  "schedule": {
+    "cron": "30 0 * * *",
+    "date_policy": "previous_local_day"
+  },
+  "repositories": [
+    {
+      "id": "web",
+      "provider": "gitlab",
+      "host": "https://gitlab.example.com",
+      "project": "group/web",
+      "clone_url": "https://gitlab.example.com/group/web.git",
+      "local_path": null,
+      "target_branch": "main",
+      "required": true
+    },
+    {
+      "id": "java",
+      "provider": "gitlab",
+      "host": "https://gitlab.example.com",
+      "project": "group/java",
+      "clone_url": "https://gitlab.example.com/group/java.git",
+      "local_path": null,
+      "target_branch": "main",
+      "required": true
+    },
+    {
+      "id": "dags",
+      "provider": "local",
+      "local_path": "/replace/airflow-dags",
+      "target_branch": "main",
+      "required": true
+    },
+    {
+      "id": "plugins",
+      "provider": "local",
+      "local_path": "/replace/python-plugins",
+      "target_branch": "main",
+      "required": true
+    }
+  ],
+  "links": [
+    {
+      "from": "web",
+      "to": "java",
+      "kind": "http",
+      "entry_hint": "/api/tasks"
+    },
+    {
+      "from": "java",
+      "to": "dags",
+      "kind": "dag-run-conf"
+    },
+    {
+      "from": "dags",
+      "to": "plugins",
+      "kind": "operator"
+    }
+  ],
+  "scope": {
+    "exclude": [
+      "**/node_modules/**",
+      "**/vendor/**",
+      "**/dist/**"
+    ],
+    "include_tests": true,
+    "include_config": true,
+    "include_lockfiles": true,
+    "daily_repositories": [
+      "web",
+      "java"
+    ],
+    "include_checkpoint_gap": true
+  },
+  "limits": {
+    "max_parallel_tasks": 4,
+    "max_run_minutes": 360,
+    "max_model_calls": 500,
+    "max_task_retries": 2
+  },
+  "validation": {
+    "allow_isolated_execution": true,
+    "trusted_commands": []
+  },
+  "release": {
+    "required": false,
+    "deployment_manifest": null
+  },
+  "output": {
+    "directory": "./scan-runs",
+    "checkpoint": "./scan-state/checkpoint.json"
+  },
+  "analysis": "general"
+}

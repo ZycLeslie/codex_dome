@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "mode": "full",
+  "timezone": "Asia/Shanghai",
+  "date": null,
+  "mr": null,
+  "schedule": {
+    "cron": "30 0 * * *",
+    "date_policy": "previous_local_day"
+  },
+  "repositories": [
+    {
+      "id": "web",
+      "provider": "local",
+      "local_path": "/replace/frontend-repo",
+      "target_branch": "main",
+      "required": true
+    }
+  ],
+  "links": [],
+  "scope": {
+    "exclude": [
+      "**/node_modules/**",
+      "**/vendor/**",
+      "**/dist/**"
+    ],
+    "include_tests": true,
+    "include_config": true,
+    "include_lockfiles": true,
+    "daily_repositories": [],
+    "include_checkpoint_gap": false
+  },
+  "limits": {
+    "max_parallel_tasks": 4,
+    "max_run_minutes": 360,
+    "max_model_calls": 500,
+    "max_task_retries": 2
+  },
+  "validation": {
+    "allow_isolated_execution": true,
+    "trusted_commands": []
+  },
+  "release": {
+    "required": false,
+    "deployment_manifest": null
+  },
+  "output": {
+    "directory": "./scan-runs",
+    "checkpoint": "./scan-state/checkpoint.json"
+  },
+  "analysis": "parameter-lineage",
+  "parameter_lineage": {
+    "repository": "web",
+    "scenarios": "auto",
+    "targets": "auto",
+    "expectations_file": null,
+    "max_paths_per_scenario": 2000,
+    "loop_unroll_limit": 3,
+    "call_depth_limit": 30
+  }
+}

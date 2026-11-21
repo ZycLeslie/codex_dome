@@ -1,0 +1,11 @@
+interface:
+  display_name: 跨仓库代码扫描
+  short_description: 支持场景参数全路径追踪、全量及 MR 扫描，定位仓库出口前的变更与丢失
+  default_prompt: 使用 $cross-repo-scan 按配置扫描代码仓，追踪跨仓库风险并生成审查报告和门禁结果。
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
